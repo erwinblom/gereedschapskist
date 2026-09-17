@@ -1,0 +1,20 @@
+BRONNENKAST — 0.1
+
+Pak de ZIP uit en open Start Bronnenkast.html. Er zijn geen installatie, accounts of API-sleutels nodig. De tien startbronnen verschijnen meteen; een eerder bewaarde browsersessie krijgt voorrang.
+
+Zoek in titels, bronnen, onderwerpen, samenvattingen, citaten en notities. Filter op Sociaal, Technisch, Beide of Favorieten. Een categorie selecteert alleen die categorie: Beide is een aparte categorie. Combineer dit met een onderwerp. Klik op de ster voor favorieten, op Bewerken voor wijzigingen en op Bron toevoegen voor eigen materiaal.
+
+Bewaar collectie downloadt alle bronnen als JSON, ook bij een actief filter. Open dit bestand later via Collectie openen. Import vervangt je collectie na bevestiging. Browseropslag is een tussentijdse kopie; bewaar je eigen bestanden buiten de appmap en maak een back-up. Gebruik één venster tegelijk.
+
+Ongedaan maken herstelt één wijziging. Onder de uitleg onderaan kun je de vorige browserversie herstellen, de startcollectie terugzetten of leeg beginnen. Maak eerst een bestandskopie wanneer je de huidige collectie wilt behouden.
+
+De app werkt offline. Voor Open bron heb je internet nodig; de originele pagina opent in een apart tabblad. Er worden geen pagina's of afbeeldingen automatisch opgehaald. Alleen de bewaarde tekst en links zitten in de collectie.
+
+STARTCOLLECTIE
+Tien primaire bronnen geraadpleegd op 16 september 2026. Samenvattingen zijn eigen parafrases, onderzoeksvragen zijn redactionele suggesties. Dit is geen onafhankelijke beoordeling van effectiviteit. Geen letterlijke citaten meegeleverd. Bewerk je een startbron, dan vervalt de raadpleegdatum om oude verificatie niet aan nieuwe tekst toe te schrijven. De volledige collectie staat ook in Startcollectie.json.
+
+GETEST
+Chromium: startcollectie, categorie/onderwerp, zoeken in notities, favorieten, toevoegen, bewerken, verwijderen, ongedaan maken, herladen, volledige export bij filters, JSON-import en afwijzen van onveilige linkprotocollen. Geen horizontale overflow bij 390 pixels. Andere browsers niet apart getest.
+
+OPEN SOURCE
+HTML, CSS en JavaScript zonder afhankelijkheden. Software onder MIT; zie LICENSE. Links verwijzen naar externe bronnen met hun eigen rechten. De originele artikelen zijn niet meegeleverd.

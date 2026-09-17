@@ -1,0 +1,21 @@
+PLANNER — 0.1
+
+Pak de ZIP uit en open Start Publicatieplanner.html. Geen installatie, account, internet of API-sleutel nodig. Klik Probeer een voorbeeld of voeg zelf een publicatie toe.
+
+Bewaar titel, kanaal, status, optionele datum, concepttekst, eigen notities en eventueel de link naar de uiteindelijke publicatie. Kanalen zijn vrij invulbaar. De status is Idee, Concept, Klaar of Gepubliceerd. Gepubliceerd kies je zelf; de app verstuurt niets en controleert niet of een publicatie echt live staat.
+
+De lijst toont alle datums. De kalender toont de gekozen maand, met ongedateerde items eronder. Op mobiel wordt dit een maandagenda met alleen gevulde dagen. Klik op een datum om een publicatie toe te voegen; klik op een titel om te bewerken. Er zijn geen tijden, slepen naar een andere dag, uploads of terugkerende afspraken.
+
+Zoeken werkt in titel, kanaal, concepttekst en notities. Combineer met kanaal en status. Aandacht nodig betekent: datum vandaag of eerder, en nog niet als Gepubliceerd gemarkeerd. Ook een idee met een datum kan dus aandacht nodig hebben.
+
+Bewaar planning downloadt altijd ALLE items als JSON, ongeacht filters en maand. Bewaar dat bestand in een eigen map en maak een back-up. Planning openen vervangt de huidige gegevens na bevestiging. Browseropslag is alleen tussentijds; gebruik één venster tegelijk. Onbekende versies en ongeldige bestanden worden geweigerd zonder de huidige planning te vervangen.
+
+Download tekst (.md) in het bewerkvenster downloadt precies de tekst die op dat moment in het tekstveld staat, ook als de formulierwijzigingen nog niet zijn bewaard. De Markdown-export bevat geen titel, status, datum of notities buiten dat tekstveld. Bewaar dus ook de publicatie en het JSON-bestand. Afsluiten van een gewijzigd formulier vraagt bevestiging.
+
+Ongedaan maken herstelt één wijziging in je sessie. De vorige browserversie herstellen of leeg beginnen kan onder de uitleg onderaan. Bestanden zijn niet versleuteld.
+
+GETEST
+Chromium: lijst/kalender, ongedateerde items, filteren, zoeken in notities, toevoegen vanuit kalenderdag, bewerken, status, verwijderen, ongedaan maken, herladen, ongewijzigde Markdown-export, volledige JSON-export/import, ongeldige links afwijzen, herstel, maand/jaargrenzen en schrikkeljaar, desktop en mobiele indeling. Andere browsers niet apart getest.
+
+OPEN SOURCE
+HTML, CSS en JavaScript zonder afhankelijkheden. MIT-licentie; zie LICENSE. Broncode en werkende app zijn hetzelfde bestand. De voorbeeldteksten zijn fictief en geen publicatieadvies.

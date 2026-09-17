@@ -1,0 +1,35 @@
+OFFERTE — 0.1
+
+Pak de ZIP uit en open Start Offerte.html. Klik Probeer een voorbeeld of Nieuwe offerte. Er zijn geen account, installatie, API-sleutel of externe koppelingen nodig.
+
+Vul je bedrijf, klant, titel, eventuele referentie, datum, geldigheid, werkzaamheden en afspraken in. Het voorbeeld verandert tijdens het invullen. Een aantal mag bijvoorbeeld 1,5 zijn; prijs en aantal mogen maximaal twee decimalen hebben. Gebruik een komma of punt als decimaalteken, zonder duizendtalscheiding.
+
+Offerte bewaren bewaart de huidige offerte in deze browser. Bewaar offertesbestand downloadt ALLE offertes als JSON; eventuele geldige wijzigingen in de open offerte worden eerst bewaard. Open het JSON-bestand later via Offertes openen. Een PDF is bedoeld om te delen en kan niet terug worden geïmporteerd. Bewaar je JSON-bestand in een eigen map buiten de appmap en maak een back-up. Gebruik één venster tegelijk.
+
+AFDRUKKEN / PDF
+Vul minimaal bedrijfsnaam, klant, titel, datum en een omschreven regel in. Klik Afdrukken / PDF bewaren en kies Bewaar als PDF in het afdrukvenster. Zet kop- en voetteksten van de browser uit. Bekijk de pagina-indeling van de PDF voordat je die verstuurt. Een offerte met status Concept toont CONCEPT in het document; de overige statussen worden niet als akkoordverklaring in het document afgedrukt.
+
+GEGEVENS EN STATUS
+Elke offerte bewaart eigen bedrijfs- en klantgegevens. Een nieuwe offerte neemt de bedrijfsgegevens uit de bovenste bewaarde offerte als startpunt over, als een aparte kopie. Kopie als concept bewaart eerst de huidige offerte en maakt dan een onbewaard nieuw concept: zonder referentie en geldigheidsdatum, met de datum van vandaag.
+
+Concept, Verstuurd, Geaccepteerd en Afgewezen houd je handmatig bij. De app verzendt niets en registreert geen ondertekening. Ook verstuurde en geaccepteerde offertes zijn bewerkbaar; bewaar de verstuurde PDF zelf. Er is geen formele versiehistorie, automatische nummering, korting, vreemde valuta of factuurkoppeling. Ongedaan maken herstelt één bewaaractie; de vorige browserversie herstellen staat onder de uitleg onderaan.
+
+Bedragen zijn euro's. Btw wordt per regel berekend en afgerond. Kies zelf het toepasselijke tarief; de app beoordeelt geen btw-regimes of voorwaarden. 0% is alleen een rekenpercentage. Geldig tot en met mag niet vóór de offertedatum vallen. Een verlopen datum verandert de status niet automatisch.
+
+GETEST
+Chromium: voorbeeldtotalen, decimalen en gemengde btw, ongeldige invoer, eigen bedrijfsgegevens per offerte, kopiëren, statussen/filteren, opslaan/herladen, volledige JSON-export/import, ongedaan maken, ongeldige import, veilige tekstweergave, PDF-generatie, afdrukknop en mobiele schermbreedte. Desktop en mobiel visueel bekeken. Het native afdrukvenster en andere browsers zijn niet afzonderlijk getest.
+
+OPEN SOURCE
+Gewone HTML, CSS en JavaScript zonder afhankelijkheden. MIT-licentie; zie LICENSE. Broncode en werkende app zijn hetzelfde bestand. De voorbeeldgegevens zijn fictief.
+
+CONTACTEN GEBRUIKEN IN OFFERTE
+1. Klik in Contacten op Bewaar contactenbestand.
+2. Open of maak een offerte en klik bij Klant op Kies contact.
+3. Open het Contacten-bestand, zoek een persoon en selecteer die.
+4. Controleer het voorbeeld en klik Neem contact over.
+5. Vul het adres aan en bewaar de offerte.
+
+Naam, organisatie en e-mail worden als eigen kopie in de offerte bewaard. Bij overnemen wordt een eerder klantadres leeggemaakt om een verkeerde combinatie te voorkomen. Contacten heeft nog geen adresveld. Notities, gesprekken en andere contacten worden niet in het offertesbestand opgenomen. Er is geen automatische synchronisatie; opnieuw overnemen is een bewuste handeling. De bron-contactcode wordt bewaard voor herkenning.
+
+NIEUW CONTACT VANUIT OFFERTE
+Klik op Kies contact en daarna + Nieuw contact. Open eerst je bestaande Contacten-bestand als het nieuwe contact daaraan moet worden toegevoegd. Vul naam, organisatie en e-mail in en klik Contact toevoegen en gebruiken. Een bijgewerkt Contacten-bestand wordt gedownload; bestaande contacten en notities blijven behouden. Zonder geopend bestand begin je een nieuwe verzameling. Controleer je downloadmap en open het bijgewerkte bestand later in Contacten. De oorspronkelijke bestanden worden niet overschreven. Bewaar daarnaast je offerte.

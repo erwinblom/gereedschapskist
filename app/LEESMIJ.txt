@@ -1,0 +1,23 @@
+GEREEDSCHAPSKIST 0.21.0 — LOKAAL / OPEN SOURCE
+
+ONLINE: https://erwinblom.github.io/gereedschapskist/
+OFFLINE: pak de volledige ZIP uit en open Begin hier.html.
+
+Dezelfde negen tools en dezelfde gegevensbestanden, online en offline.
+Schrijfkamer, Ping, Projectbord, Bronnenkast, Uren, Contacten, Planner, Offerte en Kasboek.
+
+OPENEN EN BEWAREN
+Open een tool en begin. Bewaar je werk met de bewaarknop in een bestand op je computer. Open dat bestand later opnieuw. De webversie en downloadversie wisselen niet automatisch gegevens uit. Browseropslag is tussentijds, geen back-up. Bewaar het actuele gegevensbestand voordat je van versie wisselt.
+
+Schrijfkamer: open een Markdown-bestand of maak een nieuw document. Bewaar document downloadt je document. Project toevoegen biedt rechtstreekse maptoegang in geschikte browsers, na toestemming. Mapbewerkingen gebruiken de bestaande bewaarknoppen met herstelkopieën.
+
+Ping: werk met één actuele administratie. Bewaar na definitief maken je gegevensbestand en PDF. Definitieve nummers en gegevens blijven vaststaan. Gebruik geen oude administratiekopie om nieuwe facturen te maken.
+
+Contacten naar Offerte of Ping: open je Contacten-bestand bij Kies contact. Een nieuw contact levert een bijgewerkt Contacten-bestand op. Open dit bestand in Contacten om daar verder te werken.
+
+BROWSER EN PRIVACY
+Gebruik bij voorkeur Chrome of Edge op een computer. Organisatiebeleid kan bestanden openen, downloaden of maptoegang beperken. Je hoeft geen app of extensie te installeren. De online versie vraagt verbinding voor het laden; zonder internet gebruik je het downloadpakket. De site ontvangt geen documenten via een uploadfunctie. Zie PRIVACY.md voor externe afbeeldingen en hostinggegevens.
+
+BRONCODE EN HERKOMST
+https://github.com/erwinblom/gereedschapskist
+Eigen code: MIT. Schrijfkamer bouwt voort op Markdown Browser van Joost Plattel. Zie Apps/Werkbank/HERKOMST.md en de aanvullende licenties. Technische mapnamen blijven behouden om bestaande verwijzingen niet te breken.

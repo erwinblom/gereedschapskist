@@ -1,0 +1,24 @@
+PROJECTBORD — VERSIE 0.1
+
+Pak de ZIP uit en dubbelklik op Start Projectbord.html.
+Geen installatie, account, internet of API-sleutel nodig.
+
+1. Klik op Probeer een voorbeeld of Nieuwe taak.
+2. Voeg een titel, notities, prioriteit en eventueel deadline toe.
+3. Sleep kaarten naar Te doen, Bezig of Klaar. De keuzelijst werkt ook op mobiel en met toetsenbord.
+4. Klik op een titel om te bewerken. Verwijderen staat onderaan.
+5. Kies Bewaar bordbestand. Bewaar het gedownloade JSON-bestand in een eigen map.
+6. Open het later via Bord openen, ook in een andere browser of kopie van de app.
+
+Naam wijzigen geeft je project een eigen titel. Je kunt afzonderlijke projecten als losse bestanden bewaren en om beurten openen. De app toont één bord tegelijk.
+
+Ongedaan maken herstelt de laatste wijziging in de huidige sessie. Onder de uitleg onderaan kun je de vorige browserversie herstellen, ook na opnieuw openen. Bij het herstellen wordt het huidige bord de herstelkopie.
+
+Browseropslag is alleen tussentijdse opslag. Maak zelf een bestandskopie en back-up. Gebruik één venster tegelijk. Als een andere geopende kopie dezelfde browseropslag wijzigt, weigert de app verdere wijzigingen tot je herlaadt. Dit is geen voorziening voor samenwerken.
+
+Versie 0.1 heeft vaste kolommen; binnen een kolom blijft de oorspronkelijke taakvolgorde behouden. Geen bijlagen, koppelingen, herinneringen op de achtergrond of gedeelde borden. Gegevensbestanden zijn gewone, niet-versleutelde tekst.
+
+Getest met Chromium: taken maken, bewerken/verwijderen, selecteren/slepen tussen kolommen, zoeken en filteren, ongedaan maken, herladen, volledige JSON-export bij een actief filter, import, afwijzen van een ongeldig bestand en herstel. Geen horizontale overflow bij 390 pixels. Desktopweergave visueel bekeken. Andere browsers zijn niet afzonderlijk getest.
+
+OPEN SOURCE
+HTML, CSS en JavaScript zonder externe afhankelijkheden. Broncode en werkende app zijn hetzelfde bestand. MIT-licentie; zie LICENSE.

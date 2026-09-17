@@ -1,0 +1,29 @@
+CONTACTEN — 0.1
+
+Pak uit en open Start Contacten.html. Geen installatie, account, internet of API-sleutel nodig. Begin met een nieuw contact of het fictieve voorbeeld.
+
+Bewaar naam, organisatie, rol, e-mail, telefoon, labels en achtergrondnotities. Voeg aparte gespreksnotities met datum toe. Zoek ook in de inhoud van notities. Filter op label en vervolgafspraak.
+
+Een vervolgactie heeft een omschrijving en optioneel een datum. Een datum vereist een omschrijving. Aandacht nodig toont acties met datum vandaag of eerder. Gepland toont latere datums. Zonder datum toont contacten zonder actiedatum, ook als er wel een actieomschrijving is. Actie afgerond maakt een gedateerde gespreksnotitie en wist de vervolgactie. De app stuurt geen berichten of herinneringen en koppelt niet aan een agenda.
+
+Bewaar contactenbestand downloadt ALLE contacten inclusief notities, ook bij een actief filter. Open het bestand later via Contacten openen. Import vervangt het huidige bestand na bevestiging. Houd één venster open en maak eigen back-ups. Browseropslag is alleen tussentijds; bestanden staan leesbaar en niet versleuteld op je computer.
+
+Ongedaan maken herstelt één wijziging. Vorige browserversie herstellen staat onder de uitleg onderaan. Gespreksnotities kunnen worden verwijderd; aanpassen kan in deze eerste versie door een nieuwe notitie te maken en de oude te verwijderen. Verwijderen van een contact verwijdert ook de bijbehorende notities, met bevestiging en mogelijkheid tot ongedaan maken.
+
+GETEST
+Chromium: contacten toevoegen/bewerken/verwijderen, notities toevoegen, actie afronden, ongedaan maken, filters, zoeken in notities, labels, herladen, volledige JSON-export/import, ongeldige datum afwijzen, veilige tekstweergave en mobiele schermbreedte. Andere browsers niet apart getest.
+
+OPEN SOURCE
+HTML, CSS, JavaScript zonder afhankelijkheden; MIT-licentie. Broncode en werkende app zijn hetzelfde bestand. De voorbeeldpersonen en organisaties zijn fictief.
+
+CONTACTEN GEBRUIKEN IN OFFERTE
+1. Klik in Contacten op Bewaar contactenbestand.
+2. Open of maak een offerte en klik bij Klant op Kies contact.
+3. Open het Contacten-bestand, zoek een persoon en selecteer die.
+4. Controleer het voorbeeld en klik Neem contact over.
+5. Vul het adres aan en bewaar de offerte.
+
+Naam, organisatie en e-mail worden als eigen kopie in de offerte bewaard. Bij overnemen wordt een eerder klantadres leeggemaakt om een verkeerde combinatie te voorkomen. Contacten heeft nog geen adresveld. Notities, gesprekken en andere contacten worden niet in het offertesbestand opgenomen. Er is geen automatische synchronisatie; opnieuw overnemen is een bewuste handeling. De bron-contactcode wordt bewaard voor herkenning.
+
+NIEUW CONTACT VANUIT OFFERTE
+Klik op Kies contact en daarna + Nieuw contact. Open eerst je bestaande Contacten-bestand als het nieuwe contact daaraan moet worden toegevoegd. Vul naam, organisatie en e-mail in en klik Contact toevoegen en gebruiken. Een bijgewerkt Contacten-bestand wordt gedownload; bestaande contacten en notities blijven behouden. Zonder geopend bestand begin je een nieuwe verzameling. Controleer je downloadmap en open het bijgewerkte bestand later in Contacten. De oorspronkelijke bestanden worden niet overschreven. Bewaar daarnaast je offerte.

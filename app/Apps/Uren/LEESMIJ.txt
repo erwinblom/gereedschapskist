@@ -1,0 +1,19 @@
+UREN — 0.1
+
+Pak de ZIP uit en open Start Uren.html. Probeer het fictieve voorbeeld of voeg je eigen uren toe. Geen installatie, account, API-sleutel of internet nodig.
+
+Registreer datum, klant/eigen organisatie, project, omschrijving, uren en minuten. Kies declarabel of niet declarabel. Namen die je al hebt gebruikt verschijnen als suggestie. De duur is minimaal één minuut en maximaal 24 uur per registratie. Meerdere registraties op een dag zijn toegestaan; de app controleert niet op overlap of een dagtotaal boven 24 uur.
+
+Een week begint op maandag. Kies vorige/volgende week of Alle datums. Combineer met klant, project en soort uren. Totalen en uitsplitsingen volgen de filters. De projectuitsplitsing houdt gelijknamige projecten van verschillende klanten apart. De projectfilter selecteert dezelfde projectnaam over klanten heen; kies ook een klant om dit te beperken.
+
+Bewaar urenbestand downloadt ALLE registraties als JSON. Exporteer selectie als CSV downloadt alleen de gefilterde registraties, met puntkomma als scheidingsteken, UTF-8 en een kopregel. Minuten zijn de exacte rekeneenheid; duur wordt getoond als uren:minuten. Om spreadsheetformules te voorkomen krijgen tekstvelden die beginnen met =, +, - of @ een apostrof vooraan in CSV. JSON bewaart de oorspronkelijke tekst.
+
+Open JSON via Gegevens openen; CSV is een export, geen importformaat. Bewaar eigen bestanden buiten de appmap en maak een back-up. Browseropslag is alleen tussentijds. Gebruik één venster tegelijk. De app blokkeert schrijven als zij een wijziging in dezelfde opslag door een ander venster opmerkt.
+
+Ongedaan maken herstelt één wijziging in je sessie. Onder de uitleg kun je de vorige browserversie herstellen of leeg beginnen. Er is geen timer, tariefberekening, factuurkoppeling of synchronisatie.
+
+GETEST
+Chromium: minutenberekeningen, declarabele totalen, filters, JSON-import/export, gefilterde CSV, afscherming tegen spreadsheetformules, invoer/bewerken/verwijderen/herstel via ongedaan maken, herladen, week over jaargrens, ongeldige datums/import en mobiele breedte. Andere browsers niet apart getest.
+
+OPEN SOURCE
+HTML, CSS, JavaScript. Geen externe afhankelijkheden. MIT-licentie; zie LICENSE. Broncode en werkende app zijn hetzelfde bestand.

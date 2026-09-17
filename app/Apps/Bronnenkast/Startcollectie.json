@@ -1,0 +1,166 @@
+{
+  "format": "bronnenkast",
+  "version": 1,
+  "items": [
+    {
+      "id": "start-01",
+      "title": "Buurtzorg: anders organiseren",
+      "source": "Buurtzorg International",
+      "url": "https://www.buurtzorg.com/about-us/",
+      "category": "Sociaal",
+      "tags": [
+        "zorg",
+        "zelforganisatie"
+      ],
+      "summary": "Buurtzorg beschrijft een verpleegkundig geleid zorgmodel waarin de cliënt centraal staat en teams decentraal werken. De organisatie presenteert dit als alternatief voor sterker opgeknipte zorgorganisaties.",
+      "notes": "Onderzoeksvraag: welke beslissingen kun je bij de mensen leggen die het werk uitvoeren? De bron is de organisatie zelf; resultaatclaims vragen onafhankelijke controle.",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-02",
+      "title": "Repair Café: repareren als ontmoeting",
+      "source": "Repair Café International",
+      "url": "https://www.repaircafe.org/en/about/",
+      "category": "Sociaal",
+      "tags": [
+        "reparatie",
+        "gemeenschap"
+      ],
+      "summary": "Repair Cafés brengen mensen samen om spullen te repareren met hulp van vrijwilligers. Naast langer gebruik van producten draait het initiatief om het delen van vaardigheden.",
+      "notes": "Onderzoeksvraag: hoe verandert een praktische activiteit in een blijvend lokaal netwerk?",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-03",
+      "title": "Decidim: digitale democratie",
+      "source": "Decidim",
+      "url": "https://docs.decidim.org/en/develop/features/general-description.html",
+      "category": "Beide",
+      "tags": [
+        "democratie",
+        "open source"
+      ],
+      "summary": "Decidim is vrije software voor participatie. Organisaties kunnen er voorstellen, gesprekken, bijeenkomsten en participatieve besluitvorming mee organiseren.",
+      "notes": "Onderzoeksvraag: hoe verbind je online deelname aan echte zeggenschap? Beschikbare functies bewijzen nog geen democratische impact.",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-04",
+      "title": "Precious Plastic: kennis om lokaal te recyclen",
+      "source": "Precious Plastic",
+      "url": "https://www.preciousplastic.com/about/open-source",
+      "category": "Beide",
+      "tags": [
+        "open hardware",
+        "circulariteit"
+      ],
+      "summary": "Precious Plastic deelt ontwerpen, instructies en andere kennis voor plasticrecycling. Het uitgangspunt is dat lokale makers die kennis kunnen toepassen, aanpassen en verder delen.",
+      "notes": "Onderzoeksvraag: wat is er naast een open ontwerp nodig om een lokale werkplaats draaiend te houden?",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-05",
+      "title": "OpenStreetMap: een kaart als gemeenschappelijk werk",
+      "source": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/about",
+      "category": "Beide",
+      "tags": [
+        "open data",
+        "gemeenschap"
+      ],
+      "summary": "OpenStreetMap is een wereldkaart die door een gemeenschap wordt opgebouwd en onderhouden. De kaartgegevens zijn beschikbaar als open data onder licentievoorwaarden.",
+      "notes": "Onderzoeksvraag: hoe organiseer je kwaliteit en onderhoud wanneer iedereen kan bijdragen?",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-06",
+      "title": "Home Assistant: meer controle over je slimme huis",
+      "source": "Home Assistant",
+      "url": "https://www.home-assistant.io/",
+      "category": "Technisch",
+      "tags": [
+        "lokale software",
+        "privacy"
+      ],
+      "summary": "Home Assistant is open-source-software voor huisautomatisering die lokale controle en privacy centraal stelt. Het verbindt apparaten en maakt automatiseringen mogelijk.",
+      "notes": "Onderzoeksvraag: hoeveel afhankelijkheid van leveranciers kun je verminderen? De mogelijkheden verschillen per apparaat en integratie.",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-07",
+      "title": "Raspberry Pi Foundation: leren maken met computers",
+      "source": "Raspberry Pi Foundation",
+      "url": "https://www.raspberrypi.org/about/",
+      "category": "Sociaal",
+      "tags": [
+        "onderwijs",
+        "digitale vaardigheden"
+      ],
+      "summary": "De Raspberry Pi Foundation is een educatieve organisatie die mensen helpt kennis en vaardigheden rond computers en digitale technologie te ontwikkelen.",
+      "notes": "Onderzoeksvraag: hoe maak je van toegang tot technologie ook het vermogen om zelf iets te maken?",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-08",
+      "title": "WikiHouse: open ontwerpen voor bouwen",
+      "source": "WikiHouse",
+      "url": "https://www.wikihouse.cc/",
+      "category": "Technisch",
+      "tags": [
+        "open hardware",
+        "bouwen"
+      ],
+      "summary": "WikiHouse ontwikkelt een open-source-bouwsysteem met digitaal vervaardigde onderdelen. Het project onderzoekt hoe digitale ontwerpen het maken van gebouwen toegankelijker kunnen maken.",
+      "notes": "Onderzoeksvraag: welke onderdelen kun je standaardiseren zonder de lokale situatie te negeren? Een open ontwerp neemt vergunningen of constructieve eisen niet weg.",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-09",
+      "title": "Local-first: software die begint bij jouw gegevens",
+      "source": "Ink & Switch",
+      "url": "https://www.inkandswitch.com/essay/local-first/",
+      "category": "Technisch",
+      "tags": [
+        "lokale software",
+        "eigenaarschap"
+      ],
+      "summary": "Dit essay uit 2019 beschrijft principes voor software die lokaal werken en zeggenschap over gegevens combineert met samenwerking. Het verkent ook technische mogelijkheden en beperkingen.",
+      "notes": "Onderzoeksvraag: welke functies blijven bruikbaar als de maker of een clouddienst verdwijnt? Dit is een ontwerpvisie, geen garantie voor elke lokale app.",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    },
+    {
+      "id": "start-10",
+      "title": "ActivityPub: sociale netwerken laten samenwerken",
+      "source": "W3C",
+      "url": "https://www.w3.org/TR/activitypub/",
+      "category": "Technisch",
+      "tags": [
+        "open standaarden",
+        "sociale netwerken"
+      ],
+      "summary": "ActivityPub is een W3C-standaard voor gedecentraliseerde sociale netwerktoepassingen. De specificatie beschrijft communicatie tussen gebruikerssoftware en servers en tussen servers onderling.",
+      "notes": "Onderzoeksvraag: wat levert een gedeeld protocol op voor keuzevrijheid? Een technische standaard lost moderatie en bestuur niet vanzelf op.",
+      "quote": "",
+      "favorite": false,
+      "checked": "2026-09-16"
+    }
+  ]
+}

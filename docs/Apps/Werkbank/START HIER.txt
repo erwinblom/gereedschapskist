@@ -1,0 +1,28 @@
+MARKDOWN WERKBANK — STARTEN
+
+1. Pak de volledige ZIP uit op een vaste plek op je computer.
+2. Klik met rechts op ▶ Begin hier.html en kies Open met → Google Chrome
+   of Microsoft Edge. Open niet alleen het HTML-bestand vanuit de ZIP.
+3. Klik op + Project toevoegen.
+4. Kies de meegeleverde map Werkbank en geef toestemming.
+5. Kies Werkbank — alles en open 00 - Begin hier.md.
+6. Kies Bewerken, verander een zin en klik Opslaan.
+
+Klaar. Je hebt geen account, installatie of API-sleutel nodig.
+De drie voorbeeldprojecten bevatten alleen oefenteksten.
+
+Je eigen bestanden gebruiken? Voeg daarna je eigen werkmap toe.
+Houd ▶ Begin hier.html, alle scripts, stijlen en vendor bij elkaar.
+
+WERKT IETS NIET?
+- Geen mapkeuze: controleer dat je Chrome of Edge op een computer gebruikt.
+- Geen toegang meer: voeg de map opnieuw toe en geef opnieuw toestemming.
+- Opslaan grijs: er is nog niets gewijzigd.
+- Extern gewijzigd: kopieer eerst je bewerking voordat je opnieuw opent.
+
+Verwijderen gaat niet via de prullenmand. Oefen eerst met de demo.
+Editor en lokale bestanden werken offline. Webafbeeldingen en YouTube
+hebben internet nodig. De Werkbank maakt geen automatische back-up.
+
+Meer uitleg: README.md. Licenties en herkomst: LICENSE en HERKOMST.md.
+De applicatie heeft een MIT-licentie; bibliotheken houden hun eigen licenties.

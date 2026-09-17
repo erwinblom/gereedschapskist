@@ -1,0 +1,26 @@
+KASBOEK 0.1 — LOKAAL / OPEN SOURCE
+
+Pak de ZIP uit en open Start Kasboek.html in Chrome of Edge.
+Voeg een boeking toe of probeer de fictieve voorbeelden.
+Registreer werkelijk ontvangen en betaalde bedragen in euro, inclusief eventuele btw.
+Filter op maand, jaar, soort, categorie, zoekterm of ontbrekende bon.
+
+BEWAREN
+Bewaar kasboekbestand downloadt alle boekingen en bonnen als JSON.
+Kasboek openen leest dit bestand weer in en vervangt de huidige inhoud na bevestiging.
+Bewaar regelmatig een eigen bestand buiten de appmap. Browseropslag is tussentijds en kan worden gewist of vol raken. Bij volle browseropslag verschijnt een waarschuwing: download dan je kasboekbestand voordat je afsluit.
+CSV bevat alleen de geselecteerde boekingen en bonbestandsnamen, niet de bonnen zelf.
+Een bon download je via de link bij een boeking.
+
+GRENZEN
+Eén PDF, PNG, JPEG of WebP per boeking, maximaal 2 MB. Een kasboekbestand maximaal 20 MB en 10.000 boekingen. Grote verzamelingen kun je over aparte bestanden verdelen.
+Er is geen tekstherkenning, bankkoppeling, btw-berekening of aangiftefunctie.
+Het verschil tussen inkomsten en uitgaven is geen banksaldo of winstberekening.
+Dit is een eenvoudig kasstroomoverzicht, geen volledig boekhoudpakket.
+Bestanden zijn niet versleuteld. Bewaar ze op een passende eigen plek.
+
+CONTROLE
+Getest in Chromium: exacte centberekeningen, filters, toevoegen/bewerken/verwijderen, ongedaan maken, herladen, JSON-invoer en -uitvoer, behoud van bonbytes, CSV, ongeldige bestanden en mobiele indeling.
+
+BRONCODE
+Alle code staat leesbaar in het HTML-bestand. Geen installatie, externe bibliotheken, accounts of sleutels nodig. MIT-licentie; zie LICENSE. Zie FORMAAT.md voor het bestandsformaat.
