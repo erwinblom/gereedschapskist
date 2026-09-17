@@ -14,7 +14,7 @@ GETEST
 Chromium: contacten toevoegen/bewerken/verwijderen, notities toevoegen, actie afronden, ongedaan maken, filters, zoeken in notities, labels, herladen, volledige JSON-export/import, ongeldige datum afwijzen, veilige tekstweergave en mobiele schermbreedte. Andere browsers niet apart getest.
 
 OPEN SOURCE
-HTML, CSS, JavaScript zonder afhankelijkheden; MIT-licentie. Broncode en werkende app zijn hetzelfde bestand. De voorbeeldpersonen en organisaties zijn fictief.
+HTML, CSS, JavaScript zonder afhankelijkheden; MIT-licentie. De HTML en gedeelde JavaScript-bestanden vormen samen de app. De voorbeeldpersonen en organisaties zijn fictief.
 
 CONTACTEN GEBRUIKEN IN OFFERTE
 1. Klik in Contacten op Bewaar contactenbestand.
@@ -27,3 +27,6 @@ Naam, organisatie en e-mail worden als eigen kopie in de offerte bewaard. Bij ov
 
 NIEUW CONTACT VANUIT OFFERTE
 Klik op Kies contact en daarna + Nieuw contact. Open eerst je bestaande Contacten-bestand als het nieuwe contact daaraan moet worden toegevoegd. Vul naam, organisatie en e-mail in en klik Contact toevoegen en gebruiken. Een bijgewerkt Contacten-bestand wordt gedownload; bestaande contacten en notities blijven behouden. Zonder geopend bestand begin je een nieuwe verzameling. Controleer je downloadmap en open het bijgewerkte bestand later in Contacten. De oorspronkelijke bestanden worden niet overschreven. Bewaar daarnaast je offerte.
+
+KOPPELINGEN
+Maak taak staat bij een vervolgactie. Controleer titel, project en datum. Open de overdracht in Doen via Taken overnemen. De contactpersoon en actie staan in de taaknotities. De oorspronkelijke vervolgactie blijft staan. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.

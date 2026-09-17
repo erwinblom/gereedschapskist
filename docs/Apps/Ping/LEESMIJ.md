@@ -40,3 +40,6 @@ Kies contact opent een Contacten-bestand. Alleen de gekozen klantgegevens gaan n
 ## Getest
 
 Ontbrekende velden, annuleren zonder nummer, instelbaar startnummer, opeenvolgende nummers, jaarwisseling, vaste bedrijfsgegevens, alleen-lezen, JSON en PDF, herladen, oude bestandsversie, import met ontbrekende/gewijzigde/dubbele definitieve facturen, opslagfout en tweede venster. Contacten overnemen en nieuw contact teruglezen blijven getest. Desktop en mobiel zijn visueel bekeken.
+
+KOPPELINGEN
+Uren overnemen maakt een concept met één regel per registratie. Bedragen worden uit exacte minuten berekend. Elke omschrijving noemt tijd en tarief; aantal 1 betekent het berekende bedrag voor die registratie. Na definitief maken: Uren als gefactureerd terugmelden om in Uren schrijven het definitieve nummer vast te leggen. Boek als ontvangen maakt een overdracht voor Boekhouden nadat je betaaldatum en volledige ontvangst bevestigt. Deelbetalingen worden niet door deze koppeling verwerkt. Bewaar steeds je facturenbestand. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.

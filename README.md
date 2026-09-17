@@ -36,6 +36,14 @@ Chrome en Edge op een computer zijn de aanbevolen browsers. Organisatiebeleid ka
 
 [Privacy](app/PRIVACY.md) · [Gebruiksaanwijzing](app/LEESMIJ.txt)
 
+## Koppelingen
+
+Gegevens overnemen werkt met lokale overdrachtsbestanden: uren naar facturen, ontvangen facturen naar Boekhouden, geplande projecten en contactacties naar taken, taken naar uren en geselecteerde bronnen naar een Markdown-document. Geaccepteerde offertes kunnen ook naar Factureren; contactgegevens kunnen naar Offreren en Factureren.
+
+Open steeds eerst het actuele bestand in de ontvangende tool en gebruik daarna de specifieke overneemknop. Controleer en bewaar je bijgewerkte administratie. Uren zijn eerst Klaargezet; na definitief factureren geef je het factuurnummer terug via Uren als gefactureerd terugmelden / Factuurstatus bijwerken. Ontvangsten ondersteunen één volledige betaling per factuur. Dubbele overdrachten worden binnen dezelfde actuele administratie herkend. Dit is geen automatische synchronisatie.
+
+Zie [stappen per koppeling](https://erwinblom.github.io/gereedschapskist/Uitleg.html#koppelingen) en [het open overdrachtsformaat](app/koppelingen/FORMAAT.md).
+
 ## Ontwikkeling
 
 `app/` is de enige bron voor de tools. `docs/` is de gegenereerde website voor GitHub Pages. Bewerk `app/` en voer daarna uit:

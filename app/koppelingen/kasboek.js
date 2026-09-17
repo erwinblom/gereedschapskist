@@ -1,0 +1,7 @@
+'use strict';
+(()=>{
+ const K=Koppelingen,oldEdit=edit;edit=function(id=null){K.setDraft('Kasboek',{});oldEdit(id)};
+ const duplicate=b=>data.entries.some(i=>i.id!==editing&&(i.sourceInvoiceId===b.sourceInvoiceId||i.sourceInvoiceKey===b.sourceInvoiceKey));
+ const submit=$('form').onsubmit;$('form').onsubmit=e=>{const b=K.draft('Kasboek');if(b.sourceInvoiceId&&duplicate(b)){e.preventDefault();notify('Deze factuur is al als ontvangen geboekt. Er is niets toegevoegd.');return;}submit(e)};
+ K.receiver('Ontvangst overnemen','take-receipt',['factuur-ontvangst'],async p=>{const b=p.body;K.id(b?.invoiceId);K.number(b.number);K.text(b.customer,200,true);K.integer(b.cents,1,100000000);K.date(b.receivedOn);for(const field of ['name','kvk','vat'])K.text(b.issuer?.[field],4000,field==='name');const meta={sourceInvoiceId:b.invoiceId,sourceInvoiceNumber:b.number,sourceInvoiceKey:await K.key([b.issuer.kvk.trim().toLowerCase()||b.issuer.vat.trim().toLowerCase()||b.issuer.name.trim().toLowerCase(),b.number])};editing=null;K.fresh();if(duplicate(meta))throw Error('Deze factuur is al als ontvangen geboekt.');edit();K.setDraft('Kasboek',meta);$('date').value=b.receivedOn;$('type').value='income';$('party').value=b.customer;$('description').value='Ontvangen factuur '+b.number;$('category').value='Omzet';$('amount').value=(b.cents/100).toFixed(2).replace('.',',');$('form-title').textContent='Ontvangst controleren · '+b.number;K.notice('Controleer de betaling en bewaar de boeking. Bewaar daarna je boekhoudbestand.');});
+})();

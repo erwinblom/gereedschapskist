@@ -57,7 +57,7 @@ window.Werkmap=(()=>{
  async function exportFile(blob,name){
   await ready;if(!root||example)return false;if(busy){message('Er loopt nog een bestandsactie. Probeer deze export daarna opnieuw.');return false;}busy=true;if(box)box.open=true;
   try{const dir=await(await folder()).getDirectoryHandle('Exports',{create:true});name=safeName(name);if(await existing(dir,name))name=new Date().toISOString().replace(/[:.]/g,'-')+'-'+crypto.randomUUID().slice(0,8)+'-'+name;
-   const file=await dir.getFileHandle(name,{create:true}),stream=await file.createWritable({mode:'exclusive'});try{await stream.write(blob);await stream.close()}catch(e){try{await stream.abort()}catch{}throw e;}
+   const file=await dir.getFileHandle(name,{create:true});if((await file.getFile()).size!==0)throw Error('Er bestaat ondertussen al een export met deze naam. Probeer opnieuw.');let stream;try{stream=await file.createWritable({mode:'exclusive'});await stream.write(blob);await stream.close()}catch(e){try{await stream?.abort()}catch{}try{if((await file.getFile()).size===0)await dir.removeEntry(name)}catch{}throw e;}
    if((await file.getFile()).size!==blob.size)throw Error('Bestandsgrootte niet bevestigd.');
    message('Export opgeslagen in '+root.name+'/'+catalog[tool][0]+'/Exports/'+name+'.');return true;
   }catch(e){message('Export niet opgeslagen: '+e.message);return false;}finally{busy=false;}

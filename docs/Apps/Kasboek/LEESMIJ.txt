@@ -23,4 +23,7 @@ CONTROLE
 Getest in Chromium: exacte centberekeningen, filters, toevoegen/bewerken/verwijderen, ongedaan maken, herladen, JSON-invoer en -uitvoer, behoud van bonbytes, CSV, ongeldige bestanden en mobiele indeling.
 
 BRONCODE
-Alle code staat leesbaar in het HTML-bestand. Geen installatie, externe bibliotheken, accounts of sleutels nodig. MIT-licentie; zie LICENSE. Zie FORMAAT.md voor het bestandsformaat.
+De broncode staat in de HTML en gedeelde JavaScript-bestanden. Geen installatie, externe bibliotheken, accounts of sleutels nodig. MIT-licentie; zie LICENSE. Zie FORMAAT.md voor het bestandsformaat.
+
+KOPPELINGEN
+Ontvangst overnemen leest een overdrachtsbestand uit Factureren. Open eerst je actuele boekhoudbestand. Controleer de ingevulde boeking en kies Boeking bewaren. Daarna Bewaar bestand. Een factuur kan via deze koppeling één keer als volledig ontvangen worden geboekt; er is geen bankcontrole of automatische koppeling. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.

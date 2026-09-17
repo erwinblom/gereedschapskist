@@ -18,4 +18,7 @@ GETEST
 Chromium: lijst/kalender, ongedateerde items, filteren, zoeken in notities, toevoegen vanuit kalenderdag, bewerken, status, verwijderen, ongedaan maken, herladen, ongewijzigde Markdown-export, volledige JSON-export/import, ongeldige links afwijzen, herstel, maand/jaargrenzen en schrikkeljaar, desktop en mobiele indeling. Andere browsers niet apart getest.
 
 OPEN SOURCE
-HTML, CSS en JavaScript zonder afhankelijkheden. MIT-licentie; zie LICENSE. Broncode en werkende app zijn hetzelfde bestand. De voorbeeldteksten zijn fictief en geen publicatieadvies.
+HTML, CSS en JavaScript zonder afhankelijkheden. MIT-licentie; zie LICENSE. De HTML en gedeelde JavaScript-bestanden vormen samen de app. De voorbeeldteksten zijn fictief en geen publicatieadvies.
+
+KOPPELINGEN
+Maak taken staat bij projecten in de lijst en in het bewaarde projectformulier. Kies zelf taaknamen en deadlines. Open de overdracht in Doen via Taken overnemen. Plan en taken worden daarna afzonderlijk bijgehouden. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.

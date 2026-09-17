@@ -10,10 +10,13 @@ Bewaar urenbestand downloadt ALLE registraties als JSON. Exporteer selectie als 
 
 Open JSON via Gegevens openen; CSV is een export, geen importformaat. Bewaar eigen bestanden buiten de appmap en maak een back-up. Browseropslag is alleen tussentijds. Gebruik één venster tegelijk. De app blokkeert schrijven als zij een wijziging in dezelfde opslag door een ander venster opmerkt.
 
-Ongedaan maken herstelt één wijziging in je sessie. Onder de uitleg kun je de vorige browserversie herstellen of leeg beginnen. Er is geen timer, tariefberekening, factuurkoppeling of synchronisatie.
+Ongedaan maken herstelt één wijziging in je sessie. Onder de uitleg kun je de vorige browserversie herstellen of leeg beginnen. Er is geen timer of automatische synchronisatie.
 
 GETEST
 Chromium: minutenberekeningen, declarabele totalen, filters, JSON-import/export, gefilterde CSV, afscherming tegen spreadsheetformules, invoer/bewerken/verwijderen/herstel via ongedaan maken, herladen, week over jaargrens, ongeldige datums/import en mobiele breedte. Andere browsers niet apart getest.
 
 OPEN SOURCE
-HTML, CSS, JavaScript. Geen externe afhankelijkheden. MIT-licentie; zie LICENSE. Broncode en werkende app zijn hetzelfde bestand.
+HTML, CSS, JavaScript. Geen externe afhankelijkheden. MIT-licentie; zie LICENSE. De HTML en gedeelde JavaScript-bestanden vormen samen de app.
+
+KOPPELINGEN
+Selecteer declarabele uren van één klant en kies Maak factuur. Controleer tarief en btw. Open in Factureren eerst je actuele administratie en kies Uren overnemen. De uren staan eerst op Klaargezet. Na definitief maken: Uren als gefactureerd terugmelden in Factureren, daarna Factuurstatus bijwerken in Uren schrijven. Bewaar beide bestanden. Klaargezette en gefactureerde registraties zijn alleen-lezen; kopiëren maakt een nieuwe registratie zonder factuurstatus. Klaargezette uren opnieuw overdragen herhaalt dezelfde overdracht. Taak overnemen opent een taak uit Doen als nieuwe registratie; vul klant, tijd en eventueel tarief in. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.

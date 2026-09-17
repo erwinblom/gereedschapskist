@@ -21,4 +21,7 @@ Versie 0.1 heeft vaste kolommen; binnen een kolom blijft de oorspronkelijke taak
 Getest met Chromium: taken maken, bewerken/verwijderen, selecteren/slepen tussen kolommen, zoeken en filteren, ongedaan maken, herladen, volledige JSON-export bij een actief filter, import, afwijzen van een ongeldig bestand en herstel. Geen horizontale overflow bij 390 pixels. Desktopweergave visueel bekeken. Andere browsers zijn niet afzonderlijk getest.
 
 OPEN SOURCE
-HTML, CSS en JavaScript zonder externe afhankelijkheden. Broncode en werkende app zijn hetzelfde bestand. MIT-licentie; zie LICENSE.
+HTML, CSS en JavaScript zonder externe afhankelijkheden. De HTML en gedeelde JavaScript-bestanden vormen samen de app. MIT-licentie; zie LICENSE.
+
+KOPPELINGEN
+Taken overnemen voegt gekozen taken uit Plannen of Contact houden aan je huidige bord toe. Open eerst je actuele bordbestand. Herhaalde overdracht van dezelfde taak wordt herkend. Elke taak kan een projectnaam bevatten. Registreer uren maakt een bestand voor Taak overnemen in Uren schrijven. Elke nieuwe werksessie krijgt een eigen overdracht; een identieke overdracht wordt niet opnieuw geregistreerd. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.

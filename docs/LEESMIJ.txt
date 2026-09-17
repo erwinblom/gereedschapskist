@@ -1,4 +1,4 @@
-GEREEDSCHAPSKIST 0.29.1 — LOKAAL / OPEN SOURCE
+GEREEDSCHAPSKIST 0.30.0 — LOKAAL / OPEN SOURCE
 
 ONLINE: https://erwinblom.github.io/gereedschapskist/
 OFFLINE: pak de volledige ZIP uit en open Begin hier.html.
@@ -41,3 +41,7 @@ Kies op de startpagina een werkmap; de negen toolmappen worden aangemaakt. Open 
 Volgende keer: Open uit werkmap. Bewaar bestand werkt het vaste bestand bij. Voordat een bestaande versie wordt overschreven, komt er een herstelkopie in Herstelkopieen. Bij externe wijzigingen stopt het bewaren.
 Schrijven bewaart losse documenten. CSV, bonnen en overdrachten komen in Exports. De map voor een PDF kies je zelf in het afdrukvenster. Download kopie blijft altijd beschikbaar. Zonder werkmap gelden de downloadstappen hierboven.
 Maptoegang vraagt browsertoestemming (Chrome/Edge), mogelijk opnieuw na herstart. Web en offline krijgen afzonderlijk toegang. Werk met hetzelfde actuele bestand en niet tegelijk in beide versies. Maak ook een back-up van de hele map.
+
+KOPPELINGEN
+Zie Uitleg.html, onderdeel Werk overnemen tussen tools. Open in de ontvangende tool eerst je actuele gegevensbestand, kies daarna de specifieke overneemknop en selecteer het overdrachtsbestand. Bewaar de bijgewerkte administratie. Met een werkmap staan overdrachten in Exports bij de oorspronkelijke tool.
+Uren staan eerst op Klaargezet. Na definitief factureren: Uren als gefactureerd terugmelden, daarna Factuurstatus bijwerken in Uren schrijven. Bewaar beide administraties.

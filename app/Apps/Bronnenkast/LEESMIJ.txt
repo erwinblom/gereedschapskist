@@ -18,3 +18,6 @@ Chromium: startcollectie, categorie/onderwerp, zoeken in notities, favorieten, t
 
 OPEN SOURCE
 HTML, CSS en JavaScript zonder afhankelijkheden. Software onder MIT; zie LICENSE. Links verwijzen naar externe bronnen met hun eigen rechten. De originele artikelen zijn niet meegeleverd.
+
+KOPPELINGEN
+Selecteer bronnen op de kaarten en kies Maak document. Titels, bronverwijzingen, links, samenvattingen, citaten en eigen notities gaan naar een Markdown-bestand. Open dit in Schrijven via Document openen. De bronnen blijven in je collectie. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.
