@@ -1,0 +1,21 @@
+const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+const root=path.resolve(__dirname,'../docs'),server=http.createServer((req,res)=>{try{const file=path.join(root,decodeURIComponent(new URL(req.url,'http://localhost').pathname));res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html; charset=utf-8');res.end(fs.readFileSync(file));}catch{res.statusCode=404;res.end();}});
+(async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'chrome',headless:true});try{for(const base of [`http://127.0.0.1:${server.address().port}`,'file://'+path.resolve(__dirname,'../app')]){
+const context=await browser.newContext({acceptDownloads:true}),p=await context.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+await p.goto(base+'/Apps/Offerte/Start%20Offerte.html?werkruimte=eigen');
+await p.evaluate(()=>{newQuote(true);working.state='accepted';working.business.kvk='12345678';working.business.vat='TEST';working.reference='OFF-123';working.lines.push({description:'Afronding',quantity100:113,cents:137,vat:9});renderEditor()});
+const expected=await p.evaluate(()=>({total:totals(working),quote:structuredClone(working)}));
+const event=p.waitForEvent('download');await p.locator('#make-invoice').click();const download=await event,buffer=fs.readFileSync(await download.path());assert.match(download.suggestedFilename(),/offerte-naar-factuur/);
+assert.equal(await p.evaluate(()=>data.quotes.length),1);
+await p.goto(base+'/Apps/Ping/Start%20Ping.html?werkruimte=eigen');await p.locator('#new').click();const before=await p.evaluate(()=>structuredClone(data));
+const upload=()=>p.locator('#quote-file').setInputFiles({name:'offerte.json',mimeType:'application/json',buffer});
+p.once('dialog',d=>d.dismiss());await upload();await p.waitForTimeout(100);assert.equal(await p.evaluate(()=>data.invoices.length),1);
+p.once('dialog',d=>d.accept());await upload();await p.waitForFunction(()=>data.invoices.length===2);
+assert.deepEqual(await p.evaluate(()=>totals(current())),expected.total);assert.equal(await p.evaluate(()=>current().state),'draft');assert.equal(await p.evaluate(()=>current().number),undefined);assert.deepEqual(await p.evaluate(()=>data.sequences),{});assert.deepEqual(await p.evaluate(()=>data.business),before.business);assert.deepEqual(await p.evaluate(()=>data.invoices[1]),before.invoices[0]);assert.equal(await p.evaluate(()=>invoiceBusiness().name),expected.quote.business.name);
+await upload();await p.waitForTimeout(100);assert.equal(await p.evaluate(()=>data.invoices.length),2);
+await p.locator('[data-key=deliveryDate]').fill('2026-09-17');await p.locator('#finalize').click();await p.locator('#final-confirm').click();await p.waitForFunction(()=>current().state==='final');const final=await p.evaluate(()=>structuredClone(current()));assert.equal(final.business.name,expected.quote.business.name);assert.deepEqual(final.finalTotals,expected.total);
+await p.reload();await upload();await p.waitForTimeout(100);assert.deepEqual(await p.evaluate(()=>current()),final);assert.equal(await p.evaluate(()=>data.invoices.length),2);
+const saved=await p.evaluate(()=>validate(JSON.parse(JSON.stringify(data))));assert.deepEqual(saved.invoices[0],final);
+for(const change of [x=>x.quote.lines[0].quantity100=-1,x=>x._gereedschapskistExample=true,x=>x.quote.state='draft']){const payload=JSON.parse(buffer);change(payload);await p.locator('#quote-file').setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(payload))});await p.waitForTimeout(100);assert.equal(await p.evaluate(()=>data.invoices.length),2);assert.match(await p.locator('#message').innerText(),/Niet overgenomen/);}
+await p.setViewportSize({width:390,height:844});assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.deepEqual(errors,[]);await context.close();console.log('OK',base.startsWith('file:')?'offline':'web','transfer, decimals, cancellation, duplicate, final snapshot, reload, invalid input, example isolation, mobile');
+}}finally{await browser.close();server.close()}})().catch(e=>{console.error(e);server.close();process.exitCode=1});
