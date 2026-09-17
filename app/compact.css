@@ -38,7 +38,28 @@ body[data-tool=Publicatieplanner] #list-view[aria-pressed=true],body[data-tool=P
 body[data-tool=Publicatieplanner] .publication .state{background:#eef0f2;color:#454545;border:0;font-size:12px;font-weight:400;padding:4px 8px;border-radius:3px;cursor:default}
 body[data-tool=Publicatieplanner] .pub-main [data-plan-tasks]{display:block;width:fit-content;margin:3px 0 6px;color:#555;font-size:13px}
 body[data-tool=Publicatieplanner] .utility{padding:8px 0}
-body[data-tool=Publicatieplanner] .unsaved-marker{font-weight:600;color:#111;white-space:nowrap}
-body[data-tool=Publicatieplanner] .unsaved-marker::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:#c51d17;margin-right:7px}
+.compact-tools .unsaved-marker{font-weight:600;color:#111;white-space:nowrap}
+.compact-tools .unsaved-marker::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:#c51d17;margin-right:7px}
 body[data-tool=Publicatieplanner] #workspace-help-toggle:hover,body[data-tool=Publicatieplanner] #undo:enabled:hover,body[data-tool=Publicatieplanner] [data-plan-tasks]:hover{color:#111;text-decoration-thickness:2px}
 @media(max-width:700px){body[data-tool=Publicatieplanner] .toolbar{gap:10px;padding:10px}body[data-tool=Publicatieplanner] .toolbar .search-label{min-width:0}}
+
+/* Suite-wide hierarchy: black primary action, quiet controls and contextual links. */
+.compact-tools>header #save,.compact-tools>header #export,.compact-tools #loose-save{background:#fff!important;color:#111!important;border:1px solid #777!important;font-weight:600!important}
+.compact-tools #loose-new{background:#111;color:#fff;border-color:#111;font-weight:700}
+.compact-tools #workspace-help-toggle,.compact-tools #undo,.compact-tools #rename,.compact-tools #rename-collection,.compact-tools #csv,.compact-tools #duplicate,.compact-tools #download-text,.compact-tools [data-track-hours],.compact-tools [data-contact-task],.compact-tools [data-plan-tasks],.compact-tools [data-conversation],.compact-tools [data-copy],.compact-tools #make-invoice,.compact-tools #invoice-received,.compact-tools #invoice-hours-receipt{background:transparent;color:#333;border:0;padding:6px 0;min-height:32px;font-size:14px;font-weight:400;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.compact-tools #undo:disabled{opacity:.55;color:#666;text-decoration:none;cursor:default}
+.compact-tools:not([data-tool=Werkbank]) main>.toolbar,.compact-tools .layout>section>.tools,.compact-tools .filter-strip{background:#f1f3f5;border:0;padding:12px 14px;gap:14px;margin-top:14px;align-items:end}
+.compact-tools:not([data-tool=Werkbank]) main>.toolbar label,.compact-tools .layout>section>.tools label,.compact-tools .filter-strip label{font-size:12px;font-weight:400;color:#454545}
+.compact-tools:not([data-tool=Werkbank]) main>.toolbar input,.compact-tools:not([data-tool=Werkbank]) main>.toolbar select,.compact-tools .layout>section>.tools input,.compact-tools .layout>section>.tools select,.compact-tools .filter-strip select{font-size:14px;font-weight:400;padding:7px 9px;min-height:36px;border-color:#bfc4c9}
+.compact-tools #cards-view,.compact-tools #compact-view,.compact-tools #list-view,.compact-tools #calendar-view{background:transparent;color:#555;border:0;border-bottom:3px solid transparent;font-size:14px;font-weight:400;min-height:38px;padding:8px 12px}
+.compact-tools #cards-view[aria-pressed=true],.compact-tools #compact-view[aria-pressed=true],.compact-tools #list-view[aria-pressed=true],.compact-tools #calendar-view[aria-pressed=true]{background:transparent;color:#111;border-bottom-color:#111;font-weight:600}
+.compact-tools #categories button,.compact-tools #filters button{background:transparent;color:#444;font-weight:400;border:0;border-left:3px solid transparent;padding:8px 10px;font-size:13px}
+.compact-tools #categories button[aria-pressed=true],.compact-tools #filters button[aria-pressed=true]{background:#f1f3f5;color:#111;border-left-color:#111;font-weight:600}
+.compact-tools span.badge:not(.late),.compact-tools span.state,.compact-tools span.tag{background:#eef0f2;color:#454545;border:0;font-size:12px;font-weight:400;padding:4px 8px;border-radius:3px;cursor:default}
+.compact-tools .followup [data-contact-task],.compact-tools .task [data-track-hours]{display:block;width:fit-content;margin:4px 0 8px}
+.compact-tools .filter-strip{margin:8px 0 14px}.compact-tools .filter-strip select{width:100%}
+.compact-tools[data-tool=Werkbank] .projectbar,.compact-tools[data-tool=Werkbank] .sidebar-tools{background:#f1f3f5}
+.compact-tools[data-tool=Werkbank] .projectbar label,.compact-tools[data-tool=Werkbank] .sidebar-tools label{font-size:12px;font-weight:400}
+@media(max-width:700px){.compact-tools:not([data-tool=Werkbank]) main>.toolbar,.compact-tools .layout>section>.tools{gap:10px;padding:10px}.compact-tools .layout>section>.tools input{min-width:0}}
+.compact-tools .invoice-btn.active,.compact-tools .quote-button.selected{background:#f1f3f5;color:#111;border:1px solid #c7cbd0;border-left:3px solid #111}
+.compact-tools .invoice-btn.active small,.compact-tools .quote-button.selected span{color:#454545}

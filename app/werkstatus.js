@@ -19,9 +19,11 @@ window.Werkstatus = (() => {
   if(info.written&&sig===info.written)parts.push('Opgeslagen in het geopende bestand');
   if(unfinished())parts.push('Formulier of document bevat onbewaarde invoer');
   box.textContent=parts.join(' · ');
-  if(tool==='Publicatieplanner'){
+  {
    const baseline=info.baseline||info.written||info.downloaded||info.opened;
-   const changed=unfinished()||(baseline?sig!==baseline:mode.example?sig!==initialSignature:!!read()?.items?.length);
+   const value=read();
+   const hasWork=tool==='Werkbank'?!!value?.content:['items','entries','tasks','contacts','quotes','invoices'].some(key=>value?.[key]?.length);
+   const changed=unfinished()||(baseline?sig!==baseline:mode.example?sig!==initialSignature:hasWork);
    if(changed){const marker=document.createElement('strong');marker.className='unsaved-marker';marker.textContent='Onbewaarde wijzigingen';box.prepend(marker,document.createTextNode(' · '));}
   }
  }

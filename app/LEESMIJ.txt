@@ -1,4 +1,4 @@
-GEREEDSCHAPSKIST 0.31.1 — LOKAAL / OPEN SOURCE
+GEREEDSCHAPSKIST 0.32.0 — LOKAAL / OPEN SOURCE
 
 ONLINE: https://erwinblom.github.io/gereedschapskist/
 OFFLINE: pak de volledige ZIP uit en open Begin hier.html.

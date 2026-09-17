@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  const links=document.createElement('p');links.innerHTML='<a href="../../Uitleg.html">Uitleg en gebruik</a> · <a href="../../Over.html">Over de Gereedschapskist</a>';panel.append(links);
  function placeWorkmap(){const map=document.getElementById('werkmap');if(!map||panel.contains(map))return;panel.prepend(map);map.open=true;const message=document.getElementById('wm-message');if(message)panel.after(message);}
  placeWorkmap();const observer=new MutationObserver(()=>{placeWorkmap();if(panel.querySelector('#werkmap'))observer.disconnect()});observer.observe(document.body,{childList:true,subtree:true});
+ const offerFilter=document.querySelector('body[data-tool=Offerte] #filter');if(offerFilter){const wrap=document.createElement('div');wrap.className='filter-strip';const label=document.querySelector('label[for=filter]');offerFilter.before(wrap);if(label)wrap.append(label);wrap.append(offerFilter);}
  const main=document.querySelector('main'),heading=main?.querySelector(':scope>.heading,:scope>.intro');
  if(heading){
   heading.classList.add('work-actions');

@@ -44,6 +44,10 @@ Open steeds eerst het actuele bestand in de ontvangende tool en gebruik daarna d
 
 Zie [stappen per koppeling](https://erwinblom.github.io/gereedschapskist/Uitleg.html#koppelingen) en [het open overdrachtsformaat](app/koppelingen/FORMAAT.md).
 
+## Ontwerp
+
+[De gedeelde ontwerpregels](ONTWERPREGELS.md) gelden voor alle tools en nieuwe functies: het werk krijgt aandacht, bediening ondersteunt en uitleg blijft op de achtergrond.
+
 ## Ontwikkeling
 
 `app/` is de enige bron voor de tools. `docs/` is de gegenereerde website voor GitHub Pages. Bewerk `app/` en voer daarna uit:
