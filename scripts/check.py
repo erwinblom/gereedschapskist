@@ -16,7 +16,7 @@ class Links(HTMLParser):
 for directory in [root/'app',root/'docs']:
  for p in directory.rglob('*.html'):Links(p).feed(p.read_text())
  start=(directory/'Begin hier.html').read_text();assert len(re.findall(r'<li class="card active">',start))==9
- assert 'Schrijfkamer' in start and '>Planner<' in start
+ assert 'Schrijven' in start and '>Plannen<' in start
 for p in (root/'docs/Apps').glob('*/*.html'):
  if p.parent.name!='Werkbank':assert "KEY='gereedschapskist:" in p.read_text(),p
 assert "'gereedschapskist:MarkdownWerkbankLocalV2'" in (root/'docs/Apps/Werkbank/Onderdelen/app.js').read_text()

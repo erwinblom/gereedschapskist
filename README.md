@@ -8,21 +8,21 @@ Download de ZIP, pak hem volledig uit en open **Begin hier.html**. De online en 
 
 | Tool | Waarvoor? |
 |---|---|
-| Schrijfkamer | Markdown-documenten lezen, schrijven en ordenen |
-| Ping | Facturen maken en definitief vastleggen |
-| Projectbord | Taken, deadlines en prioriteiten |
-| Bronnenkast | Links, citaten en notities |
-| Uren | Gewerkte tijd bijhouden |
-| Contacten | Contactgegevens, gesprekken en vervolgacties |
-| Planner | Publicaties en conceptteksten |
-| Offerte | Voorstellen met prijzen en afspraken |
-| Kasboek | Inkomsten, uitgaven en bonnen |
+| Schrijven | Markdown-documenten lezen, schrijven en ordenen |
+| Factureren | Facturen maken en definitief vastleggen |
+| Doen | Taken, deadlines en prioriteiten |
+| Verzamelen | Links, citaten en notities |
+| Uren schrijven | Gewerkte tijd bijhouden |
+| Contact houden | Contactgegevens, gesprekken en vervolgacties |
+| Plannen | Publicaties en conceptteksten |
+| Offreren | Voorstellen met prijzen en afspraken |
+| Boekhouden | Inkomsten, uitgaven en bonnen |
 
 ## Bewaar je werk
 
-Gebruik de bewaarknop voor een bestand op je computer. Browseropslag is geen back-up. Bewaar het actuele bestand voordat je overstapt tussen online en offline. Vooral bij Ping gebruik je steeds één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
+Gebruik de bewaarknop voor een bestand op je computer. Browseropslag is geen back-up. Bewaar het actuele bestand voordat je overstapt tussen online en offline. Vooral bij Factureren gebruik je steeds één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
 
-Chrome en Edge op een computer zijn de aanbevolen browsers. Organisatiebeleid kan bestandskeuze, downloaden of maptoegang beperken. Schrijfkamer kan ook losse Markdown-bestanden openen zonder toestemming voor een hele map. De downloadversie werkt zonder netwerk; de website vraagt verbinding bij het openen.
+Chrome en Edge op een computer zijn de aanbevolen browsers. Organisatiebeleid kan bestandskeuze, downloaden of maptoegang beperken. Schrijven kan ook losse Markdown-bestanden openen zonder toestemming voor een hele map. De downloadversie werkt zonder netwerk; de website vraagt verbinding bij het openen.
 
 [Privacy](app/PRIVACY.md) · [Gebruiksaanwijzing](app/LEESMIJ.txt)
 
@@ -37,7 +37,7 @@ python3 scripts/check.py
 
 Dat maakt ook `dist/Gereedschapskist.zip`. Publiceer de ZIP en SHA256SUMS.txt bij dezelfde release als de website. GitHub Pages gebruikt `main` → `/docs`. Er zijn geen Node-pakketten of builddiensten nodig.
 
-De bestaande technische mapnamen zijn behouden voor compatibiliteit; de zichtbare appnaam is bijvoorbeeld Schrijfkamer en Planner.
+De bestaande technische mapnamen zijn behouden voor compatibiliteit; de zichtbare appnaam is bijvoorbeeld Schrijven en Plannen.
 
 ## Herkomst en licenties
 
