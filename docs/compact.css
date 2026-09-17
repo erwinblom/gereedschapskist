@@ -1,0 +1,25 @@
+/* Shared, compact application chrome. Work and warnings remain visible. */
+.compact-tools>header{padding:12px 24px;gap:14px;border-bottom-width:3px}
+.compact-tools .brand{font-size:26px}.compact-tools .brand .tool-symbol{width:26px;height:28px}
+.compact-tools .workspace-strip{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0;padding:8px 24px;border-bottom:1px solid #ccc;background:#fff;color:#111;font:13px/1.4 Arial,sans-serif}
+.compact-tools .workspace-strip .file-status{flex:1;min-width:180px;margin:0;padding:0;border:0;background:none;font:inherit}
+.compact-tools .workspace-strip button{font:700 13px/1.4 Arial,sans-serif;padding:7px 10px;min-height:34px;background:#fff;color:#111;border:1px solid #aaa;cursor:pointer;border-radius:0}
+.compact-tools .workspace-strip #workspace-switch{border-color:#111}
+.compact-tools #workspace-help{margin:0;padding:16px 24px;border-bottom:2px solid #111;background:#f7f7f7;font:14px/1.5 Arial,sans-serif}
+.compact-tools #workspace-help[hidden]{display:none!important}
+.compact-tools #workspace-help .werkmap,.compact-tools #workspace-help .save-help,.compact-tools #workspace-help .example-mode{margin:0 0 12px!important;padding:10px 12px!important;background:#fff}
+.compact-tools #workspace-help .example-mode{font-size:14px;flex-direction:row}.compact-tools #workspace-help .example-mode strong{font-size:14px}
+.compact-tools #workspace-help .suite-badge{display:inline-block;font-size:11px;padding:6px 9px}
+.compact-tools #workspace-help .compact-intro h1{display:none}
+.compact-tools #workspace-help .banner{margin:12px 0;padding:0;border:0}
+.compact-tools #wm-message:empty{display:none}.compact-tools #wm-message:not(:empty){margin:8px 24px;padding:9px 12px;border-left:4px solid #e32720;font:14px/1.5 Arial,sans-serif;overflow-wrap:anywhere}
+.compact-tools main{padding-top:12px!important}
+.compact-tools .work-actions{display:flex;justify-content:flex-start;align-items:center;gap:12px;flex-wrap:wrap;padding:0 0 12px!important;margin:0!important;min-height:0}
+.compact-tools .work-actions>.actions,.compact-tools .work-actions>.link-actions{margin:0;display:flex;gap:8px;flex-wrap:wrap}
+.compact-tools .work-actions h1{font-size:24px!important;margin:0 0 4px!important}
+.compact-tools .work-actions .eyebrow{display:none}
+.compact-tools .layout,.compact-tools .workspace{margin-top:14px}
+.compact-tools .loose-documents{padding:10px 24px;gap:10px}.compact-tools .loose-documents>span{display:none}
+.compact-tools button:focus-visible,.compact-tools #workspace-help a:focus-visible{outline:3px solid #e32720;outline-offset:3px}
+@media(max-width:700px){.compact-tools>header{padding:10px 16px;gap:10px}.compact-tools .workspace-strip{padding:8px 16px;gap:8px}.compact-tools .workspace-strip .file-status{flex-basis:100%}.compact-tools #workspace-help{padding:12px 16px}.compact-tools #wm-message:not(:empty){margin:8px 16px}.compact-tools .loose-documents{padding:10px 16px}.compact-tools .brand{font-size:23px}.compact-tools .suite-meta{gap:8px}.compact-tools .work-actions{gap:8px}}
+@media print{.compact-tools .workspace-strip,.compact-tools #workspace-help,.compact-tools #wm-message{display:none!important}}

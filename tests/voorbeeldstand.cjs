@@ -11,7 +11,7 @@ try{
  for(const [folder,[key,collection]] of Object.entries(tools)){
   const context=await browser.newContext({acceptDownloads:true});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   const url=base+'/Apps/'+folder+'/'+encodeURIComponent(folder==='Werkbank'?'▶ Begin hier.html':`Start ${folder}.html`);const realKey='gereedschapskist:'+key;
-  await page.goto(url);await page.waitForSelector('#workspace-switch');
+  await page.goto(url);await page.waitForSelector('#workspace-switch',{state:'attached'});
   assert.equal(await page.evaluate(()=>GereedschapskistMode.example),true,folder+' default examples');
   const example=await page.evaluate(k=>JSON.parse(localStorage.getItem('voorbeeld:'+k)),realKey);
   assert((collection?example[collection]:example).length>0,folder+' sample content');
@@ -26,31 +26,31 @@ try{
   if(folder==='Ping'){
    await page.locator('#finalize').click();assert.equal(await page.locator('#final-dialog').evaluate(e=>e.open),false);assert.deepEqual(await page.evaluate(()=>data.sequences),{});
   }
-  await page.locator('#workspace-switch').click();await page.waitForURL(/werkruimte=eigen/);await page.waitForSelector('.example-mode.own');
+  if(await page.locator('#workspace-switch').isHidden())await page.locator('#workspace-help-toggle').click();await page.locator('#workspace-switch').click();await page.waitForURL(/werkruimte=eigen/);await page.waitForSelector('.example-mode.own',{state:'attached'});
   assert.equal(await page.evaluate(()=>GereedschapskistMode.example),false);
   if(folder==='Werkbank')assert.equal(await page.evaluate(()=>converterFiles.size),0);else assert.equal(await page.evaluate(c=>data[c].length,collection),0,folder+' empty own');
   // Preserve a sentinel own administration byte-for-byte through repeated mode switches.
   const own=structuredClone(example);
-  const raw=JSON.stringify(own);await page.evaluate(([k,v])=>{localStorage.setItem(k,v);localStorage.setItem(k+'-previous','untouched recovery');},[realKey,raw]);await page.reload();await page.waitForSelector('#workspace-switch');
-  await page.locator('#workspace-switch').click();await page.waitForURL(/werkruimte=voorbeeld/);await page.waitForSelector('#workspace-switch');
+  const raw=JSON.stringify(own);await page.evaluate(([k,v])=>{localStorage.setItem(k,v);localStorage.setItem(k+'-previous','untouched recovery');},[realKey,raw]);await page.reload();await page.waitForSelector('#workspace-switch',{state:'attached'});
+  if(await page.locator('#workspace-switch').isHidden())await page.locator('#workspace-help-toggle').click();await page.locator('#workspace-switch').click();await page.waitForURL(/werkruimte=voorbeeld/);await page.waitForSelector('#workspace-switch',{state:'attached'});
   assert.equal(await page.evaluate(k=>localStorage.getItem(k),realKey),raw);
   assert.equal(await page.evaluate(k=>localStorage.getItem(k+'-previous'),realKey),'untouched recovery');
   await page.evaluate(()=>{const k=document.querySelector('script[data-key]').dataset.key;GereedschapskistMode.storage.setItem(k+'-previous','example recovery');GereedschapskistMode.storage.setItem(k,GereedschapskistMode.storage.getItem(k));});
   assert.equal(await page.evaluate(k=>localStorage.getItem(k+'-previous'),realKey),'untouched recovery');
   if(folder==='Werkbank')await page.waitForSelector('#content .markdown-content h1');
   await page.screenshot({path:'/tmp/gereedschapskist-'+folder+'.png',fullPage:false});
-  await page.locator('#workspace-switch').click();await page.waitForURL(/werkruimte=eigen/);await page.waitForSelector('#workspace-switch');assert.equal(await page.evaluate(k=>localStorage.getItem(k),realKey),raw);
+  if(await page.locator('#workspace-switch').isHidden())await page.locator('#workspace-help-toggle').click();await page.locator('#workspace-switch').click();await page.waitForURL(/werkruimte=eigen/);await page.waitForSelector('#workspace-switch',{state:'attached'});assert.equal(await page.evaluate(k=>localStorage.getItem(k),realKey),raw);
   if(collection){const rejected=await page.evaluate(d=>{try{validate({...d,_gereedschapskistExample:true});return false;}catch{return true;}},example);assert(rejected,folder+' rejects example import into own work');}
   // Existing users without mode preferences must never land in example data.
   await page.evaluate(()=>{for(const k of Object.keys(localStorage))if(k.startsWith('gereedschapskist-mode:'))localStorage.removeItem(k)});
-  await page.goto(url);await page.waitForSelector('.example-mode.own');assert.equal(await page.evaluate(k=>localStorage.getItem(k),realKey),raw);
+  await page.goto(url);await page.waitForSelector('.example-mode.own',{state:'attached'});assert.equal(await page.evaluate(k=>localStorage.getItem(k),realKey),raw);
   await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),folder+' mobile width');
   assert.deepEqual(errors,[],folder+' no script errors');console.log('OK',folder,'examples, export, empty start, isolation, existing user, mobile');await context.close();
  }
  // Preserve legacy writing users whose only stored state is IndexedDB.
  const context=await browser.newContext();const p=await context.newPage();await p.goto(base+'/index.html');
  await p.evaluate(()=>new Promise((resolve,reject)=>{const r=indexedDB.open('gereedschapskist:MarkdownWerkbankLocalV2',1);r.onupgradeneeded=()=>r.result.createObjectStore('handles');r.onsuccess=()=>{r.result.close();resolve()};r.onerror=reject}));
- await p.goto(base+'/Apps/Werkbank/'+encodeURIComponent('▶ Begin hier.html'));await p.waitForURL(/werkruimte=eigen/);await p.waitForSelector('.example-mode.own');console.log('OK existing writing database respected');await context.close();
+ await p.goto(base+'/Apps/Werkbank/'+encodeURIComponent('▶ Begin hier.html'));await p.waitForURL(/werkruimte=eigen/);await p.waitForSelector('.example-mode.own',{state:'attached'});console.log('OK existing writing database respected');await context.close();
 // The actual ZIP is the offline deliverable: test it with network disconnected.
  const os=require('node:os'),{execFileSync}=require('node:child_process'),{pathToFileURL}=require('node:url');
  const extracted=fs.mkdtempSync(path.join(os.tmpdir(),'gereedschapskist-test-'));
@@ -59,9 +59,9 @@ try{
   const c=await browser.newContext({offline:true}),p=await c.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));
   const filename=folder==='Werkbank'?'▶ Begin hier.html':`Start ${folder}.html`;
   await p.goto(pathToFileURL(path.join(extracted,'Gereedschapskist/Apps',folder,filename)).href);
-  await p.waitForSelector('#workspace-switch');assert.equal(await p.evaluate(()=>GereedschapskistMode.example),true,folder+' offline examples');
+  await p.waitForSelector('#workspace-switch',{state:'attached'});assert.equal(await p.evaluate(()=>GereedschapskistMode.example),true,folder+' offline examples');
   if(collection)assert(await p.evaluate(k=>data[k].length>0,collection));else await p.waitForSelector('.tree-file');
-  await p.locator('#workspace-switch').click();await p.waitForSelector('.example-mode.own');
+  await p.locator('#workspace-switch').click();await p.waitForSelector('.example-mode.own',{state:'attached'});
   assert.equal(await p.evaluate(()=>GereedschapskistMode.example),false);assert.deepEqual(errors,[]);console.log('OK offline ZIP',folder);await c.close();
  }
  }finally{fs.rmSync(extracted,{recursive:true,force:true});}
