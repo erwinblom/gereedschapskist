@@ -52,7 +52,7 @@ window.Werkmap=(()=>{
   if(JSON.stringify(adapter.read())===signature){await adapter.saved?.(name);Werkstatus.opened(root.name+'/'+catalog[tool][0]+'/'+name);Werkstatus.written();message('Opgeslagen in '+root.name+'/'+catalog[tool][0]+'/'+name+'.');}
   else message('De eerdere versie is opgeslagen. Er zijn ondertussen nieuwe wijzigingen; bewaar opnieuw.');
   return true;
- }catch(e){message('Niet opgeslagen: '+e.message);return false;}finally{busy=false;}}
+ }catch(e){message('Niet opgeslagen: '+e.message);return false;}finally{busy=false;if($('message')?.textContent==='Bezig met bewaren…')message('Niet opgeslagen. Je invoer blijft behouden.');}}
 
  async function exportFile(blob,name){
   await ready;if(!root||example)return false;if(busy){message('Er loopt nog een bestandsactie. Probeer deze export daarna opnieuw.');return false;}busy=true;if(box)box.open=true;
