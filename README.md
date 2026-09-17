@@ -14,7 +14,7 @@ Download de ZIP, pak hem volledig uit en open **Begin hier.html**. De online en 
 | Verzamelen | Links, citaten en notities |
 | Uren schrijven | Gewerkte tijd bijhouden |
 | Contact houden | Contactgegevens, gesprekken en vervolgacties |
-| Plannen | Publicaties en conceptteksten |
+| Plannen | Projecten, publicaties en activiteiten |
 | Offreren | Voorstellen met prijzen en afspraken |
 | Boekhouden | Inkomsten, uitgaven en bonnen |
 
