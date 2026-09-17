@@ -1,10 +1,13 @@
-GEREEDSCHAPSKIST 0.25.0 — LOKAAL / OPEN SOURCE
+GEREEDSCHAPSKIST 0.26.0 — LOKAAL / OPEN SOURCE
 
 ONLINE: https://erwinblom.github.io/gereedschapskist/
 OFFLINE: pak de volledige ZIP uit en open Begin hier.html.
 
 Dezelfde negen tools en dezelfde gegevensbestanden, online en offline.
 Schrijven, Factureren, Doen, Verzamelen, Uren schrijven, Contact houden, Plannen, Offreren en Boekhouden.
+
+EERST PROBEREN
+Nieuwe gebruikers beginnen met voorbeelden rond de fictieve Buurtwerkplaats De Proeftuin. Kies Begin met mijn eigen werk voor een lege eigen werkruimte. Bestaande eigen gegevens blijven behouden. Met Bekijk voorbeelden kun je later opnieuw oefenen, apart van je eigen werk. Voorbeeldfacturen krijgen geen definitief nummer. Gedownloade JSON-voorbeelden hebben voorbeeld in de bestandsnaam en kunnen niet als eigen administratie worden geopend. Bewaar je eigen werk altijd zelf in een bestand.
 
 OPENEN EN BEWAREN
 Open een tool en begin. Bewaar je werk met de bewaarknop in een bestand op je computer. Open dat bestand later opnieuw. De webversie en downloadversie wisselen niet automatisch gegevens uit. Browseropslag is tussentijds, geen back-up. Bewaar het actuele gegevensbestand voordat je van versie wisselt.

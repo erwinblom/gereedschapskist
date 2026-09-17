@@ -19,7 +19,7 @@
         // Load converter files from localStorage on startup
         function loadConverterFiles() {
             try {
-                const saved = localStorage.getItem('converterFiles');
+                const saved = GereedschapskistMode.storage.getItem('converterFiles');
                 if (saved) {
                     const files = JSON.parse(saved);
                     converterFiles = new Map(files);
@@ -33,7 +33,7 @@
         function saveConverterFiles() {
             try {
                 const files = Array.from(converterFiles.entries());
-                localStorage.setItem('converterFiles', JSON.stringify(files));
+                GereedschapskistMode.storage.setItem('converterFiles', JSON.stringify(files));
             } catch (err) {
                 console.error('Error saving converter files:', err);
             }
@@ -44,7 +44,7 @@
 
         // Theme management
         function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
+            const savedTheme = GereedschapskistMode.storage.getItem('theme');
             if (savedTheme) {
                 document.documentElement.setAttribute('data-theme', savedTheme);
             } else {
@@ -62,7 +62,7 @@
                 document.documentElement.setAttribute('data-theme', newTheme);
             }
             
-            localStorage.setItem('theme', newTheme);
+            GereedschapskistMode.storage.setItem('theme', newTheme);
         }
 
         // Initialize theme immediately
@@ -71,7 +71,7 @@
         // Listen for system theme changes
         if (window.matchMedia) {
             window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-                if (localStorage.getItem('theme') === 'system') {
+                if (GereedschapskistMode.storage.getItem('theme') === 'system') {
                     if (e.matches) {
                         document.documentElement.setAttribute('data-theme', 'light');
                     } else {
@@ -82,7 +82,7 @@
         }
 
         // IndexedDB for storing directory handle
-        const DB_NAME = 'MarkdownWerkbankLocalV2';
+        const DB_NAME = GereedschapskistMode.key('MarkdownWerkbankLocalV2');
         const STORE_NAME = 'handles';
 
         async function openDB() {
@@ -155,7 +155,7 @@
                 
                 // Clear converter files
                 converterFiles.clear();
-                localStorage.removeItem('converterFiles');
+                GereedschapskistMode.storage.removeItem('converterFiles');
                 
                 // Remove converter files from files array and fileContents
                 files = files.filter(f => !f.isVirtual);
@@ -212,6 +212,7 @@
         }
 
         async function addFolder(selectAddedProject = false) {
+            if (GereedschapskistMode.example) { GereedschapskistMode.go('own'); return; }
             try {
                 const handle = await window.showDirectoryPicker({ mode: 'readwrite' });
                 
@@ -371,6 +372,9 @@
         }
 
         async function restoreSavedFolders() {
+            if (document.readyState === 'loading') await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true }));
+            await GereedschapskistMode.ready;
+            if (GereedschapskistMode.redirecting) return;
             const savedHandles = await getSavedDirectoryHandles();
             if (savedHandles.length > 0) {
                 const validHandles = [];
@@ -618,7 +622,7 @@
                     console.error(`Error loading ${file.relativePath}:`, err);
                 }
             }
-            try { for (const path of JSON.parse(localStorage.getItem('mw-folders-'+selectedProject)||'[]')) expandedFolders.add(path); } catch {}
+            try { for (const path of JSON.parse(GereedschapskistMode.storage.getItem('mw-folders-'+selectedProject)||'[]')) expandedFolders.add(path); } catch {}
             renderFileList();
             restoreLastOpenFile();
         }
@@ -635,8 +639,8 @@
         function restoreLastOpenFile() {
             if (activeFile) return;
             try {
-                const savedPath = localStorage.getItem('mw-document-'+selectedProject);
-                const lastPath = initialDocumentPath(files.filter(f=>!f.isVirtual&&projectIncludes(f.relativePath)).map(f=>f.relativePath), savedPath, selectedProject==='all'?directoryHandles.map(h=>h.name):[selectedProject]);
+                const savedPath = GereedschapskistMode.storage.getItem('mw-document-'+selectedProject);
+                const lastPath = initialDocumentPath(files.filter(f=>(!f.isVirtual||GereedschapskistMode.example)&&projectIncludes(f.relativePath)).map(f=>f.relativePath), savedPath, selectedProject==='all'?directoryHandles.map(h=>h.name):[selectedProject]);
                 if (!lastPath) return;
                 const idx = files.findIndex(f => f.relativePath === lastPath && projectIncludes(f.relativePath));
                 if (idx !== -1) {
@@ -906,8 +910,8 @@
 
             // Remember the open file for session restore
             try {
-                localStorage.setItem('lastOpenFile', file.relativePath);
-                localStorage.setItem('mw-document-'+selectedProject, file.relativePath);
+                GereedschapskistMode.storage.setItem('lastOpenFile', file.relativePath);
+                GereedschapskistMode.storage.setItem('mw-document-'+selectedProject, file.relativePath);
             } catch (e) {}
 
             try {
@@ -1067,7 +1071,7 @@
                 isEditMode = false; wysiwygDirty = false;
                 fileContents.delete(file.relativePath);
                 files = files.filter(entry => entry !== file);
-                try { localStorage.removeItem('lastOpenFile'); } catch (_) {}
+                try { GereedschapskistMode.storage.removeItem('lastOpenFile'); } catch (_) {}
                 const content = document.getElementById('content');
                 content.classList.remove('editing');
                 content.innerHTML = '<div class="empty-state"><p>Bestand verwijderd. Kies een ander bestand uit de lijst.</p></div>';
@@ -2100,6 +2104,7 @@
                     Open Schrijfkamer in Chrome of Edge op je computer.
                 </div>
             `;
+            if (converterFiles.size) restoreSavedFolders();
         } else {
             // Try to restore previously opened folder
             // restoreSavedFolders will handle loading files including converter files
@@ -2165,12 +2170,12 @@
                     
                     // Save to localStorage
                     const width = sidebar.offsetWidth;
-                    localStorage.setItem('sidebarWidth', width);
+                    GereedschapskistMode.storage.setItem('sidebarWidth', width);
                 }
             });
 
             // Restore saved width
-            const savedWidth = localStorage.getItem('sidebarWidth');
+            const savedWidth = GereedschapskistMode.storage.getItem('sidebarWidth');
             if (savedWidth) {
                 app.style.setProperty('--sidebar-width', `${savedWidth}px`);
             }
