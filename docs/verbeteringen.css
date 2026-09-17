@@ -1,0 +1,29 @@
+/* Shared proportions, status and accessible controls for the nine tools. */
+.file-status{margin:8px 32px 12px;padding:10px 14px;border:1px solid #bbb;border-left:4px solid #e32720;background:#fff;color:#333;font:14px/1.5 Arial,sans-serif;overflow-wrap:anywhere}
+.heading,main>.intro{margin-bottom:20px!important;padding-top:4px!important;padding-bottom:16px!important}
+.heading h1,main>.intro h1{font-size:clamp(28px,3.2vw,40px)!important;line-height:1.05!important}
+main{padding-top:18px!important}.hint,.storage,.source{font-size:14px!important;line-height:1.5}
+dialog .form-actions{position:sticky;bottom:-24px;background:#fff;padding:14px 0;border-top:1px solid #bbb;z-index:2}
+#editor-actions{position:sticky;bottom:0;background:#fff;padding:12px 0;border-top:1px solid #bbb;z-index:2}
+#form details>summary{font-weight:bold;cursor:pointer;padding:12px 0}#form details{border-bottom:1px solid #bbb;margin-bottom:14px}
+#form details:has(:invalid)>summary{color:#b21b15}
+@media(min-width:1050px){body[data-tool=Ping] .layout{grid-template-columns:180px minmax(400px,1.15fr) minmax(330px,1fr)}body[data-tool=Offerte] .workspace{grid-template-columns:180px minmax(380px,1.1fr) minmax(330px,1fr)}}
+body[data-tool=Uren] .stats strong,body[data-tool=Uren] .stat strong{font-size:32px!important}
+body[data-tool=Contacten] .cards.compact{display:block}.cards.compact .card{margin-bottom:10px;padding:16px}.cards.compact .card h2{font-size:21px;margin:8px 0}.cards.compact .card .tags,.cards.compact .card .contact-data,.cards.compact .card>details,.cards.compact .card .source{display:none}.cards.compact .followup{border:0;padding:0;margin:8px 0}.cards.compact .followup p{display:inline;margin:0 12px}.cards.compact .card-foot{justify-content:flex-start;gap:12px}
+@media(max-width:700px){.file-status{margin:8px 16px 12px}dialog .form-actions{bottom:-16px}#editor-actions{flex-wrap:wrap}}
+@media print{.file-status{display:none!important}}
+body[data-tool=Werkbank]:not(.has-folders) .projectbar,body[data-tool=Werkbank]:not(.has-folders) .sidebar-tools{display:none!important}
+body[data-tool=Werkbank] .content-header{position:sticky;top:0;background:#fff;z-index:3}
+body[data-tool=Werkbank] .markdown-content{animation:none!important}
+.issue-link{border:0;background:none;color:#b21b15;text-align:left;text-decoration:underline;padding:5px 0;cursor:pointer;font-size:15px}
+.calendar-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;padding:8px 5px 12px;border-bottom:1px solid #bbb;min-height:90px;align-content:start}
+.week-date{grid-row:1;border:0;background:#fff;text-align:left;font-weight:bold;padding:5px;min-height:36px}.week-date.today{background:#111;color:#fff}
+.week-strip{min-width:0;background:#fff;border:1px solid #111;border-left:4px solid #e32720;text-align:left;padding:7px;overflow:hidden}.week-strip span,.week-strip strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.week-strip span{font-size:11px;color:#555}.week-strip strong{font-size:14px;margin-top:3px}.week-strip:hover,.week-strip:focus-visible{background:#111;color:#fff}.week-strip:hover span,.week-strip:focus-visible span{color:#fff}
+@media(max-width:700px){.calendar .weekdays{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))}.calendar-week{gap:3px;padding:6px 2px}.week-strip{padding:5px 3px}.week-strip span{display:none}.week-strip strong{font-size:12px}}
+
+.heading{margin-bottom:0!important}.heading h1,main>.intro h1{margin:6px 0 10px!important}.heading .eyebrow{margin:0!important}.heading p.intro{margin:0!important;padding:0!important}
+main{row-gap:18px!important}.example-mode.own{margin-top:8px;margin-bottom:8px;padding:6px 14px}.example-mode.own p{display:none}.example-mode.own button{min-height:36px;padding:6px 12px}
+.save-help{margin-top:6px!important;margin-bottom:6px!important;padding-top:8px!important;padding-bottom:8px!important}
+body[data-tool=Werkbank] .notification{background:#111!important;color:#fff!important;border-left:4px solid #e32720;font-family:Arial,sans-serif}
+
+@media(max-width:700px){.example-mode.own{flex-direction:row;align-items:center;gap:8px}.example-mode.own button{font-size:12px;padding:6px 8px}.example-mode.own strong{font-size:13px}}

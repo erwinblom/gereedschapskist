@@ -13,6 +13,7 @@ function projectStartPath(paths, project, saved){
 }
 function defaultStartPath(){let saved;try{saved=GereedschapskistMode.storage.getItem('gereedschapskist:mw-start-'+selectedProject);}catch{}return projectStartPath([...folderHandlesByPath.keys()],selectedProject,saved);}
 function updateProjectControls(){
+ document.body.classList.toggle('has-folders',directoryHandles.length>0);
  const select=document.getElementById('projectSelect');if(!select)return;
  const choices=projectChoices();if(choices.length&&!choices.includes(selectedProject))selectedProject='all';
  select.replaceChildren(new Option('Alle bestanden','all'),...choices.map(p=>{const name=p.split('/').pop();const duplicate=choices.filter(other=>other.split('/').pop()===name).length>1;const label=directoryHandles.some(h=>h.name===p)?name+' — alles':duplicate?name+' ('+p.split('/')[0]+')':name;return new Option(label,p)}));select.value=selectedProject;

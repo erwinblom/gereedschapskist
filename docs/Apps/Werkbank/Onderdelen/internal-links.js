@@ -48,7 +48,7 @@ function openInternalLinkDialog(){
  const selectedText=inside&&!selection.isCollapsed?selection.toString():'';
  const originalHTML=editor.innerHTML,sourcePath=activeFile.relativePath,root=moveProjectRoot(sourcePath);
  const dialog=document.createElement('dialog');dialog.className='internal-link-dialog';dialog.setAttribute('aria-labelledby','internalLinkTitle');
- dialog.innerHTML=`<form><h2 id="internalLinkTitle">Link naar document</h2><p>Verwijs naar een ander document in je Schrijfkamer. Klik tijdens het lezen op de link om dat document te openen.</p>
+ dialog.innerHTML=`<form><h2 id="internalLinkTitle">Link naar document</h2><p>Verwijs naar een ander document in je Schrijven. Klik tijdens het lezen op de link om dat document te openen.</p>
  <label for="internalLinkSearch">Zoek een document</label><input id="internalLinkSearch" type="search" placeholder="Zoek op titel" autocomplete="off">
  <label class="internal-link-scope"><input id="internalLinkAll" type="checkbox"> Zoek ook buiten dit project</label>
  <fieldset><legend>Kies het document</legend><div id="internalLinkResults" class="internal-link-results"></div></fieldset>

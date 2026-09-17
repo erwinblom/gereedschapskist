@@ -79,7 +79,7 @@ async function createNewFolder(){
 }
 document.getElementById('fileList').addEventListener('keydown',event=>{if((event.key==='Enter'||event.key===' ')&&event.target.matches('[role="button"]')){event.preventDefault();event.target.click();}});
 window.addEventListener('beforeunload',event=>{if(wysiwygDirty){event.preventDefault();event.returnValue='';}});
-if(!('showDirectoryPicker' in window)){for(const button of document.querySelectorAll('.start-folder')){button.disabled=true;button.textContent='Open Schrijfkamer in Chrome of Edge';}}
+if(!('showDirectoryPicker' in window)){for(const button of document.querySelectorAll('.start-folder')){button.disabled=true;button.textContent='Open Schrijven in Chrome of Edge';}}
 
 updateProjectControls();
 

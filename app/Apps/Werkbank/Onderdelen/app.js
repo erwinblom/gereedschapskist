@@ -134,7 +134,7 @@
         }
 
         async function clearIndexedDB() {
-            if (!confirm('Schrijfkamer leegmaken? Gekoppelde mappen worden vergeten en lokale conversies verwijderd. Je bestanden op de computer blijven bestaan.')) {
+            if (!confirm('Schrijven leegmaken? Gekoppelde mappen worden vergeten en lokale conversies verwijderd. Je bestanden op de computer blijven bestaan.')) {
                 return;
             }
             
@@ -640,7 +640,7 @@
             if (activeFile) return;
             try {
                 const savedPath = GereedschapskistMode.storage.getItem('mw-document-'+selectedProject);
-                const lastPath = initialDocumentPath(files.filter(f=>(!f.isVirtual||GereedschapskistMode.example)&&projectIncludes(f.relativePath)).map(f=>f.relativePath), savedPath, selectedProject==='all'?directoryHandles.map(h=>h.name):[selectedProject]);
+                const lastPath = initialDocumentPath(files.filter(f=>projectIncludes(f.relativePath)).map(f=>f.relativePath), savedPath, selectedProject==='all'?directoryHandles.map(h=>h.name):[selectedProject]);
                 if (!lastPath) return;
                 const idx = files.findIndex(f => f.relativePath === lastPath && projectIncludes(f.relativePath));
                 if (idx !== -1) {
@@ -928,6 +928,7 @@
                 currentRawContent = rawContent;
                 originalRawContent = rawContent;
                 
+                Werkstatus.document(file.relativePath,rawContent);
                 renderFileView(rawContent);
             } catch (err) {
                 console.error('Lezen mislukt:', err);
@@ -1662,7 +1663,7 @@
                             <polyline points="17 21 17 13 7 13 7 21"></polyline>
                             <polyline points="7 3 7 8 15 8"></polyline>
                         </svg>
-                        Opslaan
+                        ${activeFile?.isVirtual?'Bewaar bestand':'Opslaan in map'}
                     </button>
                     ${activeFile && !activeFile.isVirtual ? `<details class="file-more"><summary class="edit-btn">Meer</summary><div class="file-more-panel" onclick="this.closest('details').open=false"><button class="edit-btn" onclick="openRenameFileDialog()">Hernoemen</button><button class="edit-btn" onclick="openMoveFileDialog()">Verplaatsen</button><button class="edit-btn" onclick="openRecoveryDialog()">Vorige versie herstellen</button><button class="edit-btn delete-file-btn" onclick="openDeleteFileDialog()">Verwijderen</button></div></details>` : ''}
                     </div>
@@ -1806,7 +1807,7 @@
                         }
                     }
                     
-                    if (await (await activeFile.getFile()).text() !== originalRawContent) throw Error('Dit bestand is buiten Schrijfkamer gewijzigd. Je bewerking blijft in de editor; heropen het bestand voordat je verdergaat.');
+                    if (await (await activeFile.getFile()).text() !== originalRawContent) throw Error('Dit bestand is buiten Schrijven gewijzigd. Je bewerking blijft in de editor; heropen het bestand voordat je verdergaat.');
                     // Get a writable stream from the file handle
                     await replaceWithRecovery(activeFile, folderHandlesByPath.get(activeFile.relativePath.split('/').slice(0,-1).join('/')), originalRawContent, newContent);
                 }
@@ -1821,16 +1822,17 @@
                 // Update modified indicator
                 const modifiedEl = document.getElementById('editorModified');
                 if (modifiedEl) {
-                    modifiedEl.textContent = 'Opgeslagen';
+                    modifiedEl.textContent = activeFile.isVirtual?'Download gestart; controleer je bestand.':'Opgeslagen in map';
                     modifiedEl.className = '';
                     setTimeout(() => {
-                        if (modifiedEl.textContent === 'Opgeslagen') {
+                        if (modifiedEl.textContent === 'Opgeslagen in map') {
                             modifiedEl.textContent = '';
                         }
                     }, 2000);
                 }
                 
-                showNotification(activeFile?.isVirtual?'Document gedownload. Controleer je downloadmap.':'Bestand opgeslagen', 'success');
+                if(!activeFile.isVirtual)Werkstatus.written();
+                showNotification(activeFile?.isVirtual?'Download gestart. Controleer of je bestand is opgeslagen.':'Bestand opgeslagen', 'success');
                 return true;
             } catch (err) {
                 console.error('Opslaan mislukt:', err);
@@ -2101,7 +2103,7 @@
             document.getElementById('fileList').innerHTML = `
                 <div class="empty-state">
                     Deze browser kan geen lokale mappen openen.<br><br>
-                    Open Schrijfkamer in Chrome of Edge op je computer.
+                    Open Schrijven in Chrome of Edge op je computer.
                 </div>
             `;
             if (converterFiles.size) restoreSavedFolders();

@@ -1,4 +1,4 @@
-GEREEDSCHAPSKIST 0.26.0 — LOKAAL / OPEN SOURCE
+GEREEDSCHAPSKIST 0.27.0 — LOKAAL / OPEN SOURCE
 
 ONLINE: https://erwinblom.github.io/gereedschapskist/
 OFFLINE: pak de volledige ZIP uit en open Begin hier.html.
@@ -9,10 +9,12 @@ Schrijven, Factureren, Doen, Verzamelen, Uren schrijven, Contact houden, Plannen
 EERST PROBEREN
 Nieuwe gebruikers beginnen met voorbeelden rond de fictieve Buurtwerkplaats De Proeftuin. Kies Begin met mijn eigen werk voor een lege eigen werkruimte. Bestaande eigen gegevens blijven behouden. Met Bekijk voorbeelden kun je later opnieuw oefenen, apart van je eigen werk. Voorbeeldfacturen krijgen geen definitief nummer. Gedownloade JSON-voorbeelden hebben voorbeeld in de bestandsnaam en kunnen niet als eigen administratie worden geopend. Bewaar je eigen werk altijd zelf in een bestand.
 
+UITGEBREIDE UITLEG: open Uitleg.html.
+
 OPENEN EN BEWAREN
 Open een tool en begin. Bewaar je werk met de bewaarknop in een bestand op je computer. Open dat bestand later opnieuw. De webversie en downloadversie wisselen niet automatisch gegevens uit. Browseropslag is tussentijds, geen back-up. Bewaar het actuele gegevensbestand voordat je van versie wisselt.
 
-Schrijven: open een Markdown-bestand of maak een nieuw document. Bewaar document downloadt je document. Project toevoegen biedt rechtstreekse maptoegang in geschikte browsers, na toestemming. Mapbewerkingen gebruiken de bestaande bewaarknoppen met herstelkopieën.
+Schrijven: open een Markdown-bestand of maak een nieuw document. Bewaar bestand downloadt je document. Project toevoegen biedt rechtstreekse maptoegang in geschikte browsers, na toestemming. Mapbewerkingen gebruiken de bestaande bewaarknoppen met herstelkopieën.
 
 Factureren: werk met één actuele administratie. Bewaar na definitief maken je gegevensbestand en PDF. Definitieve nummers en gegevens blijven vaststaan. Gebruik geen oude administratiekopie om nieuwe facturen te maken.
 
@@ -23,7 +25,7 @@ Gebruik bij voorkeur Chrome of Edge op een computer. Organisatiebeleid kan besta
 
 BRONCODE EN HERKOMST
 https://github.com/erwinblom/gereedschapskist
-Eigen code: MIT. Schrijfkamer bouwt voort op Markdown Browser van Joost Plattel. Zie Apps/Werkbank/HERKOMST.md en de aanvullende licenties. Technische mapnamen blijven behouden om bestaande verwijzingen niet te breken.
+Eigen code: MIT. Schrijven bouwt voort op Markdown Browser van Joost Plattel. Zie Apps/Werkbank/HERKOMST.md en de aanvullende licenties. Technische mapnamen blijven behouden om bestaande verwijzingen niet te breken.
 
 BEWAREN EN LATER VERDERGAAN
 1. Klik bovenaan de tool op Bewaar bestand. Zoek de download op; meestal staat die in Downloads.
@@ -31,3 +33,5 @@ BEWAREN EN LATER VERDERGAAN
 3. Bewaar opnieuw na wijzigingen en gebruik voortaan die nieuwste versie.
 
 De acht administratieve tools bewaren de hele verzameling (.json); Schrijven bewaart het geopende document (.md). Er is geen automatische synchronisatie. Een browserkopie kan verdwijnen. Bewaar je actuele werk voordat je een ander bestand opent.
+
+BEWAREN: een download is pas zeker als je zelf hebt gecontroleerd dat het bestand is opgeslagen. De vaste statusregel toont de bestandsnaam en wijzigingen sinds openen. Gewijzigde formulieren waarschuwen voordat je invoer weggooit.
