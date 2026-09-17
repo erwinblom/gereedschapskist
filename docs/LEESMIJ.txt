@@ -1,4 +1,4 @@
-GEREEDSCHAPSKIST 0.27.1 — LOKAAL / OPEN SOURCE
+GEREEDSCHAPSKIST 0.29.0 — LOKAAL / OPEN SOURCE
 
 ONLINE: https://erwinblom.github.io/gereedschapskist/
 OFFLINE: pak de volledige ZIP uit en open Begin hier.html.
@@ -14,7 +14,7 @@ UITGEBREIDE UITLEG: open Uitleg.html.
 OPENEN EN BEWAREN
 Open een tool en begin. Bewaar je werk met de bewaarknop in een bestand op je computer. Open dat bestand later opnieuw. De webversie en downloadversie wisselen niet automatisch gegevens uit. Browseropslag is tussentijds, geen back-up. Bewaar het actuele gegevensbestand voordat je van versie wisselt.
 
-Schrijven: open een Markdown-bestand of maak een nieuw document. Bewaar bestand downloadt je document. Project toevoegen biedt rechtstreekse maptoegang in geschikte browsers, na toestemming. Mapbewerkingen gebruiken de bestaande bewaarknoppen met herstelkopieën.
+Schrijven: open een Markdown-bestand of maak een nieuw document. Bewaar bestand schrijft naar je gekozen werkmap, of downloadt je document als je geen werkmap gebruikt. Project toevoegen biedt rechtstreekse maptoegang in geschikte browsers, na toestemming. Mapbewerkingen gebruiken de bestaande bewaarknoppen met herstelkopieën.
 
 Factureren: werk met één actuele administratie. Bewaar na definitief maken je gegevensbestand en PDF. Definitieve nummers en gegevens blijven vaststaan. Gebruik geen oude administratiekopie om nieuwe facturen te maken.
 
@@ -35,3 +35,9 @@ BEWAREN EN LATER VERDERGAAN
 De acht administratieve tools bewaren de hele verzameling (.json); Schrijven bewaart het geopende document (.md). Er is geen automatische synchronisatie. Een browserkopie kan verdwijnen. Bewaar je actuele werk voordat je een ander bestand opent.
 
 BEWAREN: een download is pas zeker als je zelf hebt gecontroleerd dat het bestand is opgeslagen. De vaste statusregel toont de bestandsnaam en wijzigingen sinds openen. Gewijzigde formulieren waarschuwen voordat je invoer weggooit.
+
+MIJN WERKMAP
+Kies op de startpagina een werkmap; de negen toolmappen worden aangemaakt. Open bestaande bestanden per tool en kies Bewaar bestand om ze mee te nemen. Bestaande originelen blijven staan.
+Volgende keer: Open uit werkmap. Bewaar bestand werkt het vaste bestand bij. Voordat een bestaande versie wordt overschreven, komt er een herstelkopie in Herstelkopieen. Bij externe wijzigingen stopt het bewaren.
+Schrijven bewaart losse documenten. CSV, bonnen en overdrachten komen in Exports. De map voor een PDF kies je zelf in het afdrukvenster. Download kopie blijft altijd beschikbaar. Zonder werkmap gelden de downloadstappen hierboven.
+Maptoegang vraagt browsertoestemming (Chrome/Edge), mogelijk opnieuw na herstart. Web en offline krijgen afzonderlijk toegang. Werk met hetzelfde actuele bestand en niet tegelijk in beide versies. Maak ook een back-up van de hele map.

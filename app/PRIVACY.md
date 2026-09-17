@@ -7,3 +7,5 @@ Bij online gebruik levert GitHub Pages de appbestanden. GitHub kan daarbij gewon
 Externe links, webafbeeldingen en media in eigen documenten kunnen verbinding maken met andere aanbieders. Open geen gevoelige documenten met onbekende externe media. Online updates wijzigen de appcode die je browser laadt. De downloadversie blijft op de gedownloade versie totdat je die zelf vervangt.
 
 Online en offline hebben gescheiden browseropslag. Verplaats werk met de bewaar- en openknoppen. De negen tools gebruiken herkenbare eigen opslagnamen; dit scheidt ze van andere apps op dezelfde website, maar is geen beveiligingsgrens tegen andere scripts op hetzelfde domein. Gebruik voor een organisatie bij voorkeur een eigen gecontroleerd domein of intranet.
+
+Mijn werkmap: na jouw toestemming bewaren we een verwijzing naar de gekozen map in de browser, zodat de tools bestanden rechtstreeks lokaal kunnen lezen en schrijven. Je kunt die koppeling verwijderen met Werkmap loskoppelen; de bestanden blijven staan. Herstelkopieën bevatten eerdere inhoud en staan lokaal bij de tool in Herstelkopieen. De werkmap wordt niet geüpload. De browser kan opnieuw om toestemming vragen.

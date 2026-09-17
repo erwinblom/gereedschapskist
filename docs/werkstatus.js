@@ -38,8 +38,8 @@ window.Werkstatus = (() => {
  });
  for(const event of ['input','change','click','submit'])document.addEventListener(event,schedule);
  window.addEventListener('beforeunload',e=>{if(unfinished()){e.preventDefault();e.returnValue='';}});
- return {register(getData,hasPending=()=>false){read=getData;pending=hasPending;schedule();},update:schedule,guardDialog,
-  opened(name){info={name,opened:signature(read())};persist();update();},
+ return {hasPending:unfinished,register(getData,hasPending=()=>false){read=getData;pending=hasPending;schedule();},update:schedule,guardDialog,
+  opened(name){info={name,opened:signature(read())};persist();update();document.dispatchEvent(new CustomEvent("werkbestand-geopend"));},
   downloaded(name,administration=true){if(administration){info.download=name;info.downloaded=signature(read());persist();}schedule();},
   written(){info.written=signature(read());persist();update();},
   document(name,content){if(tool==='Werkbank'){if(info.name!==name)info={name,opened:signature({name,content})};schedule();}}

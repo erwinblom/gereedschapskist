@@ -28,7 +28,9 @@ Nieuwe gebruikers beginnen met voorbeelden rond de fictieve Buurtwerkplaats De P
 
 ## Bewaar je werk
 
-**Bewaar bestand** downloadt je werk. Kies de volgende keer **Bestand openen** en selecteer je laatst bewaarde bestand. Bewaar opnieuw na wijzigingen. Browseropslag is geen back-up. Bewaar het actuele bestand voordat je overstapt tussen online en offline. Vooral bij Factureren gebruik je steeds één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
+**Mijn werkmap** bewaart alles in één gekozen map, met negen toolmappen. **Bewaar bestand** schrijft dan rechtstreeks naar het vaste gegevensbestand (of een los document bij Schrijven). Bij overschrijven wordt eerst een herstelkopie gemaakt. Kies een volgende keer **Open uit werkmap**. CSV, bonnen en overdrachten komen in Exports; bij PDF kies je de map in het afdrukvenster.
+
+Zonder werkmap downloadt **Bewaar bestand** je werk. Kies de volgende keer **Bestand openen** en selecteer je laatst bewaarde bestand. Bewaar opnieuw na wijzigingen. Browseropslag is geen back-up. Bewaar het actuele bestand voordat je overstapt tussen online en offline. Vooral bij Factureren gebruik je steeds één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
 
 Chrome en Edge op een computer zijn de aanbevolen browsers. Organisatiebeleid kan bestandskeuze, downloaden of maptoegang beperken. Schrijven kan ook losse Markdown-bestanden openen zonder toestemming voor een hele map. De downloadversie werkt zonder netwerk; de website vraagt verbinding bij het openen.
 

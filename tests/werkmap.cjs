@@ -1,0 +1,48 @@
+const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+const root=path.resolve(__dirname,'../docs'),server=http.createServer((req,res)=>{try{const file=path.join(root,decodeURIComponent(new URL(req.url,'http://localhost').pathname));res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html; charset=utf-8');res.end(fs.readFileSync(file));}catch{res.statusCode=404;res.end();}});
+(async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({headless:true});try{
+for(const base of [`http://127.0.0.1:${server.address().port}`]){
+ // Offline native picker was separately checked in Chrome against /tmp/gk-werkmap-native/Bestanden.
+ const context=await browser.newContext({acceptDownloads:true}),errors=[];
+ // Real browser file handles, streams and IndexedDB. Only the native folder chooser is replaced.
+ await context.addInitScript(()=>{window.showDirectoryPicker=async()=>{const origin=await navigator.storage.getDirectory();return origin.getDirectoryHandle('Mijn Werk',{create:true})}});
+ const p=await context.newPage();p.on('pageerror',e=>errors.push(e.message));await p.goto(base+'/Begin%20hier.html');await p.locator('#wm-choose').click();await p.waitForFunction(()=>Werkmap.active);const names=await p.evaluate(async()=>{const d=await (await navigator.storage.getDirectory()).getDirectoryHandle('Mijn Werk');return Array.fromAsync(d.keys())});assert.equal(names.length,9);assert(await p.locator('.grid a').first().getAttribute('href').then(x=>x.includes('werkruimte=eigen')));await p.screenshot({path:'/tmp/gk-workmap-home.png',fullPage:true});
+ const tools=[['Kasboek','Boekhouden','boekhouden'],['Contacten','Contact houden','contact-houden'],['Projectbord','Doen','doen'],['Bronnenkast','Verzamelen','verzamelen'],['Uren','Uren schrijven','uren-schrijven'],['Publicatieplanner','Plannen','plannen'],['Offerte','Offreren','offreren'],['Ping','Factureren','factureren']];
+ for(const [tool,dir,slug]of tools){await p.goto(base+`/Apps/${tool}/Start%20${tool}.html?werkruimte=eigen`);await p.waitForSelector('#wm-open');assert(await p.evaluate(()=>Werkmap.active),'shared folder '+tool);const sample=await p.evaluate(t=>GereedschapskistExamples(t),tool);await p.locator('#file').setInputFiles({name:'bestaand.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(sample))});await p.waitForFunction(()=>document.getElementById('file-status').textContent.includes('bestaand.json'));
+ const id=tool==='Ping'?'save':'export';await p.locator('#'+id).click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.startsWith('Opgeslagen'));
+ const disk=await p.evaluate(async([dir,slug])=>{const r=await(await navigator.storage.getDirectory()).getDirectoryHandle('Mijn Werk'),d=await r.getDirectoryHandle(dir);return JSON.parse(await(await(await d.getFileHandle('gereedschapskist-'+slug+'.json')).getFile()).text())},[dir,slug]);assert.deepEqual(disk,await p.evaluate(()=>data));
+ 
+ if(tool==='Kasboek'){
+  await p.evaluate(()=>{window.originalWriter=FileSystemFileHandle.prototype.createWritable;FileSystemFileHandle.prototype.createWritable=async()=>{throw Error('Test: schijf vol')};data._testFailure=true});
+  await p.locator('#'+id).click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.includes('schijf vol'));
+  const intact=await p.evaluate(async()=>{const r=await(await navigator.storage.getDirectory()).getDirectoryHandle('Mijn Werk'),d=await r.getDirectoryHandle('Boekhouden');return JSON.parse(await(await(await d.getFileHandle('gereedschapskist-boekhouden.json')).getFile()).text())});assert.deepEqual(intact,disk);
+  await p.evaluate(()=>{FileSystemFileHandle.prototype.createWritable=window.originalWriter;delete data._testFailure;window.oldQuery=FileSystemHandle.prototype.queryPermission;window.oldRequest=FileSystemHandle.prototype.requestPermission;FileSystemHandle.prototype.queryPermission=async()=> 'denied';FileSystemHandle.prototype.requestPermission=async()=> 'denied'});
+  await p.locator('#'+id).click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.includes('Geen toegang'));
+  await p.evaluate(()=>{FileSystemHandle.prototype.queryPermission=window.oldQuery;FileSystemHandle.prototype.requestPermission=window.oldRequest;window.savedRaw=lastRaw;GereedschapskistMode.storage.setItem(KEY,'{}')});await p.locator('#'+id).click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.includes('ander venster'));await p.evaluate(()=>GereedschapskistMode.storage.setItem(KEY,window.savedRaw));
+  await p.locator('#csv').click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.startsWith('Export opgeslagen'));
+  const exports=await p.evaluate(async()=>{const r=await(await navigator.storage.getDirectory()).getDirectoryHandle('Mijn Werk'),d=await r.getDirectoryHandle('Boekhouden'),e=await d.getDirectoryHandle('Exports');return Array.fromAsync(e.keys())});assert.equal(exports.length,1);assert(exports[0].endsWith('.csv'));
+  console.log('OK failed backup leaves original intact, permission denied, CSV in Exports');
+ }
+ await p.reload();await p.locator('#'+id).click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.includes('Kies eerst Open uit werkmap'));
+ p.once('dialog',d=>d.accept());await p.locator('#wm-open').click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.startsWith('Geopend uit'));
+ assert.deepEqual(await p.evaluate(()=>data),disk);
+ // Change through state, then write: backup must be byte-for-byte previous data.
+ await p.evaluate(()=>{data._test='gewijzigd'});await p.locator('#'+id).click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.startsWith('Opgeslagen'));
+ const backup=await p.evaluate(async dir=>{const r=await(await navigator.storage.getDirectory()).getDirectoryHandle('Mijn Werk'),d=await r.getDirectoryHandle(dir),b=await d.getDirectoryHandle('Herstelkopieen');const entries=await Array.fromAsync(b.values());return JSON.parse(await(await entries[0].getFile()).text())},dir);assert.deepEqual(backup,disk);
+ // Unexpected external writes never get overwritten.
+ await p.evaluate(async([dir,slug])=>{const r=await(await navigator.storage.getDirectory()).getDirectoryHandle('Mijn Werk'),d=await r.getDirectoryHandle(dir),h=await d.getFileHandle('gereedschapskist-'+slug+'.json'),w=await h.createWritable();await w.write('extern gewijzigd');await w.close();},[dir,slug]);await p.locator('#'+id).click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.includes('buiten dit venster gewijzigd'));
+ const event=p.waitForEvent('download');await p.locator('#wm-copy').click();assert((await event).suggestedFilename().endsWith('.json'));
+ console.log('OK',tool,'shared folder, save, reload, import, backup, external conflict, download fallback');
+ }
+ await p.goto(base+'/Apps/Werkbank/%E2%96%B6%20Begin%20hier.html?werkruimte=eigen');await p.waitForSelector('#wm-open');await p.locator('#loose-new').click();await p.locator('#wysiwygEditor').fill('Dit is mijn tekst');p.once('dialog',d=>d.accept('Mijn tekst.md'));await p.locator('#loose-save').click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.startsWith('Opgeslagen'));await p.locator('#wysiwygEditor').fill('Mijn aangepaste tekst');await p.locator('#loose-save').click();await p.waitForFunction(()=>!Werkmap.busy);assert.equal(await p.evaluate(()=>wysiwygDirty),false);
+ await p.locator('#wm-open').click();await p.locator('.wm-dialog button').filter({hasText:'Document openen'}).click();await p.waitForFunction(()=>document.getElementById('wm-message').textContent.startsWith('Geopend uit'));assert.match(await p.evaluate(()=>currentRawContent),/Mijn aangepaste tekst/);
+ 
+ // Copying a document from another folder must not change the original or keep a stale handle.
+ await p.evaluate(async()=>{const d=await(await navigator.storage.getDirectory()).getDirectoryHandle('Andere map',{create:true});const h=await d.getFileHandle('Extern.md',{create:true}),w=await h.createWritable();await w.write('Originele tekst');await w.close();h.relativePath='Andere map/Extern.md';h.folderName='Andere map';files.push(h);await selectFile(files.length-1);await toggleEditMode();});
+ await p.locator('#wysiwygEditor').fill('Kopie in de werkmap');p.once('dialog',d=>d.accept('Overgenomen.md'));await p.locator('#loose-save').click();await p.waitForFunction(()=>!Werkmap.busy);assert.equal(await p.evaluate(()=>activeFile.isVirtual),true);
+ const original=await p.evaluate(async()=>{const d=await(await navigator.storage.getDirectory()).getDirectoryHandle('Andere map');return (await(await d.getFileHandle('Extern.md')).getFile()).text()});assert.equal(original,'Originele tekst');assert.match(await p.evaluate(()=>currentRawContent),/Kopie in de werkmap/);
+ await p.setViewportSize({width:390,height:844});assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+ await p.goto(base+'/Apps/Kasboek/Start%20Kasboek.html?werkruimte=voorbeeld');assert(await p.locator('#wm-choose').isHidden());assert.equal(await p.evaluate(()=>Werkmap.active),false);
+ assert.deepEqual(errors,[]);console.log('OK',base.startsWith('file:')?'offline':'web','Schrijven save/reopen, mobile, example isolation');await context.close();
+}
+}finally{await browser.close();server.close();}})().catch(e=>{console.error(e);server.close();process.exitCode=1});

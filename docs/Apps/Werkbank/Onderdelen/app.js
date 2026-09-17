@@ -1777,6 +1777,7 @@
         }
 
         async function saveFile() {
+            if(window.Werkmap?.active)return await Werkmap.save();
             if (!activeFile) return;
             
             const editor = document.getElementById('wysiwygEditor');

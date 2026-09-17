@@ -5,7 +5,7 @@ function downloadLooseMarkdown(name,content){const u=URL.createObjectURL(new Blo
  bar.innerHTML='<button id="loose-new">Nieuw document</button><button id="loose-open">Document openen</button><button id="loose-folder">Map openen</button><button id="loose-save" disabled>Bewaar bestand</button><span>Bewaar bestand maakt een download. Opslaan in map werkt alleen na Map openen.</span><input type="file" id="loose-input" accept=".md,.markdown,.txt,text/markdown,text/plain" hidden>';
  document.querySelector('.brandbar').after(bar);
  const style=document.createElement('style');style.textContent='.loose-documents{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 32px;border-bottom:1px solid #ccc}.loose-documents button{padding:10px 12px;border:1px solid #111;background:#fff;font:14px Arial;cursor:pointer}.loose-documents button:disabled{opacity:.5;cursor:default}.loose-documents span{font:13px/1.5 Arial;color:#555;max-width:460px}.loose-documents button:focus-visible{outline:3px solid #e32720;outline-offset:2px}@media(max-width:600px){.loose-documents{padding:12px 16px}}@media print{.loose-documents{display:none}}';document.head.append(style);
- const picker=document.getElementById('loose-input');let busy=false;
+ const picker=document.getElementById('loose-input');let busy=false;const workmapNames=new Map();
  const canSwitch=()=>!wysiwygDirty||confirm('Je hebt onbewaarde wijzigingen. Eerst je document bewaren? Kies Annuleren om terug te gaan. Doorgaan zonder bewaren?');
  async function addLoose(name,content){
   let chosen=name,n=2;while(converterFiles.has(chosen)){chosen=name.replace(/(\.[^.]+)?$/,(_,ext)=>' ('+(n++)+')'+(ext||''));}
@@ -21,6 +21,14 @@ function downloadLooseMarkdown(name,content){const u=URL.createObjectURL(new Blo
  document.getElementById('loose-new').onclick=async()=>{if(busy||!canSwitch())return;busy=true;try{await addLoose('Nieuw document.md','# Nieuw document\n\nBegin hier met schrijven.\n');await toggleEditMode();document.getElementById('wysiwygEditor')?.focus();}finally{busy=false;}};
  document.getElementById('loose-save').onclick=async()=>{if(!activeFile)return;if(isEditMode&&activeFile.isVirtual){await saveFile();return;}downloadLooseMarkdown(activeFile.name,isEditMode?getWysiwygMarkdown():currentRawContent);showNotification('Download gestart. Controleer of je bestand is opgeslagen.','success');};
  new MutationObserver(()=>{document.getElementById('loose-save').disabled=!activeFile;}).observe(document.getElementById('content'),{childList:true,subtree:true});
+  Werkmap.register({saveId:'loose-save',
+  read:()=>activeFile?{name:activeFile.name,content:isEditMode?getWysiwygMarkdown():currentRawContent}:null,
+  prepare:()=>{if(busy)throw Error('Wacht tot het document is geopend.');return !!activeFile},
+  name:()=>workmapNames.get(activeFile?.relativePath),bound:name=>workmapNames.set(activeFile.relativePath,name),
+  saved:async name=>{const content=isEditMode?getWysiwygMarkdown():currentRawContent;if(!activeFile.isVirtual){await addLoose(name,content);workmapNames.set(activeFile.relativePath,name);return;}fileContents.set(activeFile.relativePath,content);currentRawContent=originalRawContent=content;if(activeFile.isVirtual){const doc=converterFiles.get(activeFile.name);if(doc){doc.content=content;saveConverterFiles();}}wysiwygDirty=false;updateWysiwygModifiedState();},
+  download:()=>{if(activeFile){downloadLooseMarkdown(activeFile.name,isEditMode?getWysiwygMarkdown():currentRawContent);showNotification('Download gestart. Controleer of je bestand is opgeslagen.','success');}},
+  async load(file){if(busy||!canSwitch())return false;if(file.size>2000000)throw Error('Kies een document van maximaal 2 MB.');const text=await file.text();if(text.includes('\u0000'))throw Error('Dit lijkt geen tekstbestand.');await addLoose(file.name,text);return true;}
+ });
 })();
 
 Werkstatus.register(()=>({name:activeFile?.relativePath||'',content:activeFile?(isEditMode?getWysiwygMarkdown():currentRawContent):''}),()=>wysiwygDirty);
