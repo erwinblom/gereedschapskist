@@ -1,4 +1,4 @@
-GEREEDSCHAPSKIST 0.22.0 — LOKAAL / OPEN SOURCE
+GEREEDSCHAPSKIST 0.23.0 — LOKAAL / OPEN SOURCE
 
 ONLINE: https://erwinblom.github.io/gereedschapskist/
 OFFLINE: pak de volledige ZIP uit en open Begin hier.html.
@@ -21,3 +21,10 @@ Gebruik bij voorkeur Chrome of Edge op een computer. Organisatiebeleid kan besta
 BRONCODE EN HERKOMST
 https://github.com/erwinblom/gereedschapskist
 Eigen code: MIT. Schrijfkamer bouwt voort op Markdown Browser van Joost Plattel. Zie Apps/Werkbank/HERKOMST.md en de aanvullende licenties. Technische mapnamen blijven behouden om bestaande verwijzingen niet te breken.
+
+BEWAREN EN LATER VERDERGAAN
+1. Klik bovenaan de tool op Bewaar bestand. Zoek de download op; meestal staat die in Downloads.
+2. Open een volgende keer dezelfde tool en klik op Bestand openen. Kies je laatst bewaarde bestand.
+3. Bewaar opnieuw na wijzigingen en gebruik voortaan die nieuwste versie.
+
+De acht administratieve tools bewaren de hele verzameling (.json); Schrijven bewaart het geopende document (.md). Er is geen automatische synchronisatie. Een browserkopie kan verdwijnen. Bewaar je actuele werk voordat je een ander bestand opent.

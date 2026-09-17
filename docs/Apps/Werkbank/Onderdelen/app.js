@@ -1302,7 +1302,7 @@
             
             document.getElementById('content').innerHTML = `
                 <div class="content-header"><span class="file-path-heading" title="${escapeHtml(activeFile?.relativePath || "")}"><span class="document-name">${escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || "")}</span><span class="document-folder">${activeFile?.isVirtual?"Los document": "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || "Geen map")}</span></span>${documentFocusButton()}
-                    ${fileActions(false)}<span class="document-save-status">${activeFile?.isVirtual?"Gebruik Bewaar document voor een eigen bestand":"Opgeslagen"}</span>
+                    ${fileActions(false)}<span class="document-save-status">${activeFile?.isVirtual?"Gebruik Bewaar bestand voor een eigen bestand":"Opgeslagen"}</span>
                 </div>
                 <div class="markdown-content">
                     ${html}

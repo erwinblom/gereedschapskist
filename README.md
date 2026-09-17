@@ -20,7 +20,7 @@ Download de ZIP, pak hem volledig uit en open **Begin hier.html**. De online en 
 
 ## Bewaar je werk
 
-Gebruik de bewaarknop voor een bestand op je computer. Browseropslag is geen back-up. Bewaar het actuele bestand voordat je overstapt tussen online en offline. Vooral bij Factureren gebruik je steeds één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
+**Bewaar bestand** downloadt je werk. Kies de volgende keer **Bestand openen** en selecteer je laatst bewaarde bestand. Bewaar opnieuw na wijzigingen. Browseropslag is geen back-up. Bewaar het actuele bestand voordat je overstapt tussen online en offline. Vooral bij Factureren gebruik je steeds één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
 
 Chrome en Edge op een computer zijn de aanbevolen browsers. Organisatiebeleid kan bestandskeuze, downloaden of maptoegang beperken. Schrijven kan ook losse Markdown-bestanden openen zonder toestemming voor een hele map. De downloadversie werkt zonder netwerk; de website vraagt verbinding bij het openen.
 
