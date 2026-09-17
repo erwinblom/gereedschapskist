@@ -16,7 +16,12 @@ for file in web.rglob('*'):
   for quote in ["'",'"']:
    text=text.replace(quote+key+quote,quote+'gereedschapskist:'+key+quote)
  file.write_text(text)
-(web/'index.html').write_text((web/'Begin hier.html').read_text())
+# Keep the development notice on the website, outside the offline download.
+homepage=web/'Begin hier.html'
+notice_style='<style>.work-notice{margin:18px 0 0;padding:14px 18px;border-left:6px solid #e32720;background:#111;color:#fff;font:16px/1.5 Arial,Helvetica,sans-serif}.work-notice strong{display:block;font-size:20px;text-transform:uppercase;letter-spacing:.4px}</style>'
+notice='<aside class="work-notice" aria-label="Werk in uitvoering"><strong>Werk in uitvoering!</strong>Aan deze site wordt nog voortdurend gesleuteld.</aside>'
+homepage.write_text(homepage.read_text().replace('</head>',notice_style+'</head>').replace('<main>','<main>'+notice,1))
+(web/'index.html').write_text(homepage.read_text())
 (web/'.nojekyll').touch()
 dist.mkdir(exist_ok=True)
 with zipfile.ZipFile(dist/'Gereedschapskist.zip','w',zipfile.ZIP_DEFLATED) as archive:
