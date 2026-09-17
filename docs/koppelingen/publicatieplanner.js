@@ -7,6 +7,6 @@
  const b=document.createElement('button');b.type='button';b.id='plan-make-tasks';b.textContent='Maak taken';$('delete').before(b);b.onclick=()=>{try{if(JSON.stringify(values())!==formBaseline)throw Error('Bewaar eerst je wijzigingen aan het plan.');const i=data.items.find(i=>i.id===editing);if(!i||i.kind!=='project')throw Error('Bewaar eerst een project om taken te maken.');makeTasks(structuredClone(i));}catch(e){notify(e.message)}};
  const oldEdit=edit;edit=function(...args){oldEdit(...args);b.hidden=!editing||$('kind').value!=='project'};
  const oldKind=$('kind').onchange;$('kind').onchange=function(...args){oldKind.apply(this,args);b.hidden=!editing||$('kind').value!=='project'};
- const oldRow=row;row=function(i){const html=oldRow(i);return i.kind==='project'?html.replace('</article>','<button type="button" data-plan-tasks="'+K.esc(i.id)+'">Maak taken</button></article>'):html};
+ const oldRow=row;row=function(i){const html=oldRow(i);return i.kind==='project'?html.replace('<p class="snippet">','<button type="button" data-plan-tasks="'+K.esc(i.id)+'">Maak taken →</button><p class="snippet">'):html};
  $('content').addEventListener('click',e=>{const b=e.target.closest('[data-plan-tasks]');if(b){try{K.ready();makeTasks(structuredClone(data.items.find(i=>i.id===b.dataset.planTasks)))}catch(err){K.notice(err.message)}}});render();
 })();
