@@ -16,7 +16,24 @@ window.Werkmap=(()=>{
  async function existing(dir,name){try{return await dir.getFileHandle(name);}catch(e){if(e.name==='NotFoundError')return null;throw e;}}
  function filename(){return 'gereedschapskist-'+catalog[tool][1]+'.json';}
  function safeName(name){if(typeof name!=='string'||!name.trim()||name.length>160||/[\\/:*?"<>|\u0000-\u001f]/.test(name)||name==='.'||name==='..')throw Error('Gebruik een korte bestandsnaam zonder schuine strepen of bijzondere tekens.');return name.trim();}
- async function choose(){if(busy)return;busy=true;try{const handle=await showDirectoryPicker({id:'gereedschapskist',mode:'readwrite'});await permission(handle);for(const [name]of Object.values(catalog))await handle.getDirectoryHandle(name,{create:true});const rev=crypto.randomUUID();if(db)await setting('put',{handle,revision:rev});root=handle;revision=rev;known.clear();render();message('Werkmap gekozen. Er zijn geen bestaande documenten verplaatst. Open je bestaande bestand om het mee te nemen, en kies Bewaar bestand.');}catch(e){if(e.name!=='AbortError')message('Map niet ingesteld: '+e.message);}finally{busy=false;}}
+ async function choose(){
+  if(busy)return;busy=true;const button=$('choose');if(button)button.disabled=true;if(box)box.open=true;
+  message('Kies een map in het mapvenster en geef toegang. Verschijnt er geen venster? Probeer deze pagina in Chrome of Edge.');
+  let stage='picker';
+  try{
+   const handle=await showDirectoryPicker({id:'gereedschapskist',mode:'readwrite'});
+   stage='permission';message('Toegang controleren voor '+handle.name+'…');await permission(handle);
+   stage='folders';message('De negen toolmappen aanmaken in '+handle.name+'…');
+   for(const [name]of Object.values(catalog))await handle.getDirectoryHandle(name,{create:true});
+   stage='remember';message('Werkmap onthouden…');const rev=crypto.randomUUID();if(db)await setting('put',{handle,revision:rev});
+   root=handle;revision=rev;known.clear();render();
+   message('Werkmap gekoppeld: '+handle.name+'. '+(tool?'Kies Open uit werkmap om het opgeslagen bestand van deze tool te openen, of Bewaar bestand om je huidige werk hier te bewaren.':'Open hieronder een tool. Kies daar Open uit werkmap voor bestaand werk, of Bewaar bestand om nieuw werk hier te bewaren.')+' De mapkeuze opent of verplaatst je documenten niet automatisch.');
+  }catch(e){
+   if(e.name==='AbortError'&&stage==='picker')message('Geen werkmap gekozen. Het mapvenster is gesloten of door de browser afgebroken. '+(root?'Je bestaande werkmap blijft gekoppeld. ':'')+'Verschijnt er geen mapvenster? Open deze pagina in Chrome of Edge en probeer opnieuw.');
+   else message('Werkmap niet gekoppeld ('+({picker:'mapvenster',permission:'toegang',folders:'toolmappen aanmaken',remember:'mapkeuze onthouden'}[stage])+'): '+e.message+(root?' Je vorige werkmap blijft gekoppeld.':'')+' Bestand openen en downloaden blijven beschikbaar.');
+  }finally{busy=false;if(button)button.disabled=false;}
+ }
+
  async function load(){if(busy)return;busy=true;try{await ready;const dir=await folder();let name=filename();if(tool==='Werkbank'){
   const names=[];for await(const h of dir.values())if(h.kind==='file'&&/\.(md|markdown|txt)$/i.test(h.name))names.push(h.name);
   names.sort((a,b)=>a.localeCompare(b,'nl'));if(!names.length)throw Error('De map Schrijven is nog leeg. Maak een nieuw document en bewaar het.');
