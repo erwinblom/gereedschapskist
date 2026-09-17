@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Gereedschapskist">
+  <rect width="32" height="32" fill="#fff"/>
+  <path fill="#111" d="M13 4h6v6h-6zM22 4h6v6h-6zM4 13h6v6H4zM13 13h6v6h-6zM22 13h6v6h-6zM4 22h6v6H4zM13 22h6v6h-6zM22 22h6v6h-6z"/>
+  <path fill="#e32720" d="M4 4h6v6H4z"/>
+</svg>
