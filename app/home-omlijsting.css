@@ -1,10 +1,10 @@
 /* De omlijsting hoort alleen bij het overzicht; het werkvlak blijft wit. */
 html{background:#171717!important}
-body{background:#171717!important;isolation:isolate;padding:clamp(20px,3vw,48px) clamp(20px,calc((100vw - 1200px)/4),210px);min-height:100vh}
+body{background:#171717!important;isolation:isolate;padding:clamp(20px,3vw,48px) clamp(20px,calc((100vw - 1200px)/4),7vw);min-height:100vh}
 body::before,body::after{content:"";position:fixed;z-index:-1;pointer-events:none}
 body::before{inset:0;background:radial-gradient(circle at 101% 1%,#e32720 0 220px,transparent 221px),radial-gradient(ellipse at -7% 26%,#eeeae0 0 235px,transparent 236px),radial-gradient(circle at 5% 82%,#e32720 0 65px,transparent 66px),linear-gradient(90deg,#e32720 0 22px,transparent 22px),linear-gradient(135deg,transparent 70%,#242424 70%);}
 body::after{left:38px;bottom:0;width:110px;height:31vh;border-top:1px solid #b8b5ab;background:repeating-linear-gradient(90deg,transparent 0 14px,#b8b5ab 14px 15px,transparent 15px 19px);opacity:.65}
-.shell{max-width:1440px;margin:0 auto;padding:0 24px;border-radius:32px;background:#fff!important;box-shadow:0 16px 60px #0004;overflow:hidden}
+.shell{max-width:1800px;margin:0 auto;padding:0 24px;border-radius:32px;background:#fff!important;box-shadow:0 16px 60px #0004;overflow:hidden}
 header{padding:18px 0 14px;border-bottom-width:4px}
 .edition{font-size:13px;padding:11px 14px;letter-spacing:.5px}
 .titlebar{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:20px 0 16px}
