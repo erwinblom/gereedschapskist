@@ -1,0 +1,29 @@
+/* De omlijsting hoort alleen bij het overzicht; het werkvlak blijft wit. */
+html{background:#171717!important}
+body{background:#171717!important;isolation:isolate;padding:48px clamp(28px,11vw,210px);min-height:100vh}
+body::before,body::after{content:"";position:fixed;z-index:-1;pointer-events:none}
+body::before{inset:0;background:radial-gradient(circle at 101% 1%,#e32720 0 220px,transparent 221px),radial-gradient(ellipse at -7% 26%,#eeeae0 0 235px,transparent 236px),radial-gradient(circle at 5% 82%,#e32720 0 65px,transparent 66px),linear-gradient(90deg,#e32720 0 22px,transparent 22px),linear-gradient(135deg,transparent 70%,#242424 70%);}
+body::after{left:38px;bottom:0;width:110px;height:31vh;border-top:1px solid #b8b5ab;background:repeating-linear-gradient(90deg,transparent 0 14px,#b8b5ab 14px 15px,transparent 15px 19px);opacity:.65}
+.shell{max-width:1280px;margin:0 auto;padding:0 24px;border-radius:32px;background:#fff!important;box-shadow:0 16px 60px #0004;overflow:hidden}
+header{padding:18px 0 14px;border-bottom-width:4px}
+.edition{font-size:13px;padding:11px 14px;letter-spacing:.5px}
+.titlebar{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:20px 0 16px}
+.titlebar h1{font-size:clamp(32px,3.5vw,50px)}
+.guide{font-size:15px;line-height:1.5;margin:0;max-width:560px}
+.shell .werkmap{margin:0 0 12px;padding:9px 12px;font-size:13px}
+.shell .werkmap summary{min-height:24px}
+.distribution{font-size:12px;gap:10px 20px;padding-bottom:10px}
+.index{padding:9px 0;font-size:10px}
+.grid{gap:14px}
+.card.active a{min-height:190px;padding:17px 20px;gap:12px}
+.card h2{font-size:clamp(22px,2.25vw,32px)}
+.card .description{font-size:15px}
+.help{margin-top:20px;padding:12px 0}
+footer{padding:16px 0 20px}
+/* De online waarschuwing blijft zichtbaar, maar neemt minder hoogte in. */
+.shell .work-notice{margin:12px 0 0;padding:8px 12px;font-size:13px}
+.shell .work-notice strong{display:inline;font-size:13px;margin-right:8px}
+@media(min-width:1600px){body{padding-top:60px}}
+@media(max-width:1000px){body{padding:28px 40px}.shell{border-radius:24px;padding:0 20px}.titlebar{grid-template-columns:1fr;gap:12px}.guide{max-width:720px}.card h2{font-size:24px}}
+@media(max-width:600px){html,body{background:#fff!important}body{padding:0}body::before,body::after{display:none}.shell{border-radius:0;padding:0 16px;box-shadow:none}header{gap:12px}.edition{font-size:11px;padding:9px 10px}.titlebar h1{font-size:36px}.card.active a{min-height:185px}.distribution{gap:10px 16px}.shell .werkmap{margin-bottom:12px}}
+@media print{body{padding:0;background:#fff!important}body::before,body::after{display:none}.shell{box-shadow:none;border-radius:0}}
