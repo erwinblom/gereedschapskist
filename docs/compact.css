@@ -63,3 +63,12 @@ body[data-tool=Publicatieplanner] #workspace-help-toggle:hover,body[data-tool=Pu
 @media(max-width:700px){.compact-tools:not([data-tool=Werkbank]) main>.toolbar,.compact-tools .layout>section>.tools{gap:10px;padding:10px}.compact-tools .layout>section>.tools input{min-width:0}}
 .compact-tools .invoice-btn.active,.compact-tools .quote-button.selected{background:#f1f3f5;color:#111;border:1px solid #c7cbd0;border-left:3px solid #111}
 .compact-tools .invoice-btn.active small,.compact-tools .quote-button.selected span{color:#454545}
+
+/* Dezelfde grafische omlijsting als de homepage, met voorrang voor werkruimte. */
+html:has(body.compact-tools){min-height:100%;background-color:#171717!important;background-image:radial-gradient(circle at 101% 1%,#e32720 0 220px,transparent 221px),radial-gradient(ellipse at -7% 26%,#eeeae0 0 235px,transparent 236px),radial-gradient(circle at 5% 82%,#e32720 0 65px,transparent 66px),linear-gradient(90deg,#e32720 0 22px,transparent 22px),linear-gradient(135deg,transparent 70%,#242424 70%)!important;background-attachment:fixed!important}
+body.compact-tools{width:auto;max-width:1800px;margin:24px clamp(16px,3vw,64px);min-height:calc(100vh - 48px);background:#fff!important;border-radius:26px;box-shadow:0 16px 60px #0004}
+body.compact-tools>header,body.compact-tools>.brandbar{border-radius:26px 26px 0 0;background:#fff}
+body.compact-tools>main{border-radius:0 0 26px 26px;padding-bottom:24px}
+@media(min-width:1928px){body.compact-tools{margin-left:auto;margin-right:auto}}
+@media(max-width:700px){html:has(body.compact-tools){background:#fff!important}body.compact-tools{margin:0;max-width:none;min-height:100vh;border-radius:0;box-shadow:none}body.compact-tools>header,body.compact-tools>.brandbar,body.compact-tools>main{border-radius:0}}
+@media print{html:has(body.compact-tools){background:#fff!important}body.compact-tools{margin:0;max-width:none;min-height:0;border-radius:0;box-shadow:none}}
