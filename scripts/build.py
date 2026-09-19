@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Build the website and download from the same app source. Python standard library only."""
 from pathlib import Path
-import shutil,re,zipfile,hashlib
+import shutil,re,zipfile,hashlib,subprocess,sys
 ROOT=Path(__file__).resolve().parent.parent
+subprocess.run([sys.executable,str(ROOT/'scripts/build-link-bewaren.py')],check=True)
 source=ROOT/'app';web=ROOT/'docs';dist=ROOT/'dist'
 if web.exists():shutil.rmtree(web)
 shutil.copytree(source,web,ignore=shutil.ignore_patterns('.DS_Store'))

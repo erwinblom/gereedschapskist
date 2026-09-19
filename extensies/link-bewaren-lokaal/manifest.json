@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Link Bewaren — lokaal",
+  "description": "Bewaar links op je computer en ontvang ze in Verzamelen van de Gereedschapskist. Zonder account of Google Sheets.",
+  "version": "0.1.0",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Link Bewaren — lokaal",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://erwinblom.github.io/gereedschapskist/Apps/Bronnenkast/*"
+      ],
+      "js": [
+        "bridge.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

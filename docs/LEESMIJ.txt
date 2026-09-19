@@ -1,4 +1,4 @@
-GEREEDSCHAPSKIST 0.33.0 — LOKAAL / OPEN SOURCE
+GEREEDSCHAPSKIST 0.34.0 — LOKAAL / OPEN SOURCE
 
 ONLINE: https://erwinblom.github.io/gereedschapskist/
 OFFLINE: pak de volledige ZIP uit en open Begin hier.html.
@@ -48,3 +48,10 @@ Uren staan eerst op Klaargezet. Na definitief factureren: Uren als gefactureerd 
 
 BEWAAR ALLES
 Kies een werkmap en gebruik Bewaar alles. Actuele gegevens en formulierconcepten van geopende tools worden samen bewaard. Gesloten tools: laatst bekende gegevens. Open bewaard werk herstelt de actuele kopie, of de vorige kopie als dat nodig is. Na het bewaren start een ZIP-download. Zie Uitleg.html#bewaar-alles voor de reikwijdte en beperkingen.
+
+LINK BEWAREN — LOKAAL (PROEFVERSIE)
+Verzamelen heeft nu de indeling van de Bibliotheek: Alles, Inbox en Favorieten.
+De aparte Chrome-extensie in Downloads/Link-Bewaren-lokaal.zip bewaart links lokaal.
+Installeer die naast je bestaande Link Bewaren. Je oude extensie blijft intact.
+Automatische ontvangst werkt voorlopig alleen in de online Gereedschapskist.
+Lees Link-bewaren.html voor installatie, gebruik en herstel.
