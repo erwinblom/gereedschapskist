@@ -49,3 +49,15 @@ body[data-tool=Projectbord] .add-column,body[data-tool=Projectbord] #example{dis
 .start-workspace>.workspace-name{flex-basis:100%}
 .home-more .home-example-choice{margin-top:12px;padding:10px 0 0;border-left:0;border-top:1px solid #ddd}
 @media(max-width:700px){.home-work-choice{flex-basis:100%}.home-example-choice{flex-basis:100%;border-left:0;border-top:1px solid #ddd;padding:10px 0 0;margin-top:2px}}
+
+/* Iedere tool: wit werkvlak, zwarte typografie en een vast rood merkaccent. */
+body[data-tool] > header,
+body[data-tool] .brandbar {
+ border-top:4px solid #e32720;
+ background:#fff;
+ color:#111;
+}
+body[data-tool] .brand .tool-symbol {color:#e32720}
+@media print {
+ body[data-tool] > header,body[data-tool] .brandbar {border-top:0}
+}
