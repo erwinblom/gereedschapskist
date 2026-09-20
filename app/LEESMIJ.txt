@@ -1,57 +1,25 @@
-GEREEDSCHAPSKIST 0.34.0 — LOKAAL / OPEN SOURCE
+GEREEDSCHAPSKIST — LOKAAL / OPEN SOURCE
 
-ONLINE: https://erwinblom.github.io/gereedschapskist/
-OFFLINE: pak de volledige ZIP uit en open Begin hier.html.
+Begin met Begin hier.html, of gebruik de online versie.
+Gebruik Chrome of Edge op je computer voor je werkmap.
 
-Dezelfde negen tools en dezelfde gegevensbestanden, online en offline.
-Schrijven, Factureren, Doen, Verzamelen, Uren schrijven, Contact houden, Plannen, Offreren en Boekhouden.
+1. Kies Nieuw beginnen en kies een opslagplek. De app maakt Mijn Gereedschapskist met negen submappen. Blokkeert de browser de plek? Kies de handmatige optie: maak en selecteer zelf een lege hoofdmap.
+2. Gebruik de tools. Via de keuzelijst bovenaan wissel je van tool.
+3. Klik op Bewaar alles. Je werk en concepten uit alle tools gaan mee.
+4. Kies een volgende keer Verder werken om alles terug te halen.
 
-EERST PROBEREN
-Nieuwe gebruikers beginnen met voorbeelden rond de fictieve Buurtwerkplaats De Proeftuin. Kies Begin met mijn eigen werk voor een lege eigen werkruimte. Bestaande eigen gegevens blijven behouden. Met Bekijk voorbeelden kun je later opnieuw oefenen, apart van je eigen werk. Voorbeeldfacturen krijgen geen definitief nummer. Gedownloade JSON-voorbeelden hebben voorbeeld in de bestandsnaam en kunnen niet als eigen administratie worden geopend. Bewaar je eigen werk altijd zelf in een bestand.
+Bekijk voorbeelden is een aparte oefenruimte. Je eigen werk blijft apart.
 
-UITGEBREIDE UITLEG: open Uitleg.html.
+Voor maptoegang gebruik je Chrome of Edge op een computer. De browser kan
+opnieuw om toestemming vragen. Zonder maptoegang blijven losse import en
+export beschikbaar. Er is geen automatische synchronisatie tussen browsers.
 
-OPENEN EN BEWAREN
-Open een tool en begin. Bewaar je werk met de bewaarknop in een bestand op je computer. Open dat bestand later opnieuw. De webversie en downloadversie wisselen niet automatisch gegevens uit. Browseropslag is tussentijds, geen back-up. Bewaar het actuele gegevensbestand voordat je van versie wisselt.
+Download back-up maakt een optionele ZIP van de laatst bewaarde werkmap.
+Bewaar daarvoor eerst je wijzigingen met Bewaar alles. PDF's, externe
+schrijfmappen en nog niet ontvangen extensielinks staan apart.
 
-Schrijven: open een Markdown-bestand of maak een nieuw document. Bewaar bestand schrijft naar je gekozen werkmap, of downloadt je document als je geen werkmap gebruikt. Project toevoegen biedt rechtstreekse maptoegang in geschikte browsers, na toestemming. Mapbewerkingen gebruiken de bestaande bewaarknoppen met herstelkopieën.
+Lees Uitleg.html voor de koppelingen, herstel en uitzonderingen.
+Je hebt geen account, externe database of API-sleutel nodig.
 
-Factureren: werk met één actuele administratie. Bewaar na definitief maken je gegevensbestand en PDF. Definitieve nummers en gegevens blijven vaststaan. Gebruik geen oude administratiekopie om nieuwe facturen te maken.
-
-Contact houden naar Offreren of Factureren: open je Contact houden-bestand bij Kies contact. Een nieuw contact levert een bijgewerkt Contact houden-bestand op. Open dit bestand in Contact houden om daar verder te werken.
-
-BROWSER EN PRIVACY
-Gebruik bij voorkeur Chrome of Edge op een computer. Organisatiebeleid kan bestanden openen, downloaden of maptoegang beperken. Je hoeft geen app of extensie te installeren. De online versie vraagt verbinding voor het laden; zonder internet gebruik je het downloadpakket. De site ontvangt geen documenten via een uploadfunctie. Zie PRIVACY.md voor externe afbeeldingen en hostinggegevens.
-
-BRONCODE EN HERKOMST
-https://github.com/erwinblom/gereedschapskist
-Eigen code: MIT. Schrijven bouwt voort op Markdown Browser van Joost Plattel. Zie Apps/Werkbank/HERKOMST.md en de aanvullende licenties. Technische mapnamen blijven behouden om bestaande verwijzingen niet te breken.
-
-BEWAREN EN LATER VERDERGAAN
-1. Klik bovenaan de tool op Bewaar bestand. Zoek de download op; meestal staat die in Downloads.
-2. Open een volgende keer dezelfde tool en klik op Bestand openen. Kies je laatst bewaarde bestand.
-3. Bewaar opnieuw na wijzigingen en gebruik voortaan die nieuwste versie.
-
-De acht administratieve tools bewaren de hele verzameling (.json); Schrijven bewaart het geopende document (.md). Er is geen automatische synchronisatie. Een browserkopie kan verdwijnen. Bewaar je actuele werk voordat je een ander bestand opent.
-
-BEWAREN: een download is pas zeker als je zelf hebt gecontroleerd dat het bestand is opgeslagen. De vaste statusregel toont de bestandsnaam en wijzigingen sinds openen. Gewijzigde formulieren waarschuwen voordat je invoer weggooit.
-
-MIJN WERKMAP
-Kies op de startpagina een werkmap; de negen toolmappen worden aangemaakt. Open bestaande bestanden per tool en kies Bewaar bestand om ze mee te nemen. Bestaande originelen blijven staan.
-Volgende keer: Open uit werkmap. Bewaar bestand werkt het vaste bestand bij. Voordat een bestaande versie wordt overschreven, komt er een herstelkopie in Herstelkopieen. Bij externe wijzigingen stopt het bewaren.
-Schrijven bewaart losse documenten. CSV, bonnen en overdrachten komen in Exports. De map voor een PDF kies je zelf in het afdrukvenster. Download kopie blijft altijd beschikbaar. Zonder werkmap gelden de downloadstappen hierboven.
-Maptoegang vraagt browsertoestemming (Chrome/Edge), mogelijk opnieuw na herstart. Web en offline krijgen afzonderlijk toegang. Werk met hetzelfde actuele bestand en niet tegelijk in beide versies. Maak ook een back-up van de hele map.
-
-KOPPELINGEN
-Zie Uitleg.html, onderdeel Werk overnemen tussen tools. Open in de ontvangende tool eerst je actuele gegevensbestand, kies daarna de specifieke overneemknop en selecteer het overdrachtsbestand. Bewaar de bijgewerkte administratie. Met een werkmap staan overdrachten in Exports bij de oorspronkelijke tool.
-Uren staan eerst op Klaargezet. Na definitief factureren: Uren als gefactureerd terugmelden, daarna Factuurstatus bijwerken in Uren schrijven. Bewaar beide administraties.
-
-BEWAAR ALLES
-Kies een werkmap en gebruik Bewaar alles. Actuele gegevens en formulierconcepten van geopende tools worden samen bewaard. Gesloten tools: laatst bekende gegevens. Open bewaard werk herstelt de actuele kopie, of de vorige kopie als dat nodig is. Na het bewaren start een ZIP-download. Zie Uitleg.html#bewaar-alles voor de reikwijdte en beperkingen.
-
-LINK BEWAREN — LOKAAL (PROEFVERSIE)
-Verzamelen heeft nu de indeling van de Bibliotheek: Alles, Inbox en Favorieten.
-De aparte Chrome-extensie in Downloads/Link-Bewaren-lokaal.zip bewaart links lokaal.
-Installeer die naast je bestaande Link Bewaren. Je oude extensie blijft intact.
-Automatische ontvangst werkt voorlopig alleen in de online Gereedschapskist.
-Lees Link-bewaren.html voor installatie, gebruik en herstel.
+VOORBEELDEN
+Bij je eerste bezoek tonen alle negen tools hetzelfde fictieve project: Buurtwerkplaats De Proeftuin. Naar mijn eigen werk schakelt alle geopende tools terug naar eigen werk. Zonder eerder werk begin je leeg; bestaande gegevens en conceptinvoer blijven behouden. Via Meer & uitleg > Bekijk voorbeelden start je later een verse oefenronde. Voorbeelden blijven buiten je eigen werkmap.

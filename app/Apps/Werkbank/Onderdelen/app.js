@@ -363,12 +363,17 @@
         }
 
         async function removeFolder(index) {
-            if(wysiwygDirty && !confirm('Je hebt niet-opgeslagen wijzigingen. Weggooien en map loskoppelen?')) return;
-            if(activeFile?.folderName===directoryHandles[index]?.name){activeFile=null;isEditMode=false;wysiwygDirty=false;document.getElementById('content').innerHTML='<div class="welcome"><h2>Kies je document.</h2></div>';}
-
-            directoryHandles.splice(index, 1);
-            await saveDirectoryHandles(directoryHandles);
+            const handle=directoryHandles[index];if(!handle)return;
+            const removesActive=activeFile?.folderName===handle.name;
+            if(removesActive && wysiwygDirty && !confirm('Je hebt niet-opgeslagen wijzigingen. Weggooien en map uit de lijst verwijderen?')) return;
+            const remaining=directoryHandles.filter((_,i)=>i!==index);
+            await saveDirectoryHandles(remaining);
+            directoryHandles=remaining;
+            if(selectedProject===handle.name || selectedProject.startsWith(handle.name+'/')){selectedProject='all';GereedschapskistMode.storage.setItem('mw-project','all');}
+            if(removesActive){activeFile=null;isEditMode=false;wysiwygDirty=false;currentRawContent=originalRawContent='';document.getElementById('content').classList.remove('editing');document.getElementById('content').innerHTML='<div class="welcome"><h2>Kies je document.</h2></div>';}
             await loadFiles();
+            activeFileIndex=activeFile?files.findIndex(f=>f.relativePath===activeFile.relativePath):null;renderFileList();
+            showNotification(handle.name+' is uit de lijst verwijderd. De map en bestanden blijven op je computer staan.','success');
         }
 
         async function restoreSavedFolders() {
@@ -540,10 +545,10 @@
                 allDirectoryPaths.push(path ? `${baseName}/${path}` : baseName);
                 folderHandlesByPath.set(path ? `${baseName}/${path}` : baseName, dirHandle);
                 for await (const entry of dirHandle.values()) {
-                    if (entry.name.startsWith('.') || entry.name==='node_modules') continue;
+                    if (entry.name.startsWith('.') || entry.name==='node_modules' || entry.name==='Herstelkopieen') continue;
                     const entryPath = path ? `${path}/${entry.name}` : entry.name;
                     if (pathIsIgnored(entryPath, entry.kind === 'directory', ignoreRules)) continue;
-                    if (entry.kind === 'file' && entry.name.toLowerCase().endsWith('.md')) {
+                    if (entry.kind === 'file' && /\.(md|markdown|txt)$/i.test(entry.name)) {
                         // Store both the handle and the relative path (prefixed with folder name)
                         const fullPath = path ? `${baseName}/${path}/${entry.name}` : `${baseName}/${entry.name}`;
                         entry.relativePath = fullPath;
@@ -624,7 +629,7 @@
             }
             try { for (const path of JSON.parse(GereedschapskistMode.storage.getItem('mw-folders-'+selectedProject)||'[]')) expandedFolders.add(path); } catch {}
             renderFileList();
-            restoreLastOpenFile();
+            if(!activeFile) await restoreLastOpenFile();
         }
 
         function initialDocumentPath(paths, saved, roots) {
@@ -704,10 +709,11 @@
                 const folderPath = path ? `${path}/${folderName}` : folderName;
                 const isExpanded = expandedFolders.has(folderPath);
                 const folder = tree.folders[folderName];
+                const rootIndex=directoryHandles.findIndex(h=>h.name===folderPath);
                 
                 html += `
                     <div class="tree-folder">
-                        <div class="tree-folder-header ${isExpanded ? 'expanded' : ''}" role="button" tabindex="0" aria-expanded="${isExpanded}" data-folder-path="${escapeHtml(folderPath)}" onclick="toggleFolder(this.dataset.folderPath)">
+                        <div class="tree-folder-row"><div class="tree-folder-header ${isExpanded ? 'expanded' : ''}" role="button" tabindex="0" aria-expanded="${isExpanded}" data-folder-path="${escapeHtml(folderPath)}" onclick="toggleFolder(this.dataset.folderPath)">
                             <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="9 18 15 12 9 6"></polyline>
                             </svg>
@@ -716,6 +722,7 @@
                             </svg>
                             <span>${escapeHtml(folderPath === "converter" ? "Losse documenten" : folderName)}</span>
                         </div>
+                        ${rootIndex>=0 ? `<button class="tree-folder-remove" onclick="removeFolder(${rootIndex})" title="Uit lijst verwijderen; bestanden blijven staan" aria-label="${escapeHtml(folderName)} uit lijst verwijderen">×</button>` : ''}</div>
                         <div class="tree-folder-contents ${isExpanded ? 'expanded' : ''}" data-path="${escapeHtml(folderPath)}">
                             ${renderTree(folder, folderPath)}
                         </div>
@@ -755,7 +762,7 @@
             if (header) {
                 header.classList.toggle('expanded', isExpanded);
                 header.setAttribute('aria-expanded', String(isExpanded));
-                header.nextElementSibling?.classList.toggle('expanded', isExpanded);
+                header.closest('.tree-folder-row')?.nextElementSibling?.classList.toggle('expanded', isExpanded);
             }
         }
 
@@ -1277,7 +1284,7 @@
         }
 
         function fileActions() {
-            const secondary = activeFile && !activeFile.isVirtual ? '<button class="edit-btn" onclick="openRenameFileDialog()">Hernoemen</button><button class="edit-btn" onclick="openMoveFileDialog()">Verplaatsen</button><button class="edit-btn" onclick="openRecoveryDialog()">Vorige versie herstellen</button><button class="edit-btn delete-file-btn" onclick="openDeleteFileDialog()">Verwijderen</button>' : '';
+            const secondary = activeFile && !activeFile.isVirtual ? '<button class="edit-btn" onclick="openRenameFileDialog()">Hernoemen</button><button class="edit-btn" onclick="openMoveFileDialog()">Verplaatsen</button><button class="edit-btn" onclick="openRecoveryDialog()">Vorige versie herstellen</button><button class="edit-btn delete-file-btn" onclick="openDeleteFileDialog()">Verwijderen</button>' : '<button class="edit-btn" onclick="downloadActiveDocument()">Download kopie</button><p>Sla dit document op in je werkmap om het te hernoemen of te verplaatsen.</p>';
             return `<div class="file-actions" role="group" aria-label="Bestandsacties">
                 <button class="edit-btn" onclick="toggleEditMode()">Bewerken</button>
                 ${secondary ? `<div class="file-secondary">${secondary}</div><details class="file-more"><summary class="edit-btn">Meer</summary><div class="file-more-panel" onclick="this.closest('details').open=false">${secondary}</div></details>` : ''}
@@ -1306,8 +1313,8 @@
             const backlinksHtml = renderBacklinks(backlinks);
             
             document.getElementById('content').innerHTML = `
-                <div class="content-header"><span class="file-path-heading" title="${escapeHtml(activeFile?.relativePath || "")}"><span class="document-name">${escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || "")}</span><span class="document-folder">${activeFile?.isVirtual?"Los document": "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || "Geen map")}</span></span>${documentFocusButton()}
-                    ${fileActions(false)}<span class="document-save-status">${activeFile?.isVirtual?"Gebruik Bewaar bestand voor een eigen bestand":"Opgeslagen"}</span>
+                <div class="content-header"><span class="file-path-heading" title="${escapeHtml(activeFile?.relativePath || "")}"><span class="document-name">${escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || "")}</span><span class="document-folder">${activeFile?.isVirtual?"Los document · browserkopie": "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || "Geen map")}</span></span>${documentFocusButton()}
+                    ${fileActions(false)}<span class="document-save-status">${activeFile?.isVirtual?"Gebruik Bewaar bestand om dit document op te slaan":"Opgeslagen in "+escapeHtml(activeFile.relativePath)}</span>
                 </div>
                 <div class="markdown-content">
                     ${html}
@@ -1553,7 +1560,7 @@
                 modifiedEl.textContent = 'Niet opgeslagen';
                 modifiedEl.className = 'modified';
             } else {
-                modifiedEl.textContent = '';
+                modifiedEl.textContent = activeFile?.isVirtual ? 'Los document in deze browser' : 'Opgeslagen in '+activeFile.relativePath;
                 modifiedEl.className = '';
             }
         }
@@ -1647,7 +1654,7 @@
             wysiwygDirty = false;
             
             document.getElementById('content').innerHTML = `
-                <div class="content-header"><span class="file-path-heading" title="${escapeHtml(activeFile?.relativePath || "")}"><span class="document-name">${escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || "")}</span><span class="document-folder">${activeFile?.isVirtual?"Los document": "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || "Geen map")}</span></span>${documentFocusButton()}
+                <div class="content-header"><span class="file-path-heading" title="${escapeHtml(activeFile?.relativePath || "")}"><span class="document-name">${escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || "")}</span><span class="document-folder">${activeFile?.isVirtual?"Los document · browserkopie": "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || "Geen map")}</span></span>${documentFocusButton()}
                     <span id="editorModified" class="document-save-status" role="status"></span><div class="file-actions editor-actions" role="group" aria-label="Bewerken">
                     <button id="markdownSourceToggle" class="edit-btn" title="De Markdown-brontekst bewerken" onclick="toggleMarkdownSource()" aria-pressed="false">Markdown</button>
                     <button class="cancel-btn" onclick="cancelEdit()" title="Bewerken annuleren (Esc)">
@@ -1665,7 +1672,7 @@
                         </svg>
                         ${activeFile?.isVirtual?'Bewaar bestand':'Opslaan in map'}
                     </button>
-                    ${activeFile && !activeFile.isVirtual ? `<details class="file-more"><summary class="edit-btn">Meer</summary><div class="file-more-panel" onclick="this.closest('details').open=false"><button class="edit-btn" onclick="openRenameFileDialog()">Hernoemen</button><button class="edit-btn" onclick="openMoveFileDialog()">Verplaatsen</button><button class="edit-btn" onclick="openRecoveryDialog()">Vorige versie herstellen</button><button class="edit-btn delete-file-btn" onclick="openDeleteFileDialog()">Verwijderen</button></div></details>` : ''}
+                    ${activeFile && !activeFile.isVirtual ? `<details class="file-more"><summary class="edit-btn">Meer</summary><div class="file-more-panel" onclick="this.closest('details').open=false"><button class="edit-btn" onclick="openRenameFileDialog()">Hernoemen</button><button class="edit-btn" onclick="openMoveFileDialog()">Verplaatsen</button><button class="edit-btn" onclick="openRecoveryDialog()">Vorige versie herstellen</button><button class="edit-btn delete-file-btn" onclick="openDeleteFileDialog()">Verwijderen</button></div></details>` : `<details class="file-more"><summary class="edit-btn">Meer</summary><div class="file-more-panel"><button class="edit-btn" onclick="downloadActiveDocument()">Download kopie</button><p>Sla dit document op in je werkmap om het te hernoemen of te verplaatsen.</p></div></details>`}
                     </div>
                 </div>
                 <div class="editor-container visible">
@@ -1777,14 +1784,14 @@
         }
 
         async function saveFile() {
-            if(window.Werkmap?.active)return await Werkmap.save();
+            if(activeFile?.isVirtual && window.Werkmap?.active){try{await BewaarAlles.save();wysiwygDirty=false;return true}catch(e){showNotification(e.message,'error');return false;}}
             if (!activeFile) return;
             
             const editor = document.getElementById('wysiwygEditor');
-            if (!editor) return;
+            if (!editor && activeFile.isVirtual) return;
             
-            // Convert WYSIWYG HTML back to markdown
-            const newContent = getWysiwygMarkdown();
+            // A connected document always writes back to its own file.
+            const newContent = editor ? getWysiwygMarkdown() : currentRawContent;
             
             try {
                 if (activeFile.isVirtual) {
@@ -1820,20 +1827,14 @@
                 wysiwygDirty = false;
                 
                 updateWysiwygModifiedState();
-                // Update modified indicator
+                const savedMessage = activeFile.isVirtual ? 'Download gestart; controleer je bestand.' : 'Opgeslagen in '+activeFile.relativePath;
                 const modifiedEl = document.getElementById('editorModified');
-                if (modifiedEl) {
-                    modifiedEl.textContent = activeFile.isVirtual?'Download gestart; controleer je bestand.':'Opgeslagen in map';
-                    modifiedEl.className = '';
-                    setTimeout(() => {
-                        if (modifiedEl.textContent === 'Opgeslagen in map') {
-                            modifiedEl.textContent = '';
-                        }
-                    }, 2000);
+                if (modifiedEl) modifiedEl.textContent = savedMessage;
+                if(!activeFile.isVirtual){
+                    Werkstatus.opened(activeFile.relativePath);Werkstatus.written();
+                    const status=document.getElementById('wm-message');if(status)status.textContent=savedMessage;
                 }
-                
-                if(!activeFile.isVirtual)Werkstatus.written();
-                showNotification(activeFile?.isVirtual?'Download gestart. Controleer of je bestand is opgeslagen.':'Bestand opgeslagen', 'success');
+                showNotification(savedMessage, 'success');
                 return true;
             } catch (err) {
                 console.error('Opslaan mislukt:', err);

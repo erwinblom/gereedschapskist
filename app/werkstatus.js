@@ -19,6 +19,8 @@ window.Werkstatus = (() => {
   if(info.written&&sig===info.written)parts.push('Opgeslagen in het geopende bestand');
   if(allSaved)parts.push('Opgeslagen met Bewaar alles, inclusief conceptinvoer');
   if(unfinished()&&!allSaved)parts.push('Formulier of document bevat onbewaarde invoer');
+  if(mode.example){parts.unshift('Voorbeeld · eigen werk staat apart');}
+  else if(window.Werkmap?.active){parts.length=0;parts.push('Werkmap: '+Werkmap.name);if(allSaved)parts.push('Alles bewaard'+(info.allTime?' om '+info.allTime:''));else if(info.name&&!info.name.startsWith('Werkmap /'))parts.push(info.name);}
   box.textContent=parts.join(' · ');
   {
    const baseline=info.baseline||info.written||info.downloaded||info.opened;
@@ -29,7 +31,7 @@ window.Werkstatus = (() => {
   }
  }
  function schedule(){clearTimeout(timer);timer=setTimeout(update,80);}
- function fields(root){return JSON.stringify([...root.querySelectorAll('input:not([type=file]),textarea,select')].map(e=>[e.id,e.name,e.value,e.checked]));}
+ function fields(root){return JSON.stringify([...root.querySelectorAll('input:not([type=file]),textarea,select')].filter(e=>root!==document.body||(e.closest('form')||e.closest('div#form'))&&(!e.closest('dialog')||e.closest('dialog').open)).map(e=>[e.id,e.name,e.value,e.checked]));}
  function guardDialog(id,buttons,scope){
   const dialog=document.getElementById(id);if(!dialog)return;
   const root=scope?dialog.querySelector(scope):dialog;let baseline='';
@@ -46,7 +48,8 @@ window.Werkstatus = (() => {
  });
  for(const event of ['input','change','click','submit'])document.addEventListener(event,schedule);
  window.addEventListener('beforeunload',e=>{if(unfinished()){e.preventDefault();e.returnValue='';}});
- return {allWritten(){allCheckpoint=signature([read(),fields(document.body)]);update();},hasPending:unfinished,register(getData,hasPending=()=>false){read=getData;pending=hasPending;initialSignature=signature(read());schedule();},update:schedule,guardDialog,
+ window.addEventListener('beforeunload',e=>{if(window.GereedschapskistNavigating)e.stopImmediatePropagation();},true);
+ return {changed(){allCheckpoint=null;info.baseline='changed';delete info.written;persist();update();},allWritten(){info.allTime=new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});allCheckpoint=signature([read(),fields(document.body)]);update();},hasPending:unfinished,register(getData,hasPending=()=>false){read=getData;pending=hasPending;initialSignature=signature(read());schedule();},update:schedule,guardDialog,
   opened(name){info={name,opened:signature(read()),baseline:signature(read())};persist();update();document.dispatchEvent(new CustomEvent("werkbestand-geopend"));},
   downloaded(name,administration=true){if(administration){info.download=name;info.downloaded=signature(read());info.baseline=info.downloaded;persist();}schedule();},
   written(){info.written=signature(read());info.baseline=info.written;persist();update();},

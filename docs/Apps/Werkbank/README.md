@@ -107,3 +107,9 @@ Bij de eerste opening toont Werkbank automatisch `00 - Begin hier.md` (of `Begin
 De meegeleverde Begin hier-uitleg verschijnt al bij het openen van `▶ Begin hier.html`, zonder maptoestemming. Na het koppelen van een werkmap hervat Werkbank je document. Bij wijzigingen aan de meegeleverde uitleg werkt `node Onderdelen/scripts/embed-introduction.cjs` de ingebouwde versie bij.
 
 De ZIP bevat slechts drie ingangen: **▶ Begin hier.html**, **Werkbank** en **Onderdelen**. Laat deze bij elkaar staan. Ondersteunende bestanden en documentatie zitten in Onderdelen. De sortering in Finder of Verkenner blijft afhankelijk van je instellingen.
+
+## Opslagplek en mappen in de lijst
+
+Een los geopend document is een browserkopie; de oorspronkelijke bestandslocatie is daarbij niet gekoppeld. Na bewaren in Mijn werkmap wordt het echte bestand geopend onder Schrijven. Meer is ook zichtbaar bij losse documenten, met Download kopie. Bij gekoppelde bestanden staan daar ook Hernoemen, Verplaatsen, Vorige versie herstellen en Verwijderen.
+
+Opslaan in map en Bewaar bestand schrijven een gekoppeld document terug naar zijn eigen map, ook als Mijn werkmap op een andere plek staat. De opslagplek blijft naast de documentnaam zichtbaar. Het kruisje naast een gekoppelde hoofdmap verwijdert die map alleen uit de lijst; de map en bestanden blijven op de computer staan.

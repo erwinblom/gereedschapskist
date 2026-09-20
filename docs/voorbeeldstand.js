@@ -6,7 +6,8 @@
  try { preference=localStorage.getItem(preferenceKey);hasOwn=localStorage.getItem(baseKey)!==null;
   if(tool==='Werkbank')hasOwn=hasOwn||['gereedschapskist:mw-project','gereedschapskist:lastOpenFile','gereedschapskist:mw-document-'+'all'].some(k=>localStorage.getItem(k)!==null);
  } catch { unavailable=true; }
- const example=query==='voorbeeld'||query!=='eigen'&&preference!=='eigen'&&!hasOwn&&!unavailable;
+ const suite=window.GereedschapskistKeuze?.mode;
+ const example=query==='voorbeeld'||query!=='eigen'&&(suite==='voorbeeld'||suite!=='eigen'&&preference!=='eigen'&&!hasOwn&&!unavailable);
  const key=k=>example?examplePrefix+k:k;
  const memory=new Map();
  const storage={
@@ -16,13 +17,16 @@
  };
  const mode=window.GereedschapskistMode={example,key,storage,redirecting:false,ready:Promise.resolve(),
   forExport:data=>example?{...data,_gereedschapskistExample:true}:data,
-  go(target){const u=new URL(location.href);u.searchParams.set('werkruimte',target==='own'?'eigen':'voorbeeld');location.assign(u.href);}
+  go(target){return GereedschapskistKeuze.choose(target==='own'?'eigen':'voorbeeld').catch(e=>{const el=document.getElementById('wm-message');if(el)el.textContent='Je invoer kon niet worden behouden. Blijf hier en probeer opnieuw: '+e.message;});}
  };
  // A switch never removes or replaces the user's data or its recovery copy.
  try {if(query==='eigen')localStorage.setItem(preferenceKey,'eigen');} catch {}
- if(example&&storage.getItem(baseKey)===null){
+ const tourKey='rondleiding:'+baseKey,tourId=GereedschapskistKeuze.tour;
+ let missing=true;try{const value=JSON.parse(storage.getItem(baseKey));missing=!value||(Array.isArray(value)?!value.length:![value.invoices,value.tasks,value.items,value.entries,value.contacts,value.quotes].some(list=>Array.isArray(list)&&list.length));}catch{}
+ if(example&&(missing||storage.getItem(tourKey)!==tourId)){
+  storage.removeItem(baseKey+'-previous');storage.setItem(tourKey,tourId);
   storage.setItem(baseKey,JSON.stringify(GereedschapskistExamples(tool)));
-  if(tool==='Werkbank')storage.setItem('gereedschapskist:mw-document-'+'all','converter/Buurtwerkplaats — projectplan.md');
+  if(tool==='Werkbank'){storage.setItem('gereedschapskist:mw-project','all');storage.removeItem('gereedschapskist:lastOpenFile');storage.setItem('gereedschapskist:mw-document-'+'all','converter/Buurtwerkplaats — projectplan.md');}
  }
  // Existing folder handles can be the only trace of an older writing workspace.
  // Inspect database names without opening, altering or deleting the real database.
@@ -45,9 +49,9 @@
   const banner=document.createElement('section');banner.className='example-mode'+(example?'':' own');banner.setAttribute('aria-label',example?'Voorbeeldstand':'Eigen werk');
   const text=document.createElement('div'),title=document.createElement('strong'),description=document.createElement('p'),button=document.createElement('button');button.type='button';button.id='workspace-switch';
   title.textContent=example?'Je bekijkt voorbeeldgegevens. Probeer gerust alles uit.':'Mijn eigen werk';
-  description.textContent=example?'Buurtwerkplaats De Proeftuin is een fictief project. Je oefent in een aparte werkruimte.': 'Voorbeelden staan apart en veranderen je eigen gegevens niet.';
-  button.textContent=example?(hasOwn||preference==='eigen'?'Terug naar mijn eigen werk':'Begin met mijn eigen werk'):'Bekijk voorbeelden';
-  button.onclick=()=>mode.go(example?'own':'example');
+  description.textContent=example?'De negen tools laten hetzelfde fictieve project zien: Buurtwerkplaats De Proeftuin. Via Nieuw beginnen of Verder werken op de startpagina ga je naar je eigen werk. Je bestaande werk blijft behouden.': 'Voorbeelden staan apart en veranderen je eigen gegevens niet.';
+  button.textContent=example?'Naar mijn eigen werk':'Bekijk voorbeelden';
+  button.onclick=()=>{if(example){const home=new URL('../../Begin hier.html',location.href);location.assign(GereedschapskistKeuze.url(home.href,'voorbeeld').href);}else mode.go('example');};
   text.append(title,description);banner.append(text,button);
   const header=document.querySelector('.brandbar,header');if(header)header.after(banner);else document.body.prepend(banner);
   // Opening personal files or folders always happens in the user's workspace.

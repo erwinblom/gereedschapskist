@@ -81,3 +81,6 @@ body{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5}butto
 
 .app.document-focused > .focus-panel:not([hidden]){display:block}
 @media(min-width:901px){.app.document-focused:not(.focus-hidden){grid-template-columns:minmax(0,1fr) 270px}}
+
+/* Folder removal disconnects navigation only. */
+.tree-folder-row{display:flex;align-items:center;gap:4px}.tree-folder-row .tree-folder-header{flex:1;min-width:0}.tree-folder-remove{flex:none;background:transparent;border:0;color:#555;cursor:pointer;width:32px;min-height:32px;font-size:22px}.tree-folder-remove:hover{background:#eef0f2;color:#111}.tree-folder-remove:focus-visible{outline:2px solid #e32720}.document-save-status{overflow-wrap:anywhere}.file-more-panel p{max-width:250px;font-size:12px;line-height:1.5;padding:8px}

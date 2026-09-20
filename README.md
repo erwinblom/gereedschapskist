@@ -28,7 +28,7 @@ Nieuwe gebruikers beginnen met voorbeelden rond de fictieve Buurtwerkplaats De P
 
 ## Bewaar je werk
 
-**Mijn werkmap** bewaart alles in één gekozen map, met negen toolmappen. **Bewaar bestand** schrijft dan rechtstreeks naar het vaste gegevensbestand (of een los document bij Schrijven). Bij overschrijven wordt eerst een herstelkopie gemaakt. Kies een volgende keer **Open uit werkmap**. CSV, bonnen en overdrachten komen in Exports; bij PDF kies je de map in het afdrukvenster.
+**Mijn werkmap** bewaart alles in één gekozen map, met negen toolmappen. **Bewaar bestand** schrijft dan rechtstreeks naar het vaste gegevensbestand. Bij Schrijven komt een nieuw los document in de submap Schrijven en blijft daarna gekoppeld aan dat bestand. Een document uit een andere geopende map wordt altijd in zijn eigen map opgeslagen. Bij overschrijven wordt eerst een herstelkopie gemaakt. Kies een volgende keer **Open uit werkmap**. CSV, bonnen en overdrachten komen in Exports; bij PDF kies je de map in het afdrukvenster.
 
 Zonder werkmap downloadt **Bewaar bestand** je werk. Kies de volgende keer **Bestand openen** en selecteer je laatst bewaarde bestand. Bewaar opnieuw na wijzigingen. Browseropslag is geen back-up. Bewaar het actuele bestand voordat je overstapt tussen online en offline. Vooral bij Factureren gebruik je steeds één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
 
@@ -37,6 +37,8 @@ Chrome en Edge op een computer zijn de aanbevolen browsers. Organisatiebeleid ka
 [Privacy](app/PRIVACY.md) · [Gebruiksaanwijzing](app/LEESMIJ.txt)
 
 ## Koppelingen
+
+Bij Offreren en Boekhouden kies je **Zoek in Contacten** om op naam, organisatie of e-mail te zoeken. Met Mijn werkmap leest de kiezer het bewaarde bestand in Contact houden. Bewaar wijzigingen in Contact houden eerst met Bewaar bestand. Zonder werkmap gebruikt de online versie beschikbare browsercontacten; je kunt ook zelf een Contacten-bestand openen. De gekozen gegevens worden alleen in het open formulier ingevuld.
 
 Gegevens overnemen werkt met lokale overdrachtsbestanden: uren naar facturen, ontvangen facturen naar Boekhouden, geplande projecten en contactacties naar taken, taken naar uren en geselecteerde bronnen naar een Markdown-document. Geaccepteerde offertes kunnen ook naar Factureren; contactgegevens kunnen naar Offreren en Factureren.
 
@@ -64,3 +66,9 @@ De bestaande technische mapnamen zijn behouden voor compatibiliteit; de zichtbar
 ## Herkomst en licenties
 
 Eigen code: MIT, zie [LICENSE](LICENSE). Schrijven bouwt voort op **Markdown Browser van Joost Plattel**. Zie [herkomst](app/Apps/Werkbank/HERKOMST.md) en [licenties van gebruikte bibliotheken](app/Apps/Werkbank/THIRD_PARTY_NOTICES.md). Bijdragen zijn welkom via issues en pull requests.
+
+## Gezamenlijke werkruimte
+
+De gewone bewaaractie is `Bewaar alles`: complete bewaarronden inclusief concepten, één actuele verwijzing en één vorige herstelkopie. `Open werkmap` hydrateert alle bewaarde tools, ook bij lege browseropslag. Een ZIP is een optionele back-up. Interne koppelingen gebruiken gedeelde lokale sessies; losse import/export blijft beschikbaar. De bestaande werkbestanden worden niet gewist.
+
+Controles voor deze ronde: `tests/bewaar-alles.cjs`, `tests/samenwerken.cjs` en `tests/werkruimte-ui.cjs`. De tests gebruiken een eigen browserprofiel en fictieve data; de mapkiezer wordt vervangen door een echte browserbestandssysteemmap. Een handmatige proef met de native mapkiezer blijft nodig voor browser- en organisatiebeleid.

@@ -1,0 +1,51 @@
+[hidden]{display:none!important}
+.start-workspace{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:14px 0 12px}
+.start-workspace button,#tool-switcher{font:14px/1.4 Arial,sans-serif;border:1px solid #aaa;background:white;color:#111;padding:10px 12px;min-height:42px;cursor:pointer}
+.start-workspace .primary{background:#111;color:white;border-color:#111;font-weight:700}
+.workspace-name{font-size:13px;color:#555;margin-right:auto}
+.home-more{margin:0 0 16px;font-size:14px}.home-more>summary{cursor:pointer;text-decoration:underline;text-underline-offset:4px}.home-more .werkmap{margin:12px 0!important}
+.start-workspace~#wm-message{font-size:14px;margin:0 0 8px;max-width:900px}
+#tool-switcher{max-width:190px;min-width:0}
+.compact-tools #wm-backup{white-space:nowrap;background:#fff;color:#111;border:1px solid #777;font:600 14px Arial;padding:10px 14px;min-height:42px}
+.compact-tools .workspace-strip{align-items:center;gap:12px}.compact-tools #file-status{margin-right:auto;font-size:14px;line-height:1.5}
+.compact-tools .legacy-imports{font-size:14px;padding:12px 0}.legacy-imports button{display:inline-block;margin:10px 12px 0 0}
+.tool-purpose{font:14px Arial;color:#555;margin:0 0 12px}
+.compact-tools #workspace-help .save-help{margin:12px 0}.compact-tools #workspace-help .save-help-body{font-size:15px}
+#tool-switcher:focus-visible,.start-workspace button:focus-visible{outline:3px solid #e32720;outline-offset:3px}
+@media(max-width:1100px){body[data-tool=Ping] .workspace,body[data-tool=Offerte] .workspace{grid-template-columns:180px minmax(300px,1fr)}body[data-tool=Ping] .preview,body[data-tool=Offerte] .preview{grid-column:2}}
+@media(max-width:700px){#tool-switcher{max-width:100%;flex:1}.start-workspace button{flex:1 1 180px}.workspace-name{flex-basis:100%}.compact-tools .workspace-strip{flex-wrap:wrap}.compact-tools #file-status{flex-basis:100%}body[data-tool=Ping] .workspace,body[data-tool=Offerte] .workspace{display:block}.compact-tools .preview{margin-top:18px}}
+@media print{#tool-switcher,.start-workspace,.home-more,.tool-purpose{display:none!important}}
+
+.shared-reference{display:block;width:fit-content;font:13px/1.5 Arial;color:#454545;margin:6px 0;text-underline-offset:3px}
+
+.document-tabs{display:none}
+@media screen and (max-width:1150px){
+.document-tabs{display:flex;gap:20px;grid-column:2;border-bottom:1px solid #ccc;margin-bottom:12px}
+.document-tabs button{border:0;background:transparent;color:#111;padding:10px 2px;border-bottom:3px solid transparent;font-weight:400}
+.document-tabs button[aria-selected=true]{border-bottom-color:#111}
+body[data-tool=Ping] .layout:not(.show-document-preview)>.preview,body[data-tool=Offerte] .workspace:not(.show-document-preview)>.preview{display:none}
+body[data-tool=Ping] .layout.show-document-preview>.editor,body[data-tool=Offerte] .workspace.show-document-preview>.editor{display:none}
+body[data-tool=Ping] .layout>.editor,body[data-tool=Offerte] .workspace>.editor{grid-column:2}
+}
+@media print{.document-tabs{display:none!important}}
+
+/* Only available, relevant actions occupy the ordinary work surface. */
+.compact-tools #undo:disabled,.compact-tools #hours-invoice:disabled,.compact-tools #sources-document:disabled,.compact-tools #save-all-preview{display:none!important}
+body[data-tool=Projectbord] .add-column,body[data-tool=Projectbord] #example{display:none!important}
+.compact-tools #print:disabled{display:none!important}
+.tool-extra-actions{margin:0 0 16px;padding:0 0 12px;border-bottom:1px solid #ccc}
+.tool-extra-actions h2{font:600 14px Arial;margin:0 0 8px}
+.tool-extra-actions>button,.tool-extra-actions .link-actions button,.tool-extra-actions .actions button,.home-more>button{background:#fff;color:#111;border:1px solid #aaa;font:14px Arial;padding:9px 12px;margin:4px 10px 4px 0;min-height:40px;cursor:pointer}
+.tool-extra-actions .actions{margin:6px 0;gap:12px;align-items:center}
+.start-workspace .quiet-action{border:0;background:transparent;text-decoration:underline;text-underline-offset:4px;color:#444;font-weight:400}
+.compact-tools .work-actions .actions:empty,.compact-tools header>.actions:empty{display:none}
+
+/* Explain the workmap beside its own actions; examples are a separate choice. */
+.home-work-choice{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-right:auto}
+.home-work-choice .workspace-name{flex-basis:100%;margin:0;line-height:1.5}
+.home-example-choice{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding-left:20px;border-left:1px solid #ccc}
+.home-example-choice button.quiet-action{padding:6px 0;min-height:34px;border:0;background:none;color:#333;font:14px Arial;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.home-example-choice span{font:13px/1.5 Arial,sans-serif;color:#555}
+.start-workspace>.workspace-name{flex-basis:100%}
+.home-more .home-example-choice{margin-top:12px;padding:10px 0 0;border-left:0;border-top:1px solid #ddd}
+@media(max-width:700px){.home-work-choice{flex-basis:100%}.home-example-choice{flex-basis:100%;border-left:0;border-top:1px solid #ddd;padding:10px 0 0;margin-top:2px}}

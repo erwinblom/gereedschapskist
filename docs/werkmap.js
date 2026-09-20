@@ -4,9 +4,10 @@ window.Werkmap=(()=>{
  const catalog={Werkbank:['Schrijven',null],Ping:['Factureren','factureren'],Projectbord:['Doen','doen'],Bronnenkast:['Verzamelen','verzamelen'],Uren:['Uren schrijven','uren-schrijven'],Contacten:['Contact houden','contact-houden'],Publicatieplanner:['Plannen','plannen'],Offerte:['Offreren','offreren'],Kasboek:['Boekhouden','boekhouden']};
  const tool=document.querySelector('script[data-tool]')?.dataset.tool,example=window.GereedschapskistMode?.example;
  const supported='showDirectoryPicker' in window&&!!window.indexedDB,dbName='gereedschapskist-werkmap-v1';
- let root=null,revision=null,db=null,adapter=null,box=null,busy=false;const known=new Map();
+ let root=null,revision=null,db=null,adapter=null,box=null,busy=false,starting=false;const known=new Map();let adapterResolve;const adapterReady=new Promise(resolve=>adapterResolve=resolve);
  const $=id=>document.getElementById('wm-'+id);
  function message(text){if($('message'))$('message').textContent=text;}
+ function pickerStopped(){return 'De browser heeft geen map doorgegeven. Het kiezen kan zijn afgebroken of de maptoegang kan zijn geweigerd. Heb je wel een map bevestigd? Gebruik Chrome of Edge op je computer en kies dezelfde map. Je huidige werk blijft behouden.';}
  function database(){return new Promise((resolve,reject)=>{const r=indexedDB.open(dbName,1);r.onupgradeneeded=()=>r.result.createObjectStore('settings');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
  function setting(action,value){return new Promise((resolve,reject)=>{const tx=db.transaction('settings',action==='get'?'readonly':'readwrite'),s=tx.objectStore('settings'),r=action==='get'?s.get('root'):action==='delete'?s.delete('root'):s.put(value,'root');tx.oncomplete=()=>resolve(r.result);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||Error('Mapkeuze niet bewaard.'));});}
  const ready=(async()=>{if(!supported||example)return;try{db=await database();const saved=await setting('get');root=saved?.handle||null;revision=saved?.revision||null;}catch{message('De mapkeuze kon niet worden onthouden. Kies de map opnieuw.');}})();
@@ -16,22 +17,86 @@ window.Werkmap=(()=>{
  async function existing(dir,name){try{return await dir.getFileHandle(name);}catch(e){if(e.name==='NotFoundError')return null;throw e;}}
  function filename(){return 'gereedschapskist-'+catalog[tool][1]+'.json';}
  function safeName(name){if(typeof name!=='string'||!name.trim()||name.length>160||/[\\/:*?"<>|\u0000-\u001f]/.test(name)||name==='.'||name==='..')throw Error('Gebruik een korte bestandsnaam zonder schuine strepen of bijzondere tekens.');return name.trim();}
- async function choose(){
+ async function choose(selectedHandle=null,{requireExisting=false}={}){
   if(busy)return;busy=true;const button=$('choose');if(button)button.disabled=true;if(box)box.open=true;
   message('Kies een map in het mapvenster en geef toegang. Verschijnt er geen venster? Probeer deze pagina in Chrome of Edge.');
   let stage='picker';
   try{
-   const handle=await showDirectoryPicker({id:'gereedschapskist',mode:'readwrite'});
+   const handle=selectedHandle?.kind==='directory'?selectedHandle:await showDirectoryPicker({id:'gereedschapskist',mode:'readwrite'});
    stage='permission';message('Toegang controleren voor '+handle.name+'…');await permission(handle);
-   stage='folders';message('De negen toolmappen aanmaken in '+handle.name+'…');
-   for(const [name]of Object.values(catalog))await handle.getDirectoryHandle(name,{create:true});
-   stage='remember';message('Werkmap onthouden…');const rev=crypto.randomUUID();if(db)await setting('put',{handle,revision:rev});
+   const same=!!root&&await root.isSameEntry(handle);
+   if(root&&!same&&window.BewaarAlles&&!(await BewaarAlles.canChoose()))throw Error('Sluit andere toolvensters voordat je een andere werkmap opent.');
+   stage='folders';message('Werkmap controleren: '+handle.name+'…');
+   stage='remember';message('Werkmap onthouden…');
+   let rev=same?revision:null;
+   try{const info=JSON.parse(await(await(await handle.getFileHandle('gereedschapskist-werkmap.json')).getFile()).text());if(info.format!=='gereedschapskist-werkmap'||typeof info.id!=='string')throw Error('Ongeldige werkmapgegevens.');rev=info.id;}
+   catch(e){if(e.name!=='NotFoundError')throw e;}
+   const round=await window.BewaarAlles?.readRound(handle);
+   if(requireExisting&&!rev&&!round)throw Error('Dit is geen Gereedschapskist-werkmap. Kies de hoofdmap waarin je eerder je werk hebt bewaard.');
+   if(!rev)rev=crypto.randomUUID();
+   if(!await existing(handle,'gereedschapskist-werkmap.json')){const h=await handle.getFileHandle('gereedschapskist-werkmap.json',{create:true}),w=await h.createWritable();await w.write(JSON.stringify({format:'gereedschapskist-werkmap',version:1,id:rev},null,2));await w.close();}
+   if(!same&&round&&!confirm('Open de bewaarde Gereedschapskist in '+handle.name+'? Dit vervangt je huidige browserwerk. Bewaar dat eerst als je het wilt houden.'))return;
+   if(db)await setting('put',{handle,revision:rev});
    root=handle;revision=rev;known.clear();render();
-   message('Werkmap gekoppeld: '+handle.name+'. '+(tool?'Kies Open uit werkmap om het opgeslagen bestand van deze tool te openen, of Bewaar bestand om je huidige werk hier te bewaren.':'Open hieronder een tool. Kies daar Open uit werkmap voor bestaand werk, of Bewaar bestand om nieuw werk hier te bewaren.')+' De mapkeuze opent of verplaatst je documenten niet automatisch.');
+   localStorage.setItem('gereedschapskist-suite-mode','eigen');
+   const opened=!same&&round?await BewaarAlles.openChosen(handle,rev):false;
+   message(opened?'Werkmap '+handle.name+' geopend. Alle bewaarde tools staan klaar.':'Werkmap: '+handle.name+'. Bewaar alles bewaart je werk en concepten uit alle tools hier.');
+   document.dispatchEvent(new CustomEvent('werkmap-gekozen'));
+   return true;
+
   }catch(e){
-   if(e.name==='AbortError'&&stage==='picker')message('Geen werkmap gekozen. Het mapvenster is gesloten of door de browser afgebroken. '+(root?'Je bestaande werkmap blijft gekoppeld. ':'')+'Verschijnt er geen mapvenster? Open deze pagina in Chrome of Edge en probeer opnieuw.');
+   if(e.name==='AbortError'&&stage==='picker')message(pickerStopped());
    else message('Werkmap niet gekoppeld ('+({picker:'mapvenster',permission:'toegang',folders:'toolmappen aanmaken',remember:'mapkeuze onthouden'}[stage])+'): '+e.message+(root?' Je vorige werkmap blijft gekoppeld.':'')+' Bestand openen en downloaden blijven beschikbaar.');
   }finally{busy=false;if(button)button.disabled=false;}
+ }
+
+ function chooseNewLocation(){return new Promise((resolve,reject)=>{
+  const dialog=document.createElement('dialog');dialog.className='wm-dialog';dialog.setAttribute('aria-labelledby','new-location-title');
+  const title=document.createElement('h2');title.id='new-location-title';title.textContent='Waar mag je Gereedschapskist komen?';
+  const text=document.createElement('p');text.textContent='Kies een opslagplek. Wij maken daarin Mijn Gereedschapskist met negen submappen. Sommige plekken, zoals de hele map Documenten, kunnen door je browser worden geweigerd.';
+  const hint=document.createElement('p');hint.textContent='Gebruik Chrome of Edge op je computer. Wordt alleen de gekozen opslagplek geweigerd? Gebruik dan de handmatige optie voor een lege hoofdmap.';
+  const cancel=document.createElement('button');cancel.textContent='Annuleren';cancel.onclick=()=>dialog.close();
+  const pick=document.createElement('button');pick.textContent='Kies opslagplek';pick.className='primary';
+  const manual=document.createElement('button');manual.textContent='Zelf een lege hoofdmap kiezen';let picked=false;
+  const select=async(direct)=>{pick.disabled=manual.disabled=true;try{const handle=await showDirectoryPicker({id:'gereedschapskist-plek',mode:'readwrite'});picked=true;dialog.close();resolve({handle,direct});}catch(e){picked=true;dialog.close();reject(e);}};
+  pick.onclick=()=>select(false);
+  manual.onclick=()=>{text.textContent='Maak in het mapvenster een nieuwe map, bijvoorbeeld Mijn Gereedschapskist. Selecteer die lege map en bevestig met Selecteer of Open. Er komt geen extra hoofdmap in.';pick.hidden=true;manual.textContent='Selecteer de lege hoofdmap';manual.onclick=()=>select(true);};
+  dialog.onclose=()=>{dialog.remove();if(!picked)reject(Object.assign(new Error('Geannuleerd'),{name:'UserCancelledError'}));};dialog.append(title,text,hint,cancel,pick,manual);document.body.append(dialog);dialog.showModal();
+ });}
+ async function startNew(){
+  if(busy||starting)return false;starting=true;let stage='map kiezen';
+  message('Kies een opslagplek. Wij maken de hoofdmap en negen submappen.');
+  try{
+   const selection=await chooseNewLocation();let handle=selection.handle;
+   stage='toegang controleren';await ready;await permission(handle);await allReady;await BewaarAlles.ready;
+   if(!(await BewaarAlles.canChoose()))throw Error('Sluit de andere toolvensters voordat je nieuw begint. Hun werk blijft behouden.');
+   if(!selection.direct){
+    let name='Mijn Gereedschapskist';
+    while(true){
+     let exists=false;try{await handle.getDirectoryHandle(name);exists=true;}catch(e){if(e.name==='TypeMismatchError')exists=true;else if(e.name!=='NotFoundError')throw e;}
+     if(!exists)break;
+     const answer=prompt(name+' bestaat al. Kies een andere naam voor nieuw werk, of annuleer en kies Verder werken.','Mijn Gereedschapskist 2');
+     if(answer===null)return false;name=safeName(answer);
+    }
+    handle=await handle.getDirectoryHandle(name,{create:true});
+   }
+   for await(const entry of handle.values())throw Error('Deze map is niet leeg. Maak en selecteer een nieuwe, lege map. Wil je bestaand werk openen? Kies Verder werken. Er is niets in deze map gewijzigd.');
+   // Preserve the current workspace before moving to an empty one.
+   const hadRoot=!!root;if(hadRoot)await BewaarAlles.save();
+   stage='submappen aanmaken';
+   for(const [label]of Object.values(catalog))await handle.getDirectoryHandle(label,{create:true});
+   if(!await choose(handle))return false;
+   if(hadRoot)await BewaarAlles.startEmpty(revision);
+   stage='eerste bewaarkopie maken';await BewaarAlles.save();
+   message('Klaar: '+handle.name+'. De negen submappen zijn aangemaakt. Kies een tool om te beginnen.');
+   return true;
+  }catch(e){message(e.name==='UserCancelledError'?'Geen werkmap gekoppeld. Je huidige werk blijft behouden.':e.name==='AbortError'&&stage==='map kiezen'?pickerStopped():'Niet gestart bij '+stage+': '+e.message);return false;}finally{starting=false;}
+ }
+ async function continueWork(){
+  await ready;await allReady;
+  if(!root)return choose(null,{requireExisting:true});
+  try{await permission(root);await checkRoot();message('Verder werken in '+root.name+'. Je werk staat klaar.');return true;}
+  catch(e){message('Niet geopend: '+e.message+' Kies zo nodig een andere werkmap via Meer & uitleg.');return false;}
  }
 
  async function load(){if(busy)return;busy=true;try{await ready;const dir=await folder();let name=filename();if(tool==='Werkbank'){
@@ -42,7 +107,7 @@ window.Werkmap=(()=>{
  }
  const handle=await existing(dir,name);if(!handle)throw Error('Nog geen bestand in deze toolmap. Open een bestaand bestand of begin nieuw en kies Bewaar bestand.');
  const file=await handle.getFile();if(file.size>20000000)throw Error('Het bestand is groter dan 20 MB.');const raw=await file.text();
- if(await adapter.load(file)){known.set(name,raw);adapter.bound?.(name);Werkstatus.opened(root.name+'/'+catalog[tool][0]+'/'+name);message('Geopend uit je werkmap. Bewaar bestand schrijft voortaan hier terug.');}
+ if(await adapter.load(file,{dir,handle,path:root.name+'/'+catalog[tool][0]+'/'+name})){known.set(name,raw);adapter.bound?.(name);Werkstatus.opened(root.name+'/'+catalog[tool][0]+'/'+name);message('Geopend uit je werkmap. Bewaar bestand schrijft voortaan hier terug.');}
  }catch(e){if(e.name!=='AbortError')message('Niet geopend: '+e.message);}finally{busy=false;}}
  async function write(dir,name,text){
   const operation=async()=>{
@@ -66,10 +131,17 @@ window.Werkmap=(()=>{
   if(new Blob([text]).size>20000000)throw Error('Bestand groter dan 20 MB.');
   await write(dir,name,text);adapter.bound?.(name);
   // Never mark edits made during a slow disk write as saved.
-  if(JSON.stringify(adapter.read())===signature){await adapter.saved?.(name);Werkstatus.opened(root.name+'/'+catalog[tool][0]+'/'+name);Werkstatus.written();message('Opgeslagen in '+root.name+'/'+catalog[tool][0]+'/'+name+'.');}
+  if(JSON.stringify(adapter.read())===signature){await adapter.saved?.(name,{dir,handle:await existing(dir,name),path:root.name+'/'+catalog[tool][0]+'/'+name});Werkstatus.opened(root.name+'/'+catalog[tool][0]+'/'+name);Werkstatus.written();message('Opgeslagen in '+root.name+'/'+catalog[tool][0]+'/'+name+'.');}
   else message('De eerdere versie is opgeslagen. Er zijn ondertussen nieuwe wijzigingen; bewaar opnieuw.');
   return true;
  }catch(e){message('Niet opgeslagen: '+e.message);return false;}finally{busy=false;if($('message')?.textContent==='Bezig met bewaren…')message('Niet opgeslagen. Je invoer blijft behouden.');}}
+
+ async function readContacts(){
+  await ready;if(!root||example)return null;
+  await checkRoot();await permission(root);
+  try{const dir=await root.getDirectoryHandle('Contact houden');return await(await dir.getFileHandle('gereedschapskist-contact-houden.json')).getFile();}
+  catch(e){if(e.name==='NotFoundError')return null;throw e;}
+ }
 
  async function exportFile(blob,name){
   await ready;if(!root||example)return false;if(busy){message('Er loopt nog een bestandsactie. Probeer deze export daarna opnieuw.');return false;}busy=true;if(box)box.open=true;
@@ -87,19 +159,20 @@ window.Werkmap=(()=>{
  }
  const allReady=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('bewaar-alles.js',document.currentScript.src).href;s.onload=resolve;s.onerror=()=>reject(Error('Bewaar alles kon niet laden. Ververs de pagina.'));document.head.append(s);});
  allReady.catch(()=>{});
+ const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js',document.currentScript.src).href;document.head.append(ui);
  async function allAccess(ask=true){await ready;await checkRoot();if(example)throw Error('Open eerst je eigen werk.');if(ask)await permission(root);return {root,revision};}
- function render(){if(!box)return;if(!tool){for(const link of document.querySelectorAll('.grid a')){if(!link.dataset.originalHref)link.dataset.originalHref=link.getAttribute('href');const url=new URL(link.dataset.originalHref,location.href);if(root)url.searchParams.set('werkruimte','eigen');link.href=root?url.href:link.dataset.originalHref;}}$('name').textContent=example?'Voorbeelden blijven buiten je eigen werkmap':root?'Werkmap: '+root.name+(tool?' / '+catalog[tool][0]:''):'Mijn werkmap';$('choose').hidden=!supported||example;$('choose').textContent=root?'Andere werkmap kiezen':'Kies werkmap';$('backup').hidden=!!example;$('all-open').hidden=!!example||!tool;$('forget').hidden=!root;$('open').hidden=!root||!adapter;$('copy').hidden=!root||!adapter;$('hint').textContent=example?'Je kunt voorbeelden downloaden om te oefenen.':!supported?'Deze browser biedt geen maptoegang. Bestand openen en downloaden blijven beschikbaar.':root?'Bewaar bestand schrijft naar deze map. Open een bestaand werkmapbestand eerst via Open uit werkmap. CSV, bonnen en overdrachten komen in Exports. PDF’s kies je zelf in het afdrukvenster.':'Kies één map voor je werk. De negen submappen worden aangemaakt. Zonder werkmap blijft Bewaar bestand een download.';const loose=document.querySelector('.loose-documents span');if(loose)loose.textContent=root?'Bewaar bestand schrijft naar Schrijven in je werkmap. Download kopie maakt een losse download.':'Bewaar bestand maakt een download. Opslaan in map werkt alleen na Map openen.';}
- function register(config){adapter=config;render();}
+ function render(){if(!box)return;if(!tool){for(const link of document.querySelectorAll('.grid a')){if(!link.dataset.originalHref)link.dataset.originalHref=link.getAttribute('href');const url=new URL(link.dataset.originalHref,location.href);if(root)url.searchParams.set('werkruimte','eigen');link.href=root?url.href:link.dataset.originalHref;}}$('name').textContent=example?'Voorbeelden blijven buiten je eigen werkmap':root?'Werkmap: '+root.name+(tool?' / '+catalog[tool][0]:''):'Mijn werkmap';$('choose').hidden=!supported||example;$('choose').textContent=root?'Andere werkmap kiezen':'Kies werkmap';$('backup').hidden=!!example;$('all-open').hidden=!!example;$('forget').hidden=!root;$('open').hidden=true;$('copy').hidden=!adapter;$('hint').textContent=example?'Je kunt voorbeelden downloaden om te oefenen.':!supported?'Deze browser biedt geen maptoegang. Bestand openen en downloaden blijven beschikbaar.':root?'Bewaar alles bewaart de hele werkruimte in deze map, inclusief conceptinvoer. Open werkmap brengt alle tools terug. PDF’s kies je zelf in het afdrukvenster.':'Kies eenmaal een map. Daarna bewaar je al je werk met Bewaar alles en open je de hele werkmap om verder te gaan.';const loose=document.querySelector('.loose-documents span');if(loose)loose.textContent=root?'Nieuwe losse documenten gaan naar Schrijven in je werkmap. Een gekoppeld document wordt in zijn eigen map bewaard. Download kopie maakt een losse download.':'Bewaar bestand maakt een download. Opslaan in map werkt alleen na Map openen.';}
+ function register(config){adapter=config;adapterResolve();render();}
  async function mount(){await ready;const style=document.createElement('style');style.textContent='.werkmap{margin:14px 32px;padding:14px 16px;border:1px solid #bbb;border-left:4px solid #e32720;font:14px/1.5 Arial,sans-serif;background:#fff;color:#111}.shell .werkmap{margin:0 0 20px}.werkmap summary{font-weight:700;cursor:pointer}.werkmap p{margin:8px 0;max-width:850px}.werkmap .wm-actions{display:flex;flex-wrap:wrap;gap:8px}.werkmap button,.wm-dialog button,.wm-dialog select{font:14px Arial;padding:10px;border:1px solid #111;background:#fff;color:#111;cursor:pointer;min-height:42px}.werkmap button:focus-visible,.wm-dialog :focus-visible{outline:3px solid #e32720;outline-offset:3px}.werkmap [hidden]{display:none!important}.wm-dialog{max-width:calc(100% - 32px);border:2px solid #111}.wm-dialog select{display:block;width:100%;margin:15px 0}.wm-dialog::backdrop{background:#0007}#wm-message{overflow-wrap:anywhere}@media(max-width:600px){.werkmap{margin:12px 16px}}@media print{.werkmap{display:none}}';document.head.append(style);
- box=document.createElement('details');box.className='werkmap';box.id='werkmap';box.open=!tool||!!root;box.innerHTML='<summary id="wm-name">Mijn werkmap</summary><p id="wm-hint"></p><div class="wm-actions"><button type="button" id="wm-choose">Kies werkmap</button><button type="button" id="wm-open" hidden>Open uit werkmap</button><button type="button" id="wm-copy" hidden>Download kopie</button><button type="button" id="wm-backup">Bewaar alles</button><button type="button" id="wm-all-open">Open bewaard werk</button><button type="button" id="wm-forget" hidden>Werkmap loskoppelen</button></div><p>Bewaar alles haalt je actuele werk en conceptinvoer op uit alle geopende tools in deze browser. Gesloten tools: laatst bekende gegevens. Eén actuele bewaarkopie, met één vorige kopie voor herstel. Daarna start een ZIP-download. Open na uitpakken de werkmap en kies Open bewaard werk.</p><p id="wm-message" role="status"></p>';
+ box=document.createElement('details');box.className='werkmap';box.id='werkmap';box.open=!tool||!!root;box.innerHTML='<summary id="wm-name">Mijn werkmap</summary><p id="wm-hint"></p><div class="wm-actions"><button type="button" id="wm-choose">Kies werkmap</button><button type="button" id="wm-open" hidden>Open uit werkmap</button><button type="button" id="wm-copy" hidden>Exporteer deze tool</button><button type="button" id="wm-backup">Bewaar alles</button><button type="button" id="wm-all-open">Open werkmap</button><button type="button" id="wm-zip">Download back-up</button><button type="button" id="wm-previous">Herstel vorige versie</button><button type="button" id="wm-forget" hidden>Werkmap loskoppelen</button></div><p>Je werk blijft in je eigen map. Bewaar alles neemt ook conceptinvoer en eerder bewaarde, gesloten tools mee. Er blijft één vorige kopie voor herstel. Download back-up is een optionele kopie van de map.</p><p id="wm-message" role="status"></p>';
  const home=document.querySelector('.titlebar');if(!tool&&home)home.after(box);else(document.getElementById('file-status')||document.querySelector('.brandbar,header')).after(box);
- $('backup').onclick=backup;$('all-open').onclick=async()=>{try{await allReady;await BewaarAlles.restore();}catch(e){message('Niet geopend: '+e.message);}};$('choose').onclick=choose;$('open').onclick=load;$('copy').onclick=()=>adapter?.download();$('forget').onclick=async()=>{if(busy)return;if(!confirm('Werkmap loskoppelen? Je bestanden blijven staan. Bewaar bestand wordt weer een download.'))return;try{if(db)await setting('delete');root=null;revision=null;known.clear();render();message('Losgekoppeld. Je bestanden zijn niet verwijderd.');}catch(e){message(e.message)}};
- if(tool&&!example){const info=document.querySelector('.save-help-body');if(info){const note=document.createElement('p');note.innerHTML='<strong>Met Mijn werkmap</strong> schrijft Bewaar bestand rechtstreeks naar je gekozen map. De downloadstappen hieronder gelden als je geen werkmap gebruikt. Met Download kopie kun je altijd een losse kopie maken.';info.prepend(note);}}
+ $('zip').onclick=async()=>{try{await allReady;await BewaarAlles.downloadBackup()}catch(e){message(e.message)}};$('previous').onclick=async()=>{try{await allReady;await BewaarAlles.restore(true)}catch(e){message(e.message)}};$('backup').onclick=backup;$('all-open').onclick=async()=>{try{await allReady;await BewaarAlles.restore();}catch(e){message('Niet geopend: '+e.message);}};$('choose').onclick=()=>choose(null,{requireExisting:true});$('open').onclick=load;$('copy').onclick=()=>adapter?.download();$('forget').onclick=async()=>{if(busy)return;if(!confirm('Werkmap loskoppelen? Je bestanden blijven staan. Bewaar bestand wordt weer een download.'))return;try{if(db)await setting('delete');root=null;revision=null;known.clear();render();message('Losgekoppeld. Je bestanden zijn niet verwijderd.');}catch(e){message(e.message)}};
+ if(tool&&!example){const info=document.querySelector('.save-help-body');if(info){const note=document.createElement('p');note.innerHTML='<strong>Met Mijn werkmap</strong> bewaart Bewaar alles de hele Gereedschapskist. Exporteren maakt een losse kopie; Open werkmap herstelt je complete werkruimte.';info.prepend(note);}}
  render();
  }
  window.addEventListener('beforeunload',e=>{if(busy){e.preventDefault();e.returnValue='';}});
  document.addEventListener('DOMContentLoaded',mount,{once:true});
- // Keep the familiar main button. Download remains an explicit independent action.
- document.addEventListener('click',e=>{const id=e.target.closest('button')?.id;if(!adapter||example||!root||id!==adapter.saveId)return;e.preventDefault();e.stopImmediatePropagation();save();},true);
- return {allAccess,allInfo:async()=>{await ready;return {revision};},allRead:()=>adapter?.read()??null,allLoad:file=>adapter.load(file),ready,register,save,exportFile,get active(){return !!root&&!example},get busy(){return busy},load};
+ // All ordinary save buttons share the same workspace operation. Export remains explicit.
+ document.addEventListener('click',e=>{const id=e.target.closest('button')?.id;if(!adapter||example||id!==adapter.saveId)return;e.preventDefault();e.stopImmediatePropagation();backup();},true);
+ return {suiteReady:allReady,choose,startNew,continueWork,adapterReady,allCheck:()=>adapter?.check?.(),allRestore:s=>adapter.restore(s),allReset:()=>{},allAccess,allInfo:async()=>{await ready;return {revision,name:root?.name};},allRead:()=>adapter?.read()??null,allLoad:file=>adapter.load(file),ready,register,save,exportFile,readContacts,get name(){return root?.name||''},get active(){return !!root&&!example},get busy(){return busy},load};
 })();
