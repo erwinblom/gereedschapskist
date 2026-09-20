@@ -61,3 +61,17 @@ body[data-tool] .brand .tool-symbol {color:#e32720}
 @media print {
  body[data-tool] > header,body[data-tool] .brandbar {border-top:0}
 }
+
+/* Een vast kleurvlak maakt de toolidentiteit zichtbaar zonder interactie. */
+body[data-tool] .brand {
+ background:#c51d17;
+ color:#fff;
+ padding:10px 14px;
+}
+body[data-tool] .brand .tool-name,
+body[data-tool] .brand .tool-symbol {color:#fff}
+@media print {
+ body[data-tool] .brand {background:#fff;color:#111;padding:0}
+ body[data-tool] .brand .tool-name,
+ body[data-tool] .brand .tool-symbol {color:#111}
+}
